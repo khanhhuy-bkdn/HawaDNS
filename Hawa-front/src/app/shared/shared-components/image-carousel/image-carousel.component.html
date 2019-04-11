@@ -1,0 +1,43 @@
+<div id="overlay" class="d-flex justify-content-center align-content-center">
+    <div id="modal-container" class="d-flex flex-column align-items-center">
+        <div class="close-button cursor-pointer" (click)="closeView()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></div>
+        <div class="w3-content main-show-image d-flex justify-content-center align-content-center">
+            <img *ngFor="let image of imageUrlArray; index as i" class="show-image-item" [class.noShow]="isShow !== i"
+                [class.show]="isShow === i" [src]="image.largeSizeUrl">
+        </div>
+
+
+        <div class="w-100 d-flex flex-column">
+            <div class="thumbImage w-100 d-flex justify-content-center">
+                <button class="button-thumb mr-5 d-inline-block cursor-pointer pt-5" (click)="prevButton()"><i class="fa fa-chevron-left"
+                        aria-hidden="true"></i></button>
+                <div class="d-inline-block">
+                    <ng-container *ngIf="isShow === (imageUrlArray.length -1) && imageUrlArray[isShow-2]?.largeSizeUrl">
+                        <img [src]="imageUrlArray[isShow-2]?.largeSizeUrl" (click)="viewCurrentImage(isShow-2)">
+                    </ng-container>
+
+                    <img *ngIf="imageUrlArray[isShow-1]" [src]="imageUrlArray[isShow-1]?.largeSizeUrl" (click)="viewCurrentImage(isShow-1)">
+
+                    <img *ngFor="let image of imageUrlArray; index as j" [src]="image.largeSizeUrl" [class.noThumb]="isShow !== j"
+                        [class.thumb]="isShow === j" [class.shining]="isShow === j" (click)="viewCurrentImage(j)">
+
+                    <img *ngIf="imageUrlArray[isShow+1]" [src]="imageUrlArray[isShow+1]?.largeSizeUrl" (click)="viewCurrentImage(isShow+1)">
+
+                    <ng-container *ngIf="isShow === 0 && imageUrlArray[isShow+2]?.largeSizeUrl">
+                        <img [src]="imageUrlArray[isShow+2]?.largeSizeUrl" (click)="viewCurrentImage(isShow+2)">
+                    </ng-container>
+                </div>
+                <button class="button-thumb ml-5 d-inline-block cursor-pointer pt-5" (click)="nextButton()"><i class="fa fa-chevron-right"
+                        aria-hidden="true"></i></button>
+            </div>
+
+            <div class="w3-center d-flex flex-column align-items-center button-control">
+                <div class="mb-2 d-flex flex-row justify-content-center">
+                    <h4 class="text-view">Hình {{isShow+1}} / {{imageUrlArray.length}}</h4>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

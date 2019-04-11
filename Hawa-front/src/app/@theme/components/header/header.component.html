@@ -1,0 +1,154 @@
+<div class="header-container pl-2" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
+  <div class="logo-containter pr-2">
+    <img *ngIf="isShowTog" class="pr-1 mb-1 cursor-pointer" src="assets/images/icon-menu.svg" width="25rem" (click)="toggleSidebar()">
+    <img class="pl-2 cursor-pointer" src="assets/images/logo-hawa-color.png" width="55rem" (click)="homeInforSearch()" title="Trở về trang chủ">
+    <img class="pl-2 mb-1 cursor-pointer" src="assets/images/name-logo-svg.svg" width="100rem" (click)="homeInforSearch()" title="Trở về trang chủ">
+  </div>
+  <div class="hawa-dds">
+    <div class="separator">
+      <div>
+        <!-- class="link" target="_blank" href="http://www.hawadds.com/" -->
+        <div class="font-weight-bold font-size--15px">
+          CƠ SỞ DỮ LIỆU NGUỒN GỖ HỢP PHÁP VIỆT NAM
+        </div>
+      </div>
+      <div>
+        <!-- class="link" target="_blank" href="http://www.hawadds.com/" -->
+        <div class="font-weight-bold font-size--11px">
+          VIETNAM LEGAL TIMBER SOURCES DATABASE
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- <div class="container">
+    <div class="btn-group" dropdown>
+      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
+        Button dropdown
+        <span class="caret"></span>
+      </button>
+      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem">
+          <a class="dropdown-item" href="#">Action</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" href="#">Another action</a>
+        </li>
+        <li role="menuitem">
+          <a class="dropdown-item" href="#">Something else here</a>
+        </li>
+        <li class="divider dropdown-divider"></li>
+        <li role="menuitem">
+          <a class="dropdown-item" href="#">Separated link</a>
+        </li>
+      </ul>
+    </div>
+  </div> -->
+
+  <i class="fas fa-user-check"></i>
+</div>
+
+
+
+<div class="header-bar d-flex align-items-center" *ngIf="haveSession">
+  <!-- <div class="bell-icon cursor-pointer">
+    <img src="assets/images/icon-bell.svg" alt="">
+  </div> -->
+  <div class="pr-4 link_web_hawa__login">
+    <img src="assets/images/WWW-Icon.svg" alt="" width="25px" class="img__margin">
+    <a class="link" target="_blank" href="http://www.hawadds.com/" class="font-weight-bold font-size--14px name-link__color"
+      title="Đi đến trang này">
+      WEBSITE HAWA DDS
+    </a>
+  </div>
+  <div class="menu-context d-flex align-items-center px-3">
+    <img id="adminavatar" (click)="ContextMenu.click()" class="cursor-pointer" [src]="(user && user.avatar && user.avatar.thumbSizeUrl) ? user.avatar.thumbSizeUrl : 'assets/images/avatar.svg'"
+      [alt]="user?.organizationName ? user?.organizationName : ''">
+    <p id="adminname" class="mb-0 pl-3 cursor-pointer font-size--11px" (click)="ContextMenu.click()">{{ (user && user.organizationName) ? user?.organizationName : 'Chưa có tên' }}
+    </p>
+  </div>
+  <div id="carret-down" (click)="toggleContextMenu()" #ContextMenu class="carret-down cursor-pointer">
+    <!-- [class.invisible]="isHiddenContextMenu" -->
+    <i id="carret-down-icon" class="fa fa-chevron-down" aria-hidden="true"></i>
+  </div>
+  <div class="menu-context-popup shadow-box" *ngIf="isShowContextMenu" id="adminmenu" [class.not-admin]="!admin">
+    <div class="cursor-pointer p-3 user" (click)="routerUserInfo()">
+      <img src="assets/images/icons8-administrator-male-50.png" style="width: 1rem" class="d-inline-block mr-2" alt="">
+      <span class="font-size--11px">Thông tin người dùng</span>
+    </div>
+    <hr class="m-0" />
+    <div class="cursor-pointer p-3 logout" (click)="governance()" *ngIf="admin">
+      <img src="assets/images/icons-settings.png" style="width: 1rem" class="d-inline-block mr-2" alt="">
+      <span class="font-size--11px">Quản trị hệ thống</span>
+    </div>
+    <hr class="m-0" />
+    <div class="cursor-pointer p-3 logout" (click)="logout()">
+      <img src="assets/images/icons8-exit-50.png" style="width: 1rem" class="d-inline-block mr-2" alt="">
+      <span class="font-size--11px">Đăng xuất</span>
+    </div>
+  </div>
+
+
+
+
+  <!-- <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
+    <nb-action *nbIsGranted="['view', 'user']">
+      <nb-user class="cursor-pointer" [nbContextMenu]="userMenu" [name]="(user && user.organizationName) ? user?.organizationName : 'Chưa có tên'"
+        [picture]="(user && user.avatar && user.avatar.thumbSizeUrl) ? user.avatar.thumbSizeUrl : 'assets/images/avatar.svg'" style="min-width: 110px;"></nb-user>
+    </nb-action>
+    <nb-action class="control-item d-flex align-items-center" disabled>
+      <img src="assets/images/icon-bell.svg" alt="">
+    </nb-action>
+  </nb-actions> -->
+
+  <!-- <li class="nav-item dropdown pad-user" ngbDropdown>
+    <a class="navbar-brand" href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
+      <img [src]="avatarSrc" width="30" height="30" class="d-inline-block" alt="">
+      <span>Admin</span>
+      <b class="caret"></b>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right" style="z-index: 200000;">
+      <a class="dropdown-item">
+        <i class="fa fa-user-circle"></i>&nbsp; Thông tin người dùng
+      </a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item cursor-pointer">
+        <i class="fa fa-key"></i> &nbsp;Thay đổi mật khẩu
+      </a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item  cursor-pointer">
+        <i class="fa fa-fw fa-power-off"></i>&nbsp; Đăng xuất
+      </a>
+    </div>
+  </li> -->
+</div>
+
+<div class="d-flex container-sign-in-up pr-2" *ngIf="!haveSession">
+  <div class="pr-4 center-parent">
+    <div class="link_web_hawa__notlogin">
+      <img src="assets/images/WWW-Icon.svg" alt="" width="25px" class="img__margin">
+      <a class="link" target="_blank" href="http://www.hawadds.com/" class="font-weight-bold font-size--14px name-link__color"
+        title="Đi đến trang này">
+        WEBSITE HAWA DDS
+      </a>
+    </div>
+  </div>
+  <div class="container-name-contact partition px-3 center-parent">
+    <div class="text-uppercase font-weight-bold cursor-pointer" (click)="signIn()">
+      <!-- title="Đăng nhập" -->
+      đăng nhập
+    </div>
+  </div>
+  <div class=" container-name-contact partition px-3 center-parent" (click)="singUp()">
+    <!-- title="Đăng ký" -->
+    <span class="text-uppercase font-weight-bold cursor-pointer">
+      đăng ký
+    </span>
+  </div>
+  <img class="partition px-3 cursor-pointer center-parent" src="assets/images/icon-facebook-black.svg" alt="" (click)="signInComingSoon()"
+    title="Đăng nhập bằng Facebook">
+  <img class="px-3 cursor-pointer center-parent" src="assets/images/icon-google-black.svg" alt="" (click)="signInComingSoon()"
+    title="Đăng nhập bằng Google">
+</div>

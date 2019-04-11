@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 105.3 105.3" style="enable-background:new 0 0 105.3 105.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#36B2D8;}
+	.st1{fill:#4EBFED;}
+	.st2{fill:#F45337;}
+	.st3{fill:none;stroke:#F05438;stroke-width:8;stroke-miterlimit:10;}
+</style>
+<title>Asset 1</title>
+<g>
+	<g id="Layer_1-2">
+		<polygon class="st0" points="22.4,56.6 41.5,56.6 83.7,82 65.4,81.6 		"/>
+		<polygon class="st1" points="22.4,56.6 7.6,74.7 50,99.9 65.4,81.6 		"/>
+		<polygon class="st1" points="41.5,56.6 56,41.2 97.7,66.1 83.7,82 		"/>
+		<path class="st2" d="M53.1,5.5c-13.8,0-24.9,11.2-24.9,24.9l0,0c0,13.8,24.9,37.9,24.9,37.9S78,44.2,78,30.4
+			C78,16.6,66.9,5.5,53.1,5.5L53.1,5.5z M53.1,47.8c-9.6,0-17.4-7.8-17.4-17.4S43.5,13,53.1,13s17.4,7.8,17.4,17.4l0,0
+			C70.5,40,62.7,47.8,53.1,47.8L53.1,47.8z"/>
+		<circle class="st3" cx="53.1" cy="30.4" r="18.9"/>
+	</g>
+</g>
+</svg>

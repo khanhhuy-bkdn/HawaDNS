@@ -1,0 +1,213 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div>
+      <div class="popup-content">
+        <div class="text-uppercase font-weight-bold">
+          <div class="font-size--20px">thông tin chủ rừng</div>
+          <div class="font-size--18px title-header__transalte__mar">
+            (forest owner information)
+          </div>
+        </div>
+        <div class="font-weight-bold mt-1">
+          Lô {{actorDetail?.forestPlot?.plotCode}} | Khoảnh {{actorDetail?.forestPlot?.subCompartment?.code}} | Tiểu khu {{actorDetail?.forestPlot?.compartment?.code}}
+          | {{actorDetail?.forestPlot?.commune?.text}} | {{actorDetail?.forestPlot?.district?.text}} | {{actorDetail?.forestPlot?.stateProvince?.text}}
+        </div>
+        <!-- <popup-error [change]="changeValuePopupError" [errorCode]="apiErrorCode"></popup-error> -->
+        <div class="d-flex mt-4">
+          <div class="user-avatar mb-3 mt-2 d-flex justify-content-center align-items-center w-30">
+            <div class="user-avatar__img d-flex justify-content-center align-items-center">
+              <img [src]="actorDetail?.avatar ? actorDetail.avatar.thumbSizeUrl : 'assets/images/avatar.svg'" [alt]="actorDetail?.name"
+                class="w-100">
+            </div>
+          </div>
+          <div class="w-70 mt-3">
+            <div class="d-flex">
+              <div class="field-name">Tên (Name):&nbsp;</div>
+              <div class="field-content">
+                {{actorDetail?.name}}
+              </div>
+            </div>
+            <div class="d-flex mt-3">
+              <div class="field-name">Loại chủ rừng (Owner type):&nbsp;</div>
+              <div class="field-content">
+                {{actorType}}
+              </div>
+            </div>
+            <div class="d-flex mt-3">
+              <div class="field-name">Email:&nbsp;</div>
+              <div class="field-content">
+                <a href="mailto:{{ actorDetail?.email }}?Subject=HAWA%20DDS" target="_blank">{{ actorDetail?.email }}</a>
+              </div>
+            </div>
+            <div class="d-flex mt-3">
+              <div class="field-name">Điện thoại (Tel):&nbsp;</div>
+              <div class="field-content">
+                {{actorDetail?.phone}}
+              </div>
+            </div>
+            <div class="d-flex mt-3">
+              <div class="field-name">Website:&nbsp;</div>
+              <div class="field-content">
+                <a href="http://{{actorDetail?.website}}" target="_blank">{{actorDetail?.website}}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 bulkhead-bottom">
+        </div>
+        <div class="w-100 d-flex">
+          <div class="w-30 text-center bulkhead-right py-4">
+            <div>
+              <div class="font-size--18px">
+                Đánh Giá Trung Bình
+              </div>
+              <div class="font-size--16px average-rating__transalte__mar">
+                (Average rating result)
+              </div>
+            </div>
+            <div class="font-size--30px evaluate">
+              {{ averageRating }}/5
+            </div>
+            <div class="center-parent disabled-rating" *ngIf="averageRatingRound">
+              <rate-star [change]="change" [disabledRate]="true" [name]="'average'" [score]="5" [step]="0.5" [color]="" [default]="averageRatingRound"></rate-star>
+            </div>
+            <div>
+              ({{ actorDetail?.reviews ? actorDetail?.reviews.length : '0' }} nhận xét)
+            </div>
+          </div>
+          <div class="w-40 text-center bulkhead-right py-4">
+            <div class="d-flex margin-left--10" *ngFor="let aggregateOfRating of aggregateOfRatings">
+              <div class="d-flex mt-1">
+                <div>{{ aggregateOfRating.rating }}</div>
+                <div class="pl-1">
+                  <i class="fa fa-star star-high icon-start"></i>
+                </div>
+                <div class="center-parent pl-1">
+                  <div>
+                    <nb-progress-bar class="progress" [value]="(aggregateOfRating.percent).toFixed(1)" status="success" size="xs"></nb-progress-bar>
+                  </div>
+                </div>
+                <div class="pl-1">{{ (aggregateOfRating.percent).toFixed(1) }} %</div>
+              </div>
+            </div>
+            <div class="bulkhead-right"></div>
+          </div>
+          <div class="w-30 text-center py-3" *ngIf="pagedResult && pagedResult.extraData && (pagedResult.extraData.isUserReview === false)">
+            <div class="font-weight-bold mt-2">
+              <div>Chia sẻ nhận xét về chủ rừng</div>
+              <div class="font-size--10px">
+                (Shared your comment)
+              </div>
+            </div>
+            <!-- <button *ngIf="!isShowComment" nbButton class="text-uppercase mt-2 cursor-pointer" (click)="writeComment()">viết nhận xét của bạn/comment here</button> -->
+            <div class="center-parent px-3">
+              <div *ngIf="!isShowComment" class="button-div-mul-lines text-uppercase text-center mt-2" (click)="writeComment()">
+                <div class="font-size--13px">Viết nhận xét của bạn</div>
+                <div class="font-size--11px">(Comment here)</div>
+              </div>
+            </div>
+
+            <div class="center-parent px-3">
+              <div *ngIf="isShowComment" class="button-div-mul-lines-abort text-uppercase text-center mt-2" (click)="closeComment()">
+                <div class="font-size--13px">đóng nhận xét</div>
+                <div class="font-size--11px">(Close comment here)</div>
+              </div>
+            </div>
+            <!-- <button *ngIf="isShowComment" nbButton class="text-uppercase mt-2 cursor-pointer abort-bg close-comment-button__width" (click)="closeComment()">đóng nhận xét</button> -->
+          </div>
+
+          <div class="w-30 text-center py-3 center-parent" *ngIf="pagedResult && pagedResult.extraData && pagedResult.extraData.isUserReview">
+            <div class="mt-2">
+              <div>Bạn đã nhận xét chủ rừng này rồi</div>
+              <div class="font-size--10px">
+                (You have already commented on this forest owner)
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="bulkhead-bottom">
+        </div>
+        <div *ngIf="isShowComment">
+          <div class="pt-3">
+            <popup-error [change]="changeValuePopupError" [errorCode]="apiErrorCode"></popup-error>
+            <div class="d-flex">
+              <div class="mr-3 padding-top-4">
+                1. Đánh giá của bạn về chủ rừng này (Nhấn chọn số sao đánh giá):
+              </div>
+              <rate-star [disabledRate]="false" [name]="'evaluate'" [score]="5" [step]="1" [color]="" [default]="0" (newvalue)="getRateValue($event)"></rate-star>
+              <span class="notRated p-2" *ngIf="isNotRated">
+                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp; Bạn phải chọn đánh giá trước khi gửi nhận xét
+              </span>
+              <div *ngIf="errorEvaluate" class="error-color pt-1 pl-2">
+                Bạn đã đánh giá chủ rừng này rồi
+              </div>
+            </div>
+            <div class="d-flex pt-2">
+              <div class="comment-field-name">
+                2. Tiêu đề
+              </div>
+              <div class="w-100">
+                <input nbInput class="w-100" nbInput type="text" placeholder="Viết tiêu đề" [(ngModel)]="createActorReview.title">
+              </div>
+            </div>
+            <div class="d-flex pt-2">
+              <div class="comment-field-name">
+                3. Nhận xét
+              </div>
+              <div class="w-100">
+                <textarea class="w-100" name="" id="" cols="30" rows="3" placeholder="Viết nhận xét" [(ngModel)]="createActorReview.content"></textarea>
+              </div>
+            </div>
+            <div class="text-center pt-2">
+              <button nbButton class="text-uppercase cursor-pointer comment-button__width" style="padding: 0.5rem" (click)="submitComment()">
+                gửi nhận xét
+              </button>
+              <button nbButton class="text-uppercase pl-1 abort-bg cursor-pointer comment-button__width ml-2" (click)="closeComment()">hủy</button>
+            </div>
+          </div>
+          <div class="pt-3 bulkhead-bottom"></div>
+        </div>
+        <div class="comt-wrapper">
+          <div class="list-comments">
+            <ng-container *ngFor="let review of listOfReviewsActor; index as i">
+              <div class="w-100 d-flex pt-4">
+                <div class="w-15">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <img [src]="review.reviewUser?.avatar ? review.reviewUser.avatar.thumbSizeUrl : 'assets/images/avatar.svg'" [alt]="review.reviewUser?.organizationName"
+                      width="40px" height="40px" class="img-avatar">
+                  </div>
+                  <div class="text-center font-weight-bold mt-2">
+                    {{ review.reviewUser?.organizationName }}
+                  </div>
+                  <div class="text-center font-size--11px">{{ (review.reviewDate*1000 - 7*60*60*1000) | amCalendar }}</div>
+                </div>
+                <div class="w-85">
+                  <div class="d-flex">
+                    <div class="d-flex disabled-rating">
+                      <rate-star [disabledRate]="true" [name]="'evaluatereview'+i" [score]="5" [step]="1" [color]="" [default]="review.rating"></rate-star>
+                    </div>
+                    <div class="font-weight-bold pl-3 reliability-text">
+                      {{ review.title }}
+                    </div>
+                  </div>
+                  <div class="review-with-newlines">
+                    {{ review.content }}
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div *ngIf="listOfReviewsActor && (listOfReviewsActor || []).length === 0" class="text-center p-3">Chưa có nhận xét nào</div>
+          <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

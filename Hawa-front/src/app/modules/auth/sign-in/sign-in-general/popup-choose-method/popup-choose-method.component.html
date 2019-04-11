@@ -1,0 +1,26 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="logo-icon p-1">
+        <img src="assets/images/hawa_text.png" width="190px" alt="Hawa DDS" />
+      </div>
+    <div class="container">
+      <div class="w-100 text-center font-weight-bold title-header">
+        Vui lòng chọn phương thức mã xác thực
+      </div>
+      <div class="w-100 mt-2">
+        <input id="phone" type="radio" [value]="true" [(ngModel)]="verificationPhone">
+        <label for="phone" class="pl-2 content--font m-0">Qua điện thoại</label>
+      </div>
+      <div class="w-100 mt-2">
+        <input id="email" type="radio" [value]="false" [(ngModel)]="verificationPhone">
+        <label for="email" class="pl-2 content--font m-0">Qua email</label>
+      </div>
+      <div class="mt-2">
+        <button nbButton class="text-uppercase cursor-pointer w-100 mt-2" (click)="submit()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

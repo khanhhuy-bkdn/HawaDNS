@@ -1,0 +1,233 @@
+// progress
+.progress {
+  height: 0.5rem;
+}
+
+.nb-theme-default .progress-container.xs {
+  height: 0.5rem;
+}
+
+// ===========================
+// Height Button
+button {
+  height: 36px;
+}
+// heigh input
+// input {
+//   height: 36px;
+// }
+
+// Ghi đè thư viện nebular
+// font-weight button
+.nb-theme-default [nbButton] {
+  font-weight: 400 !important;
+  cursor: pointer;
+}
+
+// outline select - option
+.nb-theme-default [nbButton].btn-info {
+  color: black;
+  border: 0.5px solid #dadfe6;
+}
+
+.nb-theme-default [nbButton].btn-info:focus {
+  color: black;
+  outline: none;
+  border-color: #008a77;
+}
+
+// silbar
+.menu-item a .menu-title {
+  font-size: 0.85rem;
+}
+
+.nb-theme-default nb-menu .menu-item {
+  .menu-icon {
+    font-size: 1.2rem !important;
+  }
+
+  a:hover {
+    background-color: #edf7f5;
+    outline: none;
+  }
+
+  .menu-icon:hover {
+    color: #0f9180;
+  }
+
+  .menu-title:hover {
+    color: #0f9180;
+  }
+}
+
+// layout-header
+.nb-theme-default nb-layout .layout nb-layout-header {
+
+  // height: 100%;
+  nav {
+    padding: 0 !important;
+  }
+}
+
+.nb-theme-default nb-sidebar nb-sidebar-header {
+  padding: 0.5rem;
+}
+// TODO: Fix sideMenu
+.nb-theme-default nb-sidebar .scrollable {
+  padding: 0 !important;
+}
+
+// page Auth of Nebular
+.nb-theme-default nb-card-header {
+  display: none;
+}
+
+// colum
+nb-layout .layout .layout-container .content .columns nb-layout-column {
+  padding: 0 !important;
+}
+
+// // content-layout
+// .nb-theme-default nb-layout .layout nb-layout-header.fixed ~ .layout-container {
+//   padding-top: 5.75rem;
+// }
+
+.nb-theme-default nb-card {
+  height: 100% !important;
+}
+
+// menu-profile
+// .cdk-overlay-pane{
+//     left: 1230px !important;
+// }
+
+// layout
+// label
+.nb-theme-default .btn {
+  font-weight: 400;
+}
+
+// Cotum thẻ a
+.nb-theme-default a {
+  color: #007bff !important;
+}
+
+.nb-theme-default a:focus {
+  color: #007bff;
+  outline: none;
+}
+
+.nb-theme-default a:hover {
+  color: #007bff;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+// textarea
+textarea {
+  padding: 0.7rem 1.125rem !important;
+}
+
+// menu-header
+.nb-theme-default nb-context-menu .arrow {
+  display: none;
+}
+
+.nb-theme-default nb-context-menu {
+  margin-top: -8px;
+  border: 1px solid #e9ecef !important;
+  transform: translateX(-16px);
+}
+
+// nb-menu ul.menu-items .menu-item a .menu-title {
+//   //   padding: 0.375rem 1.2rem !important;
+//   // font-size: 1rem;
+// }
+
+.nb-theme-default nb-menu.context-menu .menu-items .menu-item a:hover {
+  background: #e8e8e8 !important;
+}
+
+//Custom SideBar
+
+nb-menu ul.menu-items li {
+  a {
+    color: #7d7d7d !important;
+
+    span.menu-title {
+      font-size: 11px;
+      padding: 0.375rem 0 !important;
+    }
+
+    &:hover {
+      span:first-child {}
+
+      i.menu-icon {
+        color: #008a77 !important;
+      }
+
+      color: #008a77;
+      background-color: #eaf7f5 !important;
+    }
+
+    i.menu-icon {
+      color: inherit !important;
+    }
+  }
+
+  color: #7d7d7d;
+  background-color: #ffffff;
+  border-bottom: none !important;
+}
+
+// Sub Items
+nb-menu ul.menu-items li {
+  ul.menu-items {
+    li.menu-item {
+      &:first-child {
+        margin-top: 0 !important;
+      }
+
+      &:last-child {
+        margin-bottom: 0 !important;
+      }
+
+      padding: 0 !important;
+
+      a {
+        color: #7d7d7d !important;
+        border: none !important;
+        border-radius: 0 !important;
+
+        i.menu-icon {
+          font-size: 0.5rem !important;
+        }
+
+        &:hover {
+          span:first-child.menu-title {
+            color: #008a77;
+          }
+
+          border-top: 1px solid #008a77 !important;
+        }
+      }
+    }
+  }
+}
+.nb-theme-default .progress-value.success{
+  background-color: #25B44A !important;
+}
+
+// message error popup
+.nb-theme-default .alert-warning {
+  color: #721c24 !important;
+  background-color: #f8d7da !important;
+}
+
+// loading
+.nb-theme-default .pace .pace-progress {
+  opacity: 0;
+}

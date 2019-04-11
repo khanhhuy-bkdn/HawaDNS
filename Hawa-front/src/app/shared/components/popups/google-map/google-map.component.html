@@ -1,0 +1,24 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box container-google-map center-parent">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+
+    <div class="w-100 h-100" *ngIf="locationLatitude && locationLongitude">
+      <agm-map [mapTypeControl]='true' [latitude]="locationLatitude" [longitude]="locationLongitude" [zoomControl]="true" [fullscreenControl]='true'
+        [disableDefaultUI]="false" [mapTypeControlOptions]='true' [zoom]="15" [mapTypeId]="!address ? 'hybrid' : 'roadmap' "
+        [scrollwheel]="null">
+        <agm-marker [latitude]="locationLatitude" [longitude]="locationLongitude" #infoWindow>
+          <!-- [label]="markerLabel ? markerLabel : null" -->
+          <agm-info-window [disableAutoPan]="true" [isOpen]="true">
+            {{markerAddress}}
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+    </div>
+
+    <div class="w-100 h-100 text-center" *ngIf="!(locationLatitude && locationLongitude)">
+      Vị trí của lô trên bản đồ sẽ được cập nhật trong thời gian tới...
+    </div>
+
+  </div>

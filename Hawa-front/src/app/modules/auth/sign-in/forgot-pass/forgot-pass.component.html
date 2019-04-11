@@ -1,0 +1,64 @@
+<form action="" [formGroup]="forgotPassForm">
+  <div class="w-100 d-flex set-height">
+    <div class="w-100 sign-up">
+      <div class="sign-up-content px-5 w-100">
+        <div class="text-right">
+          <img [class.opacity-empty]="callApiSuccess" class="cursor-pointer go-home__color" src="assets/images/icon-go-home.png" width="40px" [routerLink]="['../../../pages']" title="Trở về trang chủ">
+        </div>
+        <div class="logo-icon pl-5 pt-3">
+          <img src="assets/images/hawa_text.png" width="190px" alt="Hawa DDS" />
+        </div>
+        <div class="w-100 font-weight-bold">
+          <div class="text-uppercase w-100 text-center title-header">quên mật khẩu</div>
+        </div>
+        <div class="text-center py-4">
+          <span class="w-50 text-center content--mar" *ngIf="!verificationPhone && !callApiSuccess">
+            Vui lòng nhập {{ verificationPhone ? 'số điện thoại' : 'địa chỉ email'}} liên kết với tài khoản của bạn để nhận đường dẫn
+            thiết lập lại mật khẩu.
+          </span>
+          <div *ngIf="callApiSuccess">
+            <div>
+              Chúng tôi đã gửi yêu cầu đặt lại mật khẩu đến địa chỉ email liên kết với tài khoản của bạn.
+            </div>
+            <div class="pt-2">
+              Vui lòng kiểm tra email để thiết lập mật khẩu mới.
+            </div>
+          </div>
+          <span class="w-50 text-center content--mar" *ngIf="verificationPhone">
+            Coming soon
+          </span>
+        </div>
+        <div class="marlef w-50">
+          <app-list-errors *ngIf="apiErrorCode && apiErrorCode !== ''" [errorCode]="apiErrorCode"></app-list-errors>
+        </div>
+        <div *ngIf="!callApiSuccess">
+          <div class="input-user w-50 marlef" [class.byemail]="!verificationPhone" [class.byphone]="verificationPhone">
+            <input nbInput *ngIf="verificationPhone" autofocus tabindex="1" class="w-100 input-form--pad input-text" type="text" placeholder="{{verificationPhone ? 'Số điện thoại' : 'Email'}}"
+              formControlName="valuePhoneOrEmail" appEnterPreventDefault appInputNumber [ngClass]="{'validate-false': formErrors.valuePhoneOrEmail}">
+            <input nbInput *ngIf="!verificationPhone" autofocus tabindex="1" class="w-100 input-form--pad input-text" type="text" placeholder="{{verificationPhone ? 'Số điện thoại' : 'Email'}}"
+              formControlName="valuePhoneOrEmail" appEnterPreventDefault [ngClass]="{'validate-false': formErrors.valuePhoneOrEmail}">
+          </div>
+          <div class="w-50 marlef">
+            <div class="invalid-feedback" *ngIf="formErrors.valuePhoneOrEmail">
+              {{formErrors.valuePhoneOrEmail}}
+            </div>
+          </div>
+          <div class="w-50 text-center pt-3 marlef d-flex" *ngIf="!verificationPhone">
+            <button nbButton tabindex="3" class="cursor-pointer text-uppercase w-50 mr-1 my-2 but-back--font" (click)="back()">trở về</button>
+            <button nbButton tabindex="2" class="cursor-pointer text-uppercase w-50 ml-1 my-2" (click)="submit()">tiếp theo</button>
+          </div>
+        </div>
+
+        <div class="w-50 text-center pt-3 marlef d-flex" *ngIf="callApiSuccess">
+          <button nbButton tabindex="3" class="cursor-pointer text-uppercase w-100 ml-1 my-2" [routerLink]="['../../../pages/infor-search']">trở về trang chủ</button>
+        </div>
+
+        <div class="w-100 text-center mt-2 pointer bot--center-content">
+          <span tabindex="4" [routerLink]="['../../sign-in']">
+            Trở về đăng nhập
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

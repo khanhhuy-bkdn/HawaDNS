@@ -1,0 +1,132 @@
+.set-height {
+  min-height: 85vh;
+
+  .modify-lineheight {
+    line-height: 3rem;
+  }
+
+  .image {
+    background: url('assets/images/logo-wood.png');
+    background-size: cover;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
+    position: relative;
+
+    .text-content {
+      color: white;
+
+      .title-header {
+        font-size: 140%;
+      }
+    }
+
+    .content-center {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+    }
+
+    .bot--center-content {
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0.5rem;
+      color: white;
+      font-size: 12px;
+    }
+  }
+
+  .sign-up {
+    position: relative;
+    background-color: white;
+    border-radius: 0rem 0.5rem 0.5rem 0rem;
+
+    .go-home__color {
+      outline: none
+    }
+
+    .title-header {
+      font-size: 140%;
+    }
+
+    .input-user {
+      position: relative;
+
+      .input-text {
+        padding-left: 2.5rem;
+        min-height: 36px;
+      }
+
+      &.icon-user::before {
+        font-family: 'FontAwesome';
+        content: "\f003";
+        position: absolute;
+        top: 46%;
+        left: 14px;
+        color: #cccccc;
+      }
+
+      &.icon-lock::before {
+        font-family: 'FontAwesome';
+        content: "\f023";
+        position: absolute;
+        top: 46%;
+        left: 15px;
+        color: #cccccc;
+        font-size: 1.1rem;
+      }
+    }
+
+    input {
+      background-color: #F4F8F7 !important;
+    }
+
+    .but-cus {
+      background-color: #008A77;
+      border-color: #008A77;
+      border-radius: 0px;
+    }
+
+    .boundary {
+      border-bottom: #D8D8D8 solid 1px;
+      width: 40%;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-out {
+      height: 36px; // 36px
+      border: #D8D8D8 solid 1px;
+      padding: 1.22rem;
+    }
+
+    .bot--center-content {
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0.5rem;
+      padding-right: 4rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .w-45 {
+    width: 45%;
+  }
+}
+
+button {
+  font-size: 120%;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}

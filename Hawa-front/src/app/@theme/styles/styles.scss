@@ -1,0 +1,300 @@
+@import "~nouislider/distribute/nouislider.min.css";
+// themes - our custom or/and out of the box themes
+@import "themes";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+// framework component themes (styles tied to theme variables)
+@import "~@nebular/theme/styles/globals";
+@import "~@nebular/auth/styles/all";
+@import "~@nebular/bootstrap/styles/globals";
+// ...
+
+// alert-style
+@import "./alert";
+// global app font size
+@import "./font-size";
+@import "./popup";
+@import "./form";
+@import "./cus-nebular";
+@import "./nouislider";
+
+// loading progress bar theme
+@import "./pace.theme";
+
+@import "./bootstrap-rtl";
+
+// install the framework and custom global styles
+@include nb-install() {
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+  @include nb-bootstrap-global();
+
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  // fixed in rc.9 and can be removed after upgrade
+  .custom-control .custom-control-indicator {
+    border-radius: 50%; // TODO: quickfix for https://github.com/akveo/nebular/issues/275
+  }
+
+  @include bootstrap-rtl();
+}
+
+body {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+.required {
+  &::after {
+    content: "*";
+    color: #ff0000;
+  }
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-90 {
+  width: 90%;
+}
+
+.w-33 {
+  width: 33% !important;
+}
+
+.w-67 {
+  width: 67% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-35 {
+  width: 35% !important;
+}
+
+.w-85 {
+  width: 85% !important;
+}
+
+.center-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.not-allowed {
+  cursor: not-allowed !important;
+  // cursor: url("assets/images/prohibition.svg") 2 2, pointer;
+}
+
+.validate-false {
+  border: 0.5px solid rgb(255, 0, 0) !important;
+}
+
+.overlay-popup {
+  background: rgba(0, 0, 0, 0.288);
+}
+
+.shadow-box {
+  -moz-box-shadow: 0 2px 12px 0 #dfe3eb;
+  -webkit-box-shadow: 0 2px 12px 0 #dfe3eb;
+  box-shadow: 0 2px 12px 0 #dfe3eb;
+}
+
+.abort-bg {
+  // background-color: #9c9c9c !important;
+
+  // &:hover {
+  background-color: #d2d2d2 !important; // }
+}
+
+.abort-bg:focus {
+  outline-color: #d2d2d2;
+}
+
+.select-control {
+  background-color: #f4f8f7;
+  border: 0.5px solid #ffffff;
+  padding: 0.61rem 1.125rem;
+  width: 12rem;
+  outline: none;
+  cursor: pointer;
+  height: 36px;
+}
+
+select {
+  background: url("assets/images/sort-down.svg") no-repeat right center;
+  background-size: 25px 10px;
+  -webkit-appearance: none;
+}
+
+select:focus {
+  border-color: #008a77;
+}
+
+.green-bg {
+  background-color: #008a77;
+  color: #ffffff;
+}
+
+// Form
+.invalid-feedback {
+  display: block !important;
+  font-size: 90%;
+}
+
+textarea {
+  border: none;
+  outline: none;
+  background-color: #f4f8f7;
+  padding: 0.5rem;
+}
+
+textarea:focus {
+  color: black;
+  outline: none;
+  border: 0.5px solid #008a77;
+}
+
+.zui-table {
+  thead {
+    background-color: #82c95b;
+    color: #ffffff;
+
+    tr {
+      height: 3.5rem;
+    }
+  }
+}
+
+.icon-back {
+  padding-bottom: 7px;
+}
+
+input.placeholder-icon {
+  font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+}
+
+// Check box-radio
+.option-user__checkbox {
+
+  [type="radio"]:checked,
+  [type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+  }
+
+  [type="radio"]:checked+label,
+  [type="radio"]:not(:checked)+label {
+    position: relative;
+    padding-left: 2rem;
+    cursor: pointer;
+    display: inline-block;
+    color: #666;
+  }
+
+  [type="radio"]:checked+label:before,
+  [type="radio"]:not(:checked)+label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+  }
+
+  [type="radio"]:checked+label:after,
+  [type="radio"]:not(:checked)+label:after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    background-color: #04bda3;
+    border: 4px solid #007766;
+  }
+
+  [type="radio"]:not(:checked)+label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  [type="radio"]:checked+label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+input:disabled {
+  color: #808284 !important;
+}
+
+.input-height--36 {
+  height: 36px;
+}
+
+.action-detail {
+  width: 70px;
+  padding: 0.3rem 0;
+  border-radius: 15px;
+  margin-left: .5rem;
+  color: #ffffff;
+  background-color: #007bff;
+  font-size: 90%;
+}
+
+#toasty .toast {
+  width: auto !important;
+}
+
+
+// ==== opacity_none
+.opacity-empty {
+  opacity: 0;
+}

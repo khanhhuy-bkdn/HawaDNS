@@ -1,0 +1,222 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="content-popup">
+      <div class="d-flex">
+        <div class="text-uppercase font-size--20px center-parent">chi tiết thông tin đóng góp</div>
+        <div class="d-flex center-parent pl-2">
+          <ng-container *ngIf="itemContactList?.status?.key === 'ChuaDuyet'">
+            <div class="arrow-left-unapproved center-parent"></div>
+            <div class="unapproved text-uppercase center-parent">chưa duyệt</div>
+          </ng-container>
+          <ng-container *ngIf="itemContactList?.status?.key === 'DangXacMinh'">
+            <div class="arrow-left-not-verified center-parent"></div>
+            <div class="not-verified text-uppercase center-parent">đang xác minh</div>
+          </ng-container>
+          <ng-container *ngIf="itemContactList?.status?.key === 'DaDuyet'">
+            <div class="arrow-left-approved center-parent"></div>
+            <div class="approved text-uppercase center-parent">đã duyệt</div>
+          </ng-container>
+        </div>
+
+        <div class="d-flex flex-wrap flex-row-reverse mt-2 ml-auto mr-1" *ngIf="position === 'admin' && itemContactList?.status?.key !== 'HuyBo'">
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="itemContactList?.status?.key === 'ChuaDuyet'"
+            (click)="editStatusContact('DangXacMinh')">bắt đầu xác minh</button>
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="itemContactList?.status?.key === 'ChuaDuyet' || itemContactList?.status?.key === 'DangXacMinh'"
+            (click)="editStatusContact('DaDuyet')">duyệt</button>
+          <button nbButton type="button" class="cursor-pointer text-uppercase" *ngIf="itemContactList?.status?.key === 'ChuaDuyet' || itemContactList?.status?.key === 'DangXacMinh' || itemContactList?.status?.key === 'DaDuyet'"
+            (click)="editStatusContact('HuyBo')">hủy bỏ</button>
+        </div>
+
+      </div>
+      <div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50 text-uppercase contac-header d-flex text-right label">
+            <span class="w-30 py-1 px-2 field-name">thông tin chung</span>
+          </div>
+          <div class="w-50 text-uppercase contac-header d-flex text-right label">
+            <span class="w-30 py-1 px-2 field-name">địa chỉ liên hệ</span>
+          </div>
+        </div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Tiêu đề đóng góp:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.titleContribute}}</div>
+              </span>
+            </div>
+            <div class="d-flex">
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right">-Tỉnh/Thành phố:</span>
+            <span class="w-70">
+              <div class="py-1">{{contacDetailItem?.stateProvince?.text}}</div>
+            </span>
+          </div>
+        </div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Đối tượng liên hệ:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.contactType?.text}}</div>
+              </span>
+            </div>
+            <div class="d-flex">
+              <span class="w-30">
+              </span>
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right">-Quận/Huyện:</span>
+            <span class="w-70">
+              <div class="py-1">{{contacDetailItem?.district?.text}}</div>
+            </span>
+          </div>
+        </div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Tên chủ thể:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.contactName}}</div>
+              </span>
+            </div>
+            <div class="d-flex">
+              <span class="w-30">
+              </span>
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right">-Phường/Xã:</span>
+            <span class="w-70">
+              <div class="py-1">{{contacDetailItem?.commune?.text}}</div>
+            </span>
+          </div>
+        </div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Tên viết tắt:</span>
+              <span class="w-70 d-flex">
+                <div class="py-1">{{contacDetailItem?.acronymName}}</div>
+              </span>
+            </div>
+            <div class="d-flex">
+              <span class="w-30">
+              </span>
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right">-Số nhà, tên đường:</span>
+            <span class="w-70">
+              <div class="py-1">{{contacDetailItem?.houseNumber}}</div>
+            </span>
+          </div>
+        </div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right">-Địa chỉ:</span>
+            <span class="w-70">
+              <div class="py-1">{{contacDetailItem?.address}}</div>
+            </span>
+          </div>
+        </div>
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name text-uppercase">Thông tin liên hệ:</span>
+              <span class="w-70">
+              </span>
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right text-uppercase">ghi chú + đính kèm</span>
+            <span class="w-70">
+            </span>
+          </div>
+        </div>
+
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Người liên hệ:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.userContact}}</div>
+              </span>
+            </div>
+            <div class="d-flex mt-2">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Điện thoại 1:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.phone1}}</div>
+              </span>
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right" style="vertical-align: top;">-Ghi chú thêm:</span>
+            <span class="w-70">
+              <div class="py-1">{{contacDetailItem?.houseNumber}}</div>
+            </span>
+          </div>
+        </div>
+
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Điện thoại 2:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.phone2}}</div>
+              </span>
+            </div>
+            <div class="d-flex mt-2">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Email:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.email}}</div>
+              </span>
+            </div>
+          </div>
+          <div class="w-50 contac-header d-flex label">
+            <span class="w-30 py-1 px-2 field-name text-right" style="vertical-align: top;">Ảnh đính kèm:</span>
+            <span class="w-70">
+              <div class="image-demo-img">
+                <div class="display-img" *ngFor="let url of imageUrls">
+                  <img [src]="url.largeSizeUrl">
+                </div>
+              </div>
+            </span>
+          </div>
+        </div>
+
+        <div class="w-100 d-flex m-2">
+          <div class="w-50">
+            <div class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name">Website:</span>
+              <span class="w-70">
+                <div class="py-1">{{contacDetailItem?.website}}</div>
+              </span>
+            </div>
+            <div class="d-flex">
+              <span class="w-30">
+              </span>
+            </div>
+          </div>
+          <div class="w-50">
+            <span class="d-flex">
+              <span class="w-30 text-right label p-1 py-1 px-2 align-top field-name"></span>
+              <span class="w-70">
+                <span class="font-weight-bold">
+                  {{detailsofTreeSpecies?.stateProvince?.text}}, {{detailsofTreeSpecies?.district?.text}}, {{detailsofTreeSpecies?.commune?.text}}
+                </span>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

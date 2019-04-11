@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <div *ngIf="disabledRate" class="disabled-rate"></div>
+  <div class="rating-star">
+    <ng-container *ngFor="let star of lengthOfRateBar">
+      <input [(ngModel)]="value" (ngModelChange)="choose($event)" type="radio" id="{{name}}rate{{(star+1)*step}}" name="{{name}}rating"
+        [value]="(star+1)*step" [checked]="value == ((star+1)*step) " />
+      <label [class.full]="star%2 == 0 && step == 1" [class.half]="star%2 !== 0 && step == 1" [class.half]="star%2 == 0 && step == 0.5"
+        [class.full]="star%2 !== 0 && step == 0.5" for="{{name}}rate{{(star+1)*step}}" title="{{(star+1)*step}} star"></label>
+    </ng-container>
+  </div>
+</div>

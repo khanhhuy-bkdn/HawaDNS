@@ -1,0 +1,170 @@
+// @nebular theming framework
+@import '~@nebular/theme/styles/theming';
+// @nebular out of the box themes
+@import '~@nebular/theme/styles/themes';
+
+// which themes you what to enable (empty to enable all)
+$nb-enabled-themes: (default, cosmic, corporate);
+
+$nb-themes: nb-register-theme((
+ // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Roboto,
+  // font-secondary: Exo,
+
+  switcher-background: #ebeff5,
+  switcher-background-percentage: 50%,
+  drops-icon-line-gadient: -webkit-linear-gradient(#01dbb5, #0bbb79),
+
+  list-item-border-width: 1px,
+
+  slide-out-container-width: 30%,
+  slide-out-background: linear-gradient(270deg, #f7fafb 0%, #ecf2f5 100%),
+  slide-out-shadow-color: 0 4px 14px 0 #a2d2c8,
+  slide-out-shadow-color-rtl: 0 4px 14px 0 #a2d2c8,
+
+  chart-panel-summary-box-shadow: none,
+  chart-panel-summary-background-color: #ecf2f5,
+  chart-panel-summary-border-color: #ebeff1,
+  chart-panel-summary-border-width: 1px,
+
+  ecommerce-card-border-width: 1px,
+
+  progress-bar-background: linear-gradient(90deg, #3edd81 0%, #3bddaf 100%),
+
+  // ================== Start Custom style
+  // layout
+  layout-fg: #1A2936, 
+  layout-bg: #F5F6F7,
+  layout-font-size: 12px,
+  // sidebar
+  sidebar-width: 16rem,
+  // // footer
+  footer-bg: #F5F6F7,
+  footer-shadow: 0 2px 0 0 #dfe3eb,
+  // font-weight
+  font-weight-thin: 200,
+  font-weight-light: 300,
+  font-weight-normal: 400,
+  font-weight-bolder: 500,
+  font-weight-bold: 600,
+  font-weight-ultra-bold: 800,
+  // button
+  // info
+  btn-info-bg: #F4F8F7,
+  // primary
+  btn-primary-bg: #008A77,
+  btn-border-radius: 0rem,
+
+  btn-padding-y-lg: 0.5rem, 
+  btn-padding-y-md: 0.5rem,
+  btn-padding-y-sm: 0.5rem,
+  btn-padding-y-xs: 0.5rem,
+  btn-padding-x-lg: 2.55rem,
+  btn-padding-x-md: 2.55rem,
+  btn-padding-x-sm: 2.55rem,
+  btn-padding-x-xs: 2.55rem,
+  // input
+  form-control-placeholder-color: #A9A9A9,
+  form-control-bg: #F4F8F7,
+  form-control-focus-bg: #F4F8F7,
+  form-control-selected-border-color: #008A77,
+  form-control-border-width: 0.5px,
+  
+  form-control-font-size: 12px,
+  form-control-placeholder-font-size: 12px,
+  form-control-border-radius: 0rem,
+  form-control-padding: 0.85rem 1.125rem,
+  form-control-border-color: white,
+  // select
+  select-bg: #F4F8F7,
+  select-border-width: 0rem,
+  select-checkmark-color: #F4F8F7,
+  // ================== End Custom style
+), default, default);
+@media only screen and (max-width: 1270px) {
+  $nb-themes: nb-register-theme((
+    // input
+    form-control-font-size: 11px,
+    // button
+    btn-font-size-lg: 11px,
+    btn-font-size-md: 11px,
+    btn-font-size-sm: 11px,
+    btn-font-size-xs: 11px,
+    ), default, default);
+}
+@media only screen and (max-width: 1900px) {
+  $nb-themes: nb-register-theme((
+    // input
+    form-control-font-size: 11px,
+    // button
+    btn-font-size-lg: 11px,
+    btn-font-size-md: 11px,
+    btn-font-size-sm: 11px,
+    btn-font-size-xs: 11px,
+    ), default, default);
+}
+$nb-themes: nb-register-theme((
+  // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Exo,
+
+  switcher-background: #4e41a5,
+  switcher-background-percentage: 14%,
+  drops-icon-line-gadient: -webkit-linear-gradient(#a258fe, #7958fa),
+
+  list-item-border-width: 1px,
+
+  slide-out-container-width: 30%,
+  slide-out-background: radial-gradient(circle, #302c6e 0%, #423f8c 100%),
+  slide-out-shadow-color: 2px 0 3px rgba(19, 19, 94, 0.9),
+  slide-out-shadow-color-rtl: -2px 0 3px rgba(19, 19, 94, 0.9),
+
+  chart-panel-summary-box-shadow: none,
+  chart-panel-summary-background-color: rgba(0, 0, 0, 0.1),
+  chart-panel-summary-border-color: #332e73,
+  chart-panel-summary-border-width: 1px,
+
+  ecommerce-card-border-width: 1px,
+
+  progress-bar-background: linear-gradient(90deg, #00c7c7 0%, #00d977 100%),
+), cosmic, cosmic);
+
+$nb-themes: nb-register-theme((
+  // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+
+  font-main: Roboto,
+  font-secondary: Exo,
+
+  switcher-background: #2b2d34,
+  switcher-background-percentage: 14%,
+  drops-icon-line-gadient: -webkit-linear-gradient(#e9e8eb, #a7a2be),
+
+  list-item-border-width: 1px,
+
+  slide-out-container-width: 30%,
+  slide-out-background: 	linear-gradient(270deg, #f7fafb 0%, #ecf2f5 100%),
+  slide-out-shadow-color: 0 4px 14px 0 #a2d2c8,
+  slide-out-shadow-color-rtl: 0 4px 14px 0 #a2d2c8,
+
+  chart-panel-summary-box-shadow: none,
+  chart-panel-summary-background-color: #f7fafb,
+  chart-panel-summary-border-color: #ebeff1,
+  chart-panel-summary-border-width: 1px,
+
+  ecommerce-card-border-width: 1px,
+
+  progress-bar-background: linear-gradient(90deg, #ff9f6f 0%, #ff8b97 100%),
+
+), corporate, corporate);

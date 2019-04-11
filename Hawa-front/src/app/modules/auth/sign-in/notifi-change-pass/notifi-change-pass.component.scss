@@ -1,0 +1,61 @@
+.set-height {
+    min-height: 85vh;
+  
+    .sign-up {
+      position: relative;
+      background-color: white;
+      border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  
+      .sign-up-content {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        position: relative;
+  
+        .logo-icon {
+          position: absolute;
+          top: 0;
+          left: 0;
+  
+          img {
+            width: 190px;
+          }
+        }
+  
+        .title-header {
+          font-size: 140%;
+        }
+  
+        .content-notifi {
+          font-size: 110%;
+        }
+      }
+  
+      .bot--center-content {
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 0.5rem;
+        cursor: pointer;
+        text-decoration: underline;
+        padding-right: 4rem;
+      }
+  
+      .but-cus {
+        background-color: #008A77;
+        border-color: #008A77;
+      }
+  
+    }
+  
+    .pointer {
+      cursor: pointer;
+    }
+  }
+  
+  .outline-none{
+    outline: none;
+  }
+  button{
+    width: 300px !important;
+    padding: 0 !important;
+  }

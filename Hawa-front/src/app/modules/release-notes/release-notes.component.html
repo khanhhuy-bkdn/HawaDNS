@@ -1,0 +1,39 @@
+<div class="container-release py-5 bg-black">
+  <div class="text-center">
+    <img src="assets/images/logo-hawa-color.png" alt="">
+  </div>
+  <div class="container-new">
+    <div class="mx-auto">
+      <div class="p-3 mb-4 border-bottom border-translucent-white">
+        <div class="f1-light text-center font-size--25px">
+          Release notes for Hawa DDS
+        </div>
+      </div>
+      <div class="position-relative">
+        <div class="timeline-decorator">
+          <section class="container-new py-6 px-3 text-left" *ngFor="let itemVersion of listReleaseNotes">
+            <header class="d-flex flex-items-center mb-3">
+              <div class="header-index mt-2">
+                <span class="bg-purple center-parent py-1 px-4 header-name">{{itemVersion?.version}}</span>
+              </div>
+              <div>
+                <div class="pl-3 pb-2 font-size--20px">{{itemVersion?.date}}</div>
+                <div class="pl-3 pt-2" *ngFor="let itemCommit of (itemVersion.note || [])">
+                  <div class="d-flex">
+                    <span [class.bg-new]="itemCommit?.status === 'new'" [class.bg-fixed]="itemCommit?.status === 'fixed'" [class.bg-change]="itemCommit?.status === 'change'"
+                      class="center-parent px-4 header-name text-uppercase font-size--10px status-width">{{itemCommit?.status}}</span>&nbsp;
+                    <span>{{itemCommit?.content}}</span>&nbsp;
+                    <!-- <span>-</span>&nbsp; -->
+                    <!-- <span class="color-purple">#{{itemCommit?.numberCommit}}</span> -->
+                  </div>
+                </div>
+              </div>
+            </header>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<nb-layout></nb-layout>

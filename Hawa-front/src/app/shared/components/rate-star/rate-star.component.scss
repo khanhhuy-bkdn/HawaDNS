@@ -1,0 +1,55 @@
+.wrapper {
+  display: inline-block;
+  position: relative;
+
+  .disabled-rate {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 10;
+  }
+
+  .rating-star {
+    position: relative;
+
+    label {
+      width: unset !important;
+      min-width: unset !important;
+      margin-bottom: unset !important;
+      color: #ddd;
+      float: right;
+
+      &::before {
+        margin: 2px;
+        font-size: 1.25em;
+        font-family: FontAwesome;
+        display: inline-block;
+        content: "\f005";
+      }
+    }
+
+    input {
+      display: none;
+    }
+
+    &>.half:before {
+      content: "\f089";
+      position: absolute;
+    }
+
+    &>input:checked~label,
+    &:not(:checked)>label:hover,
+    &:not(:checked)>label:hover~label {
+      color: #FFD700;
+    }
+
+    &>input:checked+label:hover,
+    &>input:checked~label:hover,
+    &>label:hover~input:checked~label,
+    &>input:checked~label:hover~label {
+      color: #FFED85;
+    }
+  }
+}

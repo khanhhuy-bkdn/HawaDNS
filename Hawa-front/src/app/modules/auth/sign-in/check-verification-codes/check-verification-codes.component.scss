@@ -1,0 +1,68 @@
+.set-height{
+    min-height: 85vh;
+    .sign-up{
+        position: relative;
+        background-color: white;
+        border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+        .sign-up-content{
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            position: relative;
+            .logo-icon {
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            .marlef{
+                margin-left: 25%;
+            }
+            .title-header{
+                font-size: 140%;
+            }
+            .content-notifi{
+                font-size: 110%;
+            }
+            input{
+                background-color: #F4F8F7 !important;
+            }
+            .input-user{
+                position: relative;
+                &::before {
+                    font-family: 'FontAwesome';
+                    content: "\f121";
+                    position: absolute;
+                    top: 28%;
+                    left: 10px;
+                    color: #cccccc;
+                  }
+                .input-text{
+                    padding-left: 2rem;
+                    display: block;
+                }
+            }
+        }
+        .bot--center-content{
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .but-cus{
+            background-color: #008A77;
+            border-color: #008A77;
+        }
+        .but-continue--font{
+            font-size: 120%;
+        }
+        .but-back--font{
+            background-color: #BBBBBB;
+            border-color: #BBBBBB;
+        }
+    }
+    .pointer{
+        cursor: pointer;
+    }
+}
+.go-home__color{
+    outline: none
+}

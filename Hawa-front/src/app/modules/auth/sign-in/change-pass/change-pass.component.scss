@@ -1,0 +1,95 @@
+.set-height{
+    min-height: 85vh;
+    .sign-up{
+        position: relative;
+        background-color: white;
+        border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+        .sign-up-content{
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            position: relative;
+            .logo-icon {
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            .marlef{
+                margin-left: 25%;
+            }
+            .name-field{
+                width: 13.5rem;
+            }
+            .title-header{
+                font-size: 140%;
+            }
+            .content-notifi{
+                font-size: 110%;
+            }
+            .input-user{
+                position: relative;
+                .icon-user{
+                    position: absolute;
+                    top: 0.5rem;
+                    left: 0.55rem;
+                }
+                .icon-lock{
+                    position: absolute;
+                    top: 0.5rem;
+                    zoom: 0.8;
+                    left: 0.75rem
+                }
+            }
+        }
+        .bot--center-content{
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 0.5rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding-right: 4rem;
+        }
+        .but-cus{
+            background-color: #008A77;
+            border-color: #008A77;
+        }
+        .but-continue--font{
+            font-size: 120%;
+        }
+        .but-back--font{
+            font-size: 120%;
+            background-color: #BBBBBB;
+            border-color: #BBBBBB;
+        }
+    }
+    .pointer{
+        cursor: pointer;
+    }
+}
+.go-home__color{
+    outline: none
+}
+
+.but-cusutomer{
+    width: 400px !important;
+    padding: 0 !important;
+}
+
+.input-lock {
+    position: relative;
+
+    &::before {
+      font-family: 'FontAwesome';
+      content: "\f023";
+      position: absolute;
+      top: 25%;
+      left: 13px;
+      color: #cccccc;
+      font-size: 1.1rem;
+    }
+}
+
+.input-text{
+    display: block;
+    padding-left: 2rem !important;
+}

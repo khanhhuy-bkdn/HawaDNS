@@ -1,0 +1,4 @@
+<div *ngIf="message" class="hideMe" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
+  <a class="close" (click) = "close()" aria-label="close"><i class="fa fa-times" aria-hidden="true"></i></a>
+  {{message.text}}
+</div>

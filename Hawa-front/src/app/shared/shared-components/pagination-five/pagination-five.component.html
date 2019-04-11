@@ -1,0 +1,52 @@
+<div *ngIf="pagedResult && pagedResult.pageCount" class="mt-4 d-flex flex-row justify-content-end">
+    <div class="mr-auto">
+        <div>
+            Hiển thị {{(pagedResult.currentPage * pagedResult.pageSize) + 1}} - {{(pagedResult.currentPage * pagedResult.pageSize) +
+            pagedResult.items.length}} của {{pagedResult.total}}
+        </div>
+        <div class="font-size--10px">
+            (Show {{(pagedResult.currentPage * pagedResult.pageSize) + 1}} - {{(pagedResult.currentPage * pagedResult.pageSize) + pagedResult.items.length}}
+            of {{pagedResult.total}})
+        </div>
+
+    </div>
+
+    <!-- <div class="mr-5">
+        <label>Số dòng/trang:
+            <select (change)="onItemsPerPageChange($event.target.value)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </label>
+    </div> -->
+
+    <nav *ngIf="pagedResult">
+        <ul class="pagination justify-content-end">
+            <li class="page-item mr-1" [class.disabled]="pagedResult.currentPage == 0">
+                <a (click)="getPage('0')" class="page-link">
+                    <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="page-item mr-3" [class.disabled]="pagedResult.currentPage == 0">
+                <a class="page-link" (click)="getPage(pagedResult.currentPage - 1)">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="page-item" *ngFor="let page of  pages">
+                <a class="page-link" (click)="getPage(page.value-1)" [class.current]="pagedResult.currentPage == page.value-1">{{page.label}}</a>
+            </li>
+            <li class="page-item ml-3" [class.disabled]="(pagedResult.currentPage+1) == pagedResult.pageCount">
+                <a (click)="getPage(pagedResult.currentPage + 1)" class="page-link">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+            <li class="page-item ml-1" [class.disabled]="(pagedResult.currentPage+1) == pagedResult.pageCount">
+                <a (click)="getPage(pagedResult.pageCount - 1)" class="page-link">
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

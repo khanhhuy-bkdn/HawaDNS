@@ -1,0 +1,12 @@
+.noUi-handle:before{
+    content: none;
+  }
+  .noUi-handle:after{
+    content: none;
+  }
+  .noUi-horizontal .noUi-handle{
+    cursor: pointer;
+  }
+  .noUi-horizontal .noUi-handle:focus{
+    outline: none;
+  }

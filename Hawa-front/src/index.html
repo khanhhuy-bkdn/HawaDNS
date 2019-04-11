@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Hawa DDS</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- <link rel="stylesheet" href="styles.c1edcf9bf0ba5865eb09.css"> -->
+</head>
+
+<body>
+  <ngx-app></ngx-app>
+  <style>
+    .lds-ring-spin {
+      /* background-image: url('./assets/images/backGround-login.jpg'); */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-blend-mode: color-dodge;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #008a77;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+
+    .loading-pad {
+      padding-top: 100px;
+      text-align: center;
+    }
+  </style>
+
+  <div id="nb-global-spinner" class="lds-ring-spin">
+    <div>
+      <div>
+        <img src="assets/images/logo-hawa.png" alt="Hawa DDS" width="200px" />
+      </div>
+      <div class="loading-pad">
+        <img src="assets/images/loader_beige.gif" alt="Hawa DDS" height="15px" />
+      </div>
+    </div>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtQZEu3a3_EcK7NDv_a4x3qMteGQxcp3Q"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132664380-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-132664380-1');
+  </script>
+</body>
+
+
+</html>

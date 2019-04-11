@@ -1,0 +1,179 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div>
+      <div class="text-uppercase w-100">
+        <div class="font-size--20px">
+          thông tin liên hệ gián tiếp
+        </div>
+        <div class="font-size--18px title-header__transalte__mar">
+          (indirect contact information)
+        </div>
+      </div>
+      <div class="d-flex font-weight-bold mt-1">
+        {{detailsofTreeSpecies?.stateProvince?.text}} | {{detailsofTreeSpecies?.district?.text}} | {{detailsofTreeSpecies?.commune?.text}}
+      </div>
+    </div>
+    <div class="d-flex mt-3">
+      <div>
+
+        <div class="d-flex">
+          <div class="font-weight-bold">Hạt kiểm lâm (Local forest protection unit):</div>&nbsp;
+          <div *ngIf="forestProtectionDepartment">
+            <span>{{forestProtectionDepartment?.name}}</span>
+            <!-- <span *ngIf="(forestProtectionDepartment && forestProtectionDepartment.name && ((forestProtectionDepartment.district && forestProtectionDepartment.district.text) || (forestProtectionDepartment.stateProvince && forestProtectionDepartment.stateProvince.text)))
+            || (forestProtectionDepartment.name && forestProtectionDepartment.phone)">&nbsp;-&nbsp;</span>
+            <span>{{forestProtectionDepartment?.district?.text}}</span>
+            <span *ngIf="forestProtectionDepartment && (forestProtectionDepartment.district && forestProtectionDepartment.district.text) && (forestProtectionDepartment.stateProvince && forestProtectionDepartment.stateProvince.text)">,&nbsp;</span>
+            <span>{{forestProtectionDepartment?.stateProvince?.text}}</span>
+            <span *ngIf="forestProtectionDepartment && ((forestProtectionDepartment.district && forestProtectionDepartment.district.text) || (forestProtectionDepartment.stateProvince && forestProtectionDepartment.stateProvince.text))
+            && forestProtectionDepartment.phone">&nbsp;-&nbsp;</span> -->
+
+            <span *ngIf="forestProtectionDepartment && forestProtectionDepartment.name && forestProtectionDepartment.phone">&nbsp;-&nbsp;</span>
+            <span>{{forestProtectionDepartment?.phone}}</span>
+          </div>
+        </div>
+        <!-- <div class="d-flex">
+          <div class="font-weight-bold">UBND (Communal people committee):</div>&nbsp;
+          <div>
+            <span>{{forestProtectionDepartment?.text}}</span>
+          </div>
+        </div> -->
+      </div>
+      <div class="ml-auto d-flex align-items-end">
+        <!-- <button nbButton class="text-uppercase cursor-pointer mt-3" (click)="contributeInformation('create', null)">đóng góp thêm thông tin/contribute more information</button> -->
+
+        <div class="center-parent">
+          <div class="button-div-mul-lines text-uppercase text-center" (click)="contributeInformation('create', null)">
+            <div class="font-size--13px">đóng góp thêm thông tin</div>
+            <div class="font-size--11px">(Contribute more information)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table class="w-100 mt-3">
+      <thead>
+        <tr>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Tên chủ thể</div>
+                <div class="font-size--10px">(Entity name)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Người liên hệ</div>
+                <div class="font-size--10px">(Contact person)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Điện thoại 1</div>
+                <div class="font-size--10px">(Tel/Cell)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <span class="pr-2">Email</span>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Người đóng góp</div>
+                <div class="font-size--10px">(Contributed by)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Ngày đóng góp</div>
+                <div class="font-size--10px">(Contributed date)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Thông tin đánh giá</div>
+                <div class="font-size--10px">(Feed back)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="d-flex justify-content-start">
+              <div class="pr-2">
+                <div>Trạng thái</div>
+                <div class="font-size--10px">(Status)</div>
+              </div>
+            </span>
+          </th>
+          <th>
+            <span class="text-center">
+              <div class="pr-2">
+                <div>Thao tác</div>
+                <div class="font-size--10px">(Action)</div>
+              </div>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of pagedResult.items; let i = index">
+          <td [title]="item?.contactName ? item?.contactName : ''">{{item?.contactName}}</td>
+          <td [title]="item?.userContact ? item?.userContact : ''">{{item?.userContact}}</td>
+          <td [title]="item?.phone1 ? item?.phone1 : ''">{{item?.phone1}}</td>
+          <td>
+            <a href="mailto:{{ item.email }}?Subject=HAWA%20DDS" target="_blank" [title]="item?.email ? 'Gửi mail' : ''">{{item?.email}}</a>
+          </td>
+          <td [title]="item?.contributor?.organizationName ? item?.contributor?.organizationName : ''">{{item?.contributor?.organizationName}}</td>
+          <td [title]="item?.contributeDate ? (item?.contributeDate*1000 | date:'dd/MM/yyyy': '+0000') : ''">{{item?.contributeDate*1000 | date:'dd/MM/yyyy': '+0000'}}</td>
+          <td>
+            <div class="d-flex text-right__float">
+              <div>
+                <i class="fa fa-star star-high"></i>
+              </div>
+              <div class="ml-1" style="width: 20px" [title]="item?.averageRating ? item?.averageRating : '0'">{{item?.averageRating ? item?.averageRating : '0'}}</div>
+              <div class="manipulation ml-1" [class.opacity-none]="contributorID === item?.contributor?.id" [class.cursor-pointer]="contributorID !== item?.contributor?.id"
+                (click)="evaluateContact(item)">
+                Đánh giá
+              </div>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="item?.status?.key === 'ChuaDuyet'" class="unapproved" [title]="item?.status.text ? item?.status.text : ''">
+              {{item?.status.text}}
+            </div>
+            <div *ngIf="item?.status?.key === 'DangXacMinh'" class="not-verified" [title]="item?.status.text ? item?.status.text : ''">
+              {{item?.status.text}}
+            </div>
+            <div *ngIf="item?.status?.key === 'DaDuyet'" class="approved" [title]="item?.status.text ? item?.status.text : ''">
+              {{item?.status.text}}
+            </div>
+          </td>
+          <td>
+            <div class="d-flex justify-content-between">
+              <span title="Xem chi tiết">
+                <i class="fa fa-eye text-warning cursor-pointer" aria-hidden="true" (click)="contributeInformation('view', item)"></i>
+              </span>
+              <span title="Xóa liên hệ" class="table-action__delete" (click)="deleteContribute(item?.id)" *ngIf="admin">
+                <i class="fa fa-trash-o cursor-pointer" aria-hidden="true"></i>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="pagedResult && (pagedResult.items || []).length === 0" class="text-center">Không có dữ liệu</div>
+    <pagination-five [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></pagination-five>
+  </div>
+</div>

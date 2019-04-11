@@ -1,0 +1,90 @@
+<form action="" [formGroup]="changePassForm" *ngIf="statusCallAPI === 'success'">
+  <div class="w-100 d-flex set-height">
+    <div class="w-100 sign-up">
+      <div class="sign-up-content px-5 w-100">
+        <div class="text-right">
+          <img class="cursor-pointer go-home__color" src="assets/images/icon-go-home.png" width="40px" [routerLink]="['../../../pages']" title="Trở về trang chủ">
+        </div>
+        <div class="logo-icon pl-5 pt-3">
+          <img src="assets/images/hawa_text.png" width="190px" alt="Hawa DDS" />
+        </div>
+        <div class="w-100 font-weight-bold">
+          <div class="text-uppercase w-100 text-center title-header">thay đổi mật khẩu</div>
+        </div>
+        <div class="marlef w-50 mt-1">
+          <app-list-errors *ngIf="apiErrorCode && apiErrorCode !== ''" [errorCode]="apiErrorCode"></app-list-errors>
+        </div>
+        <div class="w-100">
+          <div class="w-50 marlef mt-3">
+            <div class="d-flex">
+              <!-- <span class="text-right label required p-1 py-1 px-2 align-top name-field">Mật khẩu mới:</span> -->
+              <span class="w-100 input-lock">
+                <input nbInput placeholder="Mật khẩu" tabindex="5" type="password" class="w-100 input-text" formControlName="password" [ngClass]="{'validate-false': formErrors.password}">
+              </span>
+            </div>
+            <div class="d-flex">
+              <span class="w-30"></span>
+              <span class="w-70">
+                <div class="invalid-feedback" *ngIf="formErrors.password">
+                  {{formErrors.password}}
+                </div>
+              </span>
+            </div>
+          </div>
+          <div class="w-50 marlef mt-3">
+            <div class="d-flex">
+              <!-- <span class="text-right label required p-1 py-1 px-2 align-top name-field">Nhập lại mật khẩu:</span> -->
+              <span class="w-100 input-lock">
+                <input nbInput placeholder="Nhập lại mật khẩu" tabindex="5" type="password" class="w-100 input-text" formControlName="rePassword"
+                  [ngClass]="{'validate-false': formErrors.rePassword}">
+              </span>
+            </div>
+            <div class="d-flex">
+              <span class="w-30"></span>
+              <span class="w-70">
+                <div class="invalid-feedback" *ngIf="formErrors.rePassword">
+                  {{formErrors.rePassword}}
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="w-50 text-center pt-3 marlef d-flex">
+          <button nbButton class="text-uppercase w-100 cursor-pointer" (click)="submitForm()">Đồng ý</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<div class="w-100 d-flex set-height" *ngIf="statusCallAPI === 'tokenExpireException'">
+  <div class="w-100 sign-up">
+    <div class="sign-up-content px-5 pt-5">
+      <div class="w-100 font-weight-bold">
+        <div class="text-uppercase w-100 text-center title-header font-size--18px">quên mật khẩu</div>
+      </div>
+      <div class="logo-icon p-3">
+        <img src="assets/images/hawa_text.png" alt="Hawa DDS" />
+      </div>
+      <div class="text-center w-100 py-4">
+        <img tabindex="11" src="assets/images/icon_expire.png" alt="" width="80px">
+      </div>
+      <div class="text-center py-4">
+        <div>
+          Đường dẫn xác thực email của bạn đã hết hạn.
+        </div>
+        <div>
+          Bạn vui lòng yêu cầu gửi lại đường dẫn đặt lại mật khẩu đến địa chỉ email liên kết với tài khoản của bạn để có thể đặt lại
+          mật khẩu.
+        </div>
+      </div>
+      <div class="text-center pt-3">
+        <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus mt-3 but-continue--font cursor-pointer but-cusutomer mr-2"
+          tabindex="10" [routerLink]="['/pages/infor-search']">trở về trang chủ</button>
+        <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus mt-3 but-continue--font cursor-pointer but-cusutomer ml-2"
+          tabindex="10" (click)="resendEmail()">Yêu cầu gửi lại đường dẫn đặt mật khẩu</button>
+      </div>
+    </div>
+  </div>
+</div>

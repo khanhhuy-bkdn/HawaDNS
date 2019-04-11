@@ -1,0 +1,131 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+
+    <div class="popup-content">
+      <div class="text-uppercase font-weight-bold font-size--20px d-flex w-100">đánh giá liên hệ gián tiếp</div>
+
+      <div class="pt-3 bulkhead-bottom"></div>
+      <div class="w-100 d-flex">
+        <div class="w-30 text-center bulkhead-right py-3">
+          <div class="font-size--18px">Đánh Giá Trung Bình</div>
+          <div class="font-size--30px evaluate">{{averageRating}}/5</div>
+          <div class="d-flex center-parent mb-3 disabled-rating">
+            <rate-star [change]="change" [disabledRate]="true" [name]="'percent'" [score]="5" [step]="0.5" [color]="" [default]="averageRatingRounding"></rate-star>
+          </div>
+          <div class="mb-2">
+            ({{pagedResult?.extraData?.reviewCount}} nhận xét)
+          </div>
+        </div>
+        <div class="w-40 text-center bulkhead-right py-3">
+          <ng-container *ngFor="let item of aggregateOfRatings; let i = index">
+            <div class="d-flex margin-left--10">
+              <div>{{item.rating}}</div>
+              <div class="pl-1">
+                <i class="fa fa-star star-high icon-start"></i>
+              </div>
+              <div class="pl-1 center-parent">
+                <div>
+                  <nb-progress-bar class="progress w-100" [value]="item.percent" status="success" size="xs"></nb-progress-bar>
+                </div>
+              </div>
+              <div class="pl-1">
+                <div>
+                  {{item.percent}} %
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="w-30 text-center py-3 center-parent">
+          <div *ngIf="pagedResult && pagedResult.extraData && pagedResult.extraData.isUserReview">
+            <div>Bạn đã nhận xét liên hệ này rồi</div>
+            <div class="font-size--10px">
+              (You have already commented on this contact)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bulkhead-bottom"></div>
+      <div class="rating-form" *ngIf="pagedResult && pagedResult.extraData && (pagedResult.extraData.isUserReview === false)">
+        <div class="pt-3" >
+          <popup-error [change]="changeValuePopupError" [errorCode]="apiErrorCode"></popup-error>
+          <div class="d-flex">
+            <div class="pt-1">
+              1. Đánh giá của bạn về liên hệ này (Nhấn chọn số sao đánh giá):
+            </div>
+            <div id="wrapper-clone-node">
+              <div class="d-flex clone-node-rate">
+                <rate-star class="ml-2" [minor]="minor" [name]="'evaluateCreate'" [score]="5" [step]="1" [color]="" [default]="0" (newvalue)="getRateValue($event)"></rate-star>
+                <span class="notRated p-1 ml-1 error-color" *ngIf="errorRating">
+                  <i class="fa fa-long-arrow-left" aria-hidden="true"></i>&nbsp; Bạn phải chọn đánh giá trước khi gửi nhận xét
+                </span>
+              </div>
+            </div>
+            <div *ngIf="errorEvaluate" class="error-color pt-1 pl-2">
+              Bạn đã đánh giá liên hệ này rồi
+            </div>
+          </div>
+          <div class="d-flex pt-2">
+            <div class="comment-field-name">
+              2. Tiêu đề
+            </div>
+            <div class="w-100">
+              <input nbInput class="w-100" type="text" placeholder="Viết tiêu đề" [(ngModel)]="createContactReview.title">
+            </div>
+          </div>
+          <div class="d-flex pt-2">
+            <div class="comment-field-name">
+              3. Nhận xét
+            </div>
+            <div class="w-100">
+              <textarea class="w-100" name="" id="" cols="30" rows="3" placeholder="Viết nhận xét" [(ngModel)]="createContactReview.content"></textarea>
+            </div>
+          </div>
+          <div class="text-center pt-2">
+            <button nbButton class="text-uppercase cursor-pointer" (click)="submitComment()">gửi nhận xét</button>
+            <!-- <button nbButton class="text-uppercase pl-1 abort-bg cursor-pointer ml-2">hủy</button> -->
+          </div>
+        </div>
+
+        <div class="pt-3 bulkhead-bottom"></div>
+        <loading *ngIf="isLoadingRate"></loading>
+      </div>
+      <div class="pt-3">
+        <ng-container *ngFor="let review of pagedResult.items; index as i">
+          <div class="w-100 d-flex" [class.mt-4]="!(i === 0)">
+            <div class="w-15">
+              <div class="d-flex justify-content-center align-items-center">
+                <img [src]="review.reviewUser.avatar ? review.reviewUser.avatar.thumbSizeUrl : 'assets/images/avatar.svg'" [alt]="review.reviewUser.organizationName"
+                  width="50px" height="50px" class="img-avatar">
+              </div>
+              <div class="text-center font-weight-bold">
+                {{ review?.reviewUser?.organizationName }}
+              </div>
+              <div class="text-center font-size--11px">{{ (review?.reviewDate*1000 - 7*60*60*1000) | amCalendar }}</div>
+            </div>
+            <div class="w-85">
+              <div class="d-flex">
+                <div class="d-flex">
+                  <div class="d-flex disabled-rating">
+                    <rate-star [name]="'evaluateList' + i" [disabledRate]="true" [score]="5" [step]="1" [color]="" [default]="review.rating"></rate-star>
+                  </div>
+                </div>
+                <div class="font-weight-bold pl-3 reliability-text">
+                  {{ review?.title }}
+                </div>
+              </div>
+              <div class="review-with-newlines">
+                {{ review?.content }}
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div *ngIf="pagedResult && (pagedResult.items || []).length === 0" class="text-center p-3">Chưa có nhận xét nào</div>
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+  </div>
+</div>

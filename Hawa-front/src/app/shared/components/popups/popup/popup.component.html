@@ -1,0 +1,35 @@
+<div class="wrapper overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup shadow-box" [class.p-4]="showModel.fields && showModel.fields.length > 0" [class.p-5]="!showModel.fields || showModel.fields.length < 1">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup(false)">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+
+    <h5 [class.mb-0]="!showModel.fields || showModel.fields.length < 1" class="text-center text-uppercase font-weight-bold">
+      {{ showModel.title }}
+    </h5>
+
+    <div class="popup-notice d-flex flex-column justify-content-center align-items-center py-4" *ngIf="showModel.notices && showModel.notices.length > 0">
+      <ng-container *ngFor="let notice of showModel.notices">
+        <p class="mb-0 text-center" [innerHTML]="notice"></p>
+      </ng-container>
+    </div>
+    <div class="popup-action d-flex justify-content-between">
+      <ng-container *ngFor="let action of showModel.actions; index as i">
+
+        <div *ngIf="showModel.actions.length == 1" [style.width.%]="100/showModel.actions.length">
+          <button nbButton type="button" class="btn-block text-center text-uppercase cursor-pointer" (click)="closePopup(action.actionvalue)">
+            {{ action.actionname }}
+          </button>
+        </div>
+
+        <div *ngIf="showModel.actions.length >= 2" [style.width.%]="100/showModel.actions.length">
+          <button nbButton type="button" [class.abort-bg]="!action.actionvalue" class="btn-block text-center text-uppercase cursor-pointer"
+            [class.mr-1]="i==0" [class.ml-1]="i==(showModel.actions.length-1)" [class.customstyle]="i !== 0 && i !==(showModel.actions.length-1)"
+            (click)="closePopup(action.actionvalue)">
+            {{ action.actionname }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,348 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <form *ngIf="contributeForm" action="" [formGroup]="contributeForm">
+      <div class="popup-content px-4 py-2">
+        <div class="d-flex">
+          <div class="text-uppercase font-size--20px center-parent title-header pl-2 ml-2">
+            <ng-container *ngIf="action === 'create'">
+              đóng góp mới thông tin liên hệ gián tiếp
+            </ng-container>
+            <ng-container *ngIf="action !== 'create'">
+              thông tin liên hệ gián tiếp
+            </ng-container>
+          </div>
+
+
+          <div class="d-flex center-parent pl-2">
+            <ng-container *ngIf="itemContactList?.status?.key === 'ChuaDuyet'">
+              <div class="arrow-left-unapproved center-parent"></div>
+              <div class="unapproved text-uppercase center-parent">chưa duyệt</div>
+            </ng-container>
+            <ng-container *ngIf="itemContactList?.status?.key === 'DangXacMinh'">
+              <div class="arrow-left-not-verified center-parent"></div>
+              <div class="not-verified text-uppercase center-parent">đang xác minh</div>
+            </ng-container>
+            <ng-container *ngIf="itemContactList?.status?.key === 'DaDuyet'">
+              <div class="arrow-left-approved center-parent"></div>
+              <div class="approved text-uppercase center-parent">đã duyệt</div>
+            </ng-container>
+            <ng-container *ngIf="itemContactList?.status?.key === 'HuyBo'">
+              <div class="arrow-left-cancel center-parent"></div>
+              <div class="cancel text-uppercase center-parent">hủy bỏ</div>
+            </ng-container>
+          </div>
+
+          <div class="d-flex flex-wrap flex-row-reverse mt-2 ml-auto mr-1" *ngIf="approved && position === 'admin' && itemContactList?.status?.key !== 'HuyBo'">
+            <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="itemContactList?.status?.key === 'ChuaDuyet'"
+              (click)="editStatusContact('DangXacMinh')">bắt đầu xác minh</button>
+            <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="itemContactList?.status?.key === 'ChuaDuyet' || itemContactList?.status?.key === 'DangXacMinh'"
+              (click)="editStatusContact('DaDuyet')">duyệt</button>
+            <button nbButton type="button" class="cursor-pointer text-uppercase" *ngIf="itemContactList?.status?.key === 'ChuaDuyet' || itemContactList?.status?.key === 'DangXacMinh' || itemContactList?.status?.key === 'DaDuyet'"
+              (click)="editStatusContact('HuyBo')">hủy bỏ</button>
+          </div>
+        </div>
+        <span *ngIf="isAlertPopup" [class.alert-popup-not-verified]="itemContactList?.status?.key === 'DangXacMinh'" [class.alert-popup-approved]="itemContactList?.status?.key === 'DaDuyet'"
+          [class.alert-popup-cancel]="itemContactList?.status?.key === 'HuyBo'">Chuyển trạng thái đóng góp thành công!</span>
+        <app-list-errors class="pt-2" *ngIf="apiErrorCode && apiErrorCode !== ''" [errorCode]="apiErrorCode"></app-list-errors>
+        <div>
+          <div class="w-100 d-flex m-2 mt-3">
+            <div class="w-50 text-uppercase contac-header d-flex   label">
+              <span class="w-30 py-1 px-2 field-name font-weight-bold">thông tin chung</span>
+            </div>
+            <div class="w-50 text-uppercase contac-header d-flex   label">
+              <span class="w-30 py-1 px-2 field-name font-weight-bold">địa chỉ liên hệ</span>
+            </div>
+          </div>
+          <div class="w-100 d-flex m-2">
+            <div class="w-50">
+              <div class="d-flex">
+                <span class="w-30   label p-1 py-1 px-2 align-top field-name">Tiêu đề đóng góp:</span>
+                <span class="w-70">
+                  <input nbInput [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null"
+                    tabindex="1" type="text" class="w-80" formControlName="titleContribute">
+                </span>
+              </div>
+              <div class="d-flex">
+              </div>
+            </div>
+            <div class="w-50 contac-header d-flex label">
+              <div class="d-flex justify-content-between address-width">
+                <div class="option-width">
+                  <select tabindex="6" name="province" id="province" class="w-100 select-control" (change)="getDistricts($event.target.value)"
+                    formControlName="stateProvinceID" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null"
+                    [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                    <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                      value="null">---Tỉnh/Thành phố---</option>
+                    <option *ngFor="let province of stateProvinces; index as i" [value]="province.key">
+                      {{ province.text }}
+                    </option>
+                  </select>
+                </div>
+                <div class="ml-2 option-width">
+                  <select tabindex="7" [attr.disabled]="!contributeForm.get('stateProvinceID') || contributeForm.get('stateProvinceID').value === null
+                  || !(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null"
+                    name="province" id="province" class="w-100 select-control" (change)="getWards($event.target.value)" formControlName="districtID"
+                    [class.not-allowed]="!contributeForm.get('stateProvinceID') || contributeForm.get('stateProvinceID').value === null"
+                    [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                    <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                      value="null">---Quận/Huyện---</option>
+                    <option *ngFor="let item of districts; index as i" [value]="item.key">
+                      {{ item.text }}
+                    </option>
+                  </select>
+                </div>
+                <div class="ml-2 option-width">
+                  <select tabindex="8" [attr.disabled]="(!contributeForm.get('districtID') || contributeForm.get('districtID').value === null)
+                  || !(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null"
+                    name="province" id="province" class="w-100 select-control" formControlName="communeID" [class.not-allowed]="!contributeForm.get('districtID') || contributeForm.get('districtID').value === null"
+                    (change)="changeCommuneID()" [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                    <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                      value="null">---Phường/Xã---</option>
+                    <option *ngFor="let province of communes; index as i" [value]="province.key">
+                      {{ province.text }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-100 d-flex m-2">
+            <div class="w-50">
+              <div class="d-flex">
+                <span class="w-30   label required p-1 py-1 px-2 align-top field-name">Đối tượng liên hệ:</span>
+                <span class="w-70">
+                  <select tabindex="2" class="w-80 select-control" name="" id="" formControlName="contactTypeID" [ngClass]="{'validate-false': formErrors.contactTypeID}"
+                    [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null"
+                    [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                    <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                      value="null">---Chọn---</option>
+                    <option *ngFor="let item of contactTypes; index as i" [value]="item.key">
+                      {{ item.text }}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="formErrors.contactTypeID">
+                    {{formErrors.contactTypeID}}
+                  </div>
+                </span>
+              </div>
+              <div class="d-flex">
+                <span class="w-30">
+                </span>
+              </div>
+            </div>
+            <div class="w-50 contac-header d-flex label">
+              <span class="w-30 py-1 px-2 field-name  ">Số nhà, tên đường:</span>
+              <span class="w-70">
+                <input nbInput tabindex="8" type="text" class="w-80" formControlName="houseNumber" (keyup)="changeHouseNumber()" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+              </span>
+            </div>
+          </div>
+
+
+
+          <div class="w-100 d-flex m-2">
+            <div class="w-50">
+              <div class="d-flex">
+                <span class="w-30 label required p-1 py-1 px-2 align-top field-name">Tên chủ thể:</span>
+                <span class="w-70">
+                  <input nbInput tabindex="3" type="text" class="w-80" formControlName="contactName" [ngClass]="{'validate-false': formErrors.contactName}"
+                    [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                  <div class="invalid-feedback" *ngIf="formErrors.contactName">
+                    {{formErrors.contactName}}
+                  </div>
+                </span>
+              </div>
+              <div class="d-flex mt-2">
+                <span class="w-30   label p-1 py-1 px-2 align-top field-name">Tên viết tắt:</span>
+                <span class="w-70">
+                  <input nbInput tabindex="4" type="text" class="w-80" formControlName="acronymName" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                </span>
+              </div>
+            </div>
+            <div class="w-50 contac-header d-flex label">
+              <span class="w-30 py-1 px-2 field-name  " style="vertical-align: top;">Địa chỉ:</span>
+              <span class="w-70">
+                <div class="full-address--maxwidth text-truncate w-80">
+                  {{ contributeForm.get('address')?.value }}
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="w-100 d-flex m-2">
+            <div class="w-50">
+              <div class="d-flex">
+                <span class="w-30 label p-1 py-1 px-2 align-top field-name">Ghi chú thêm:</span>
+                <span class="w-70">
+                  <textarea tabindex="5" name="" id="" cols="30" rows="3" class="w-80" formControlName="note" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null"></textarea>
+                </span>
+              </div>
+              <div class="d-flex">
+                <span class="w-30">
+                </span>
+              </div>
+            </div>
+            <div class="w-50 contac-header d-flex label">
+              <span class="w-30 py-1 px-2 field-name  " style="vertical-align: top;">Ảnh đính kèm:</span>
+              <span class="w-70">
+                <div class="image-demo-img">
+                  <input tabindex="10" class="cursor-pointer" type="file" accept="image/*" #uploadImage (change)="uploadImageFuc($event)" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                  <ng-container *ngFor="let url of imageUrls; index as i">
+                    <div class="display-img" (click)="viewFullScreenImage(imageUrls, i)">
+                      <img [src]="url.largeSizeUrl">
+                      <span class="icon-delete-image cursor-pointer" (click)="deleteImage(url)" [class.display-element]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                  </ng-container>
+                  <div class="perspective-image cursor-pointer" (focus)="onFocus($event)" (click)="uploadImage.click()" tabindex="10" [class.d-none]="isLimitImage"
+                    [class.display-element]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <p>Image</p>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="w-100 d-flex m-2">
+            <div class="w-50">
+            </div>
+            <div class="w-50 contac-header d-flex label">
+            </div>
+          </div>
+          <div class="w-100 d-flex m-2 mt-5">
+            <div class="w-50">
+              <div class="d-flex">
+                <span class="w-30   label p-1 py-1 px-2 align-top field-name text-uppercase font-weight-bold">Thông tin liên hệ:
+                </span>
+                <span class="w-70">
+                </span>
+              </div>
+            </div>
+            <div class="w-50 contac-header d-flex label">
+              <span class="w-30 py-1 px-2 field-name text-uppercase font-weight-bold">địa bàn phụ trách</span>
+              <span class="w-70">
+              </span>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div class="w-100 d-flex m-2">
+            <div class="w-50">
+              <div class="d-flex">
+                <span class="w-30 label p-1 py-1 px-2 align-top field-name">Người liên hệ:</span>
+                <span class="w-70">
+                  <input nbInput tabindex="11" type="text" class="w-80" formControlName="userContact" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                </span>
+              </div>
+              <div class="d-flex mt-2">
+                <span class="w-30   required label p-1 py-1 px-2 align-top field-name">Điện thoại 1:</span>
+                <span class="w-70">
+                  <input nbInput appInputNumber tabindex="12" type="text" class="w-80" formControlName="phone1" [ngClass]="{'validate-false': formErrors.phone1}"
+                    [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                  <div class="invalid-feedback" *ngIf="formErrors.phone1">
+                    {{formErrors.phone1}}
+                  </div>
+                </span>
+              </div>
+
+              <div class="d-flex mt-2">
+                <span class="w-30 label p-1 py-1 px-2 align-top field-name">Điện thoại 2:</span>
+                <span class="w-70">
+                  <input nbInput tabindex="13" type="text" class="w-80" formControlName="phone2" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                </span>
+              </div>
+
+              <div class="d-flex mt-2">
+                <span class="w-30 label p-1 py-1 px-2 align-top field-name">Email:</span>
+                <span class="w-70">
+                  <input nbInput tabindex="14" type="text" class="w-80" formControlName="email" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                </span>
+              </div>
+
+              <div class="d-flex mt-2">
+                <span class="w-30 label p-1 py-1 px-2 align-top field-name">Website:</span>
+                <span class="w-70">
+                  <input nbInput tabindex="15" type="text" class="w-80" formControlName="website" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) ? '' : null">
+                </span>
+              </div>
+
+            </div>
+
+            <!-- contac-header d-flex  -->
+
+            <div class="w-50 label">
+              <form action="" formArrayName="localitys">
+                <div class="d-flex" *ngFor="let itemLocality of localitysFA.controls; index as j" [formGroupName]="j">
+                  <div class="d-flex justify-content-between address-width locality">
+                    <div class="option-width">
+                      <select [tabindex]="16 + (j - 1) * 3" name="province" id="province" class="w-100 select-control" (change)="getDistrictsFA($event.target.value, j)"
+                        formControlName="stateProvinceID" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0 ? '' : null"
+                        [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0">
+                        <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                          value="null">---Tỉnh/Thành phố---</option>
+                        <option *ngFor="let province of stateProvinces; index as i" [value]="province.key">
+                          {{ province.text }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="ml-2 option-width">
+                      <select [tabindex]="17 + (j - 1) * 3" name="province" id="province" class="w-100 select-control" (change)="getWardsFA($event.target.value, j)"
+                        formControlName="districtID" [class.not-allowed]="!localitysFA.controls[j].get('stateProvinceID').value || localitysFA.controls[j].get('stateProvinceID').value === null"
+                        [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0"
+                        [attr.disabled]="(!localitysFA.controls[j].get('stateProvinceID').value || localitysFA.controls[j].get('stateProvinceID').value === null)
+                        || !(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0 ? '' : null">
+
+                        <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                          value="null">---Quận/Huyện---</option>
+                        <option *ngFor="let item of localitysFA.controls[j].get('districts').value; index as i" [value]="item.key">
+                          {{ item.text }}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="ml-2 option-width">
+                      <select [tabindex]="18 + (j - 1) * 3" name="province" id="province" class="w-100 select-control" formControlName="communeID" [class.not-allowed]="!localitysFA.controls[j].get('districtID').value || localitysFA.controls[j].get('districtID').value === null"
+                        (change)="changeCommuneID()" [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0"
+                        [attr.disabled]="(!localitysFA.controls[j].get('districtID').value || localitysFA.controls[j].get('districtID').value === null) 
+                        || !(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0 ? '' : null">
+                        <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
+                          value="null">---Phường/Xã---</option>
+                        <option *ngFor="let province of localitysFA.controls[j].get('communes').value; index as i" [value]="province.key">
+                          {{ province.text }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="center-parent ml-3 cursor-pointer" (click)="deleteItemLocality(j)" *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) && j !== 0">
+                    <i class="fa fa-minus-square icon-delete" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </form>
+              <div class="invalid-feedback mt-3" *ngIf="errLocalitys">
+                Bạn phải hoàn tất việc chọn lựa địa bàn phụ trách
+              </div>
+              <div class="mt-2" *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))">
+                <a href="javascript:void(0)" (click)="addLocalityToForm()">Thêm mới địa bàn phụ trách</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="text-center mt-4" *ngIf="action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')">
+          <button nbButton class="text-uppercase cursor-pointer" id="save" (click)="submit()">lưu</button>
+          <button nbButton class="text-uppercase cursor-pointer abort-bg ml-2" id="cancel" (click)="closePopup()">hủy</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <image-carousel class="d-flex justify-content-center align-items-center" *ngIf="showPopupViewImage" [(imageUrlArray)]="imageUrlArray"
+    [(indexOfImage)]="indexOfImage" (closed)="closeView()"></image-carousel>

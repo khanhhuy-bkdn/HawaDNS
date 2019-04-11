@@ -1,0 +1,297 @@
+.popup-content {
+  .title-header {
+    font-weight: 500;
+  }
+
+  height: 80vh;
+  min-width: 1100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .field-name {
+    min-width: 150px;
+  }
+}
+
+.wrapper-popup .popup {
+  margin-bottom: 0px;
+
+  .logo-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+select {
+  width: 80%;
+}
+
+.weight-500 {
+  font-weight: 500;
+}
+
+
+
+.perspective-image {
+  margin: 3px;
+  width: 72px;
+  height: 72px;
+  padding-top: 13px;
+  font-size: 15px;
+}
+
+.display-img {
+  margin: 3px;
+  width: 72px;
+  height: 72px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
+
+  &:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+
+    img {
+      opacity: 0.5;
+    }
+
+    .icon-delete-image {
+      opacity: 1;
+    }
+  }
+}
+
+.icon-delete-image {
+  transition: 1s ease;
+  opacity: 0;
+  position: relative;
+  top: -72px;
+  left: 55px;
+  text-align: center;
+}
+
+.full-address--maxwidth {
+  // max-width: 44.5rem;
+  background-color: #d2d2d2;
+  font-size: inherit;
+  padding: 0.75rem 1.125rem;
+  min-height: 35px;
+  // width: 44.5rem;
+  white-space: unset;
+}
+
+.display-ouline {
+  outline: none;
+}
+
+.display-element {
+  display: none;
+}
+
+.cursor-default {
+  cursor: default !important;
+}
+
+
+.arrow-left-unapproved {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7px solid #e65140;
+}
+
+.arrow-left-not-verified {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7px solid #fdbd3d;
+}
+
+.arrow-left-approved {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7px solid #81c95a;
+}
+
+.arrow-left-cancel {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 7px solid #909191;
+}
+
+.unapproved {
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 12px !important;
+  background-color: #e65140;
+  width: 100px;
+  height: 40px;
+}
+
+.not-verified {
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 12px !important;
+  background-color: #fdbd3d;
+  width: 100px;
+  height: 40px;
+}
+
+.approved {
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 12px !important;
+  background-color: #81c95a;
+  width: 100px;
+  height: 40px;
+}
+
+.cancel {
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-size: 12px !important;
+  background-color: #909191;
+  width: 100px;
+  height: 40px;
+}
+
+.alert-popup-not-verified {
+  background: #dfdf11;
+  color: white;
+  padding: 5px;
+}
+
+.alert-popup-approved {
+  background: #5adf11;
+  color: white;
+  padding: 5px;
+}
+
+.alert-popup-cancel {
+  background: #6c757d;
+  color: white;
+  padding: 5px;
+}
+
+.address-width{
+  width: 86%;
+  .option-width{
+    width: 33%;
+  }
+}
+
+.locality{
+  box-shadow: 0 2px 30px 0 #f1f2f3;
+}
+.icon-delete{
+  color: #6d6868;
+  zoom: 1.2;
+}
+
+
+@media only screen and (max-width: 1600px) {
+  .popup-content {
+    max-width: 250px;
+  }
+  .address-width{
+    width: 86%;
+    .option-width{
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1366px) {
+  .popup-content {
+    max-width: 200px;
+  }
+  .address-width{
+    width: 86%;
+    .option-width{
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1270px) {
+  .popup-content {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+  .address-width{
+    width: 86%;
+    .option-width{
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .popup-content {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+  .address-width{
+    width: 86.5%;
+    .option-width{
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .popup-content {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+  .address-width{
+    width: 87%;
+    .option-width{
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .popup-content {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+  .address-width{
+    width: 87.7%;
+    .option-width{
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (max-width: 993) {
+  .popup-content {
+    min-width: 80vw;
+    max-width: 80vw;
+  }
+}
