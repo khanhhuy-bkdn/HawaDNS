@@ -1,0 +1,216 @@
+.set-height {
+  min-height: 85vh;
+
+  .go-home__color {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    .icon-go-home__outline {
+      outline: none;
+    }
+  }
+
+  .sign-up {
+    position: relative;
+    background-color: white;
+    border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    font-size: 90%;
+
+    .logo-icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .sign-up-content {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+
+      .w-45 {
+        width: 45%;
+      }
+
+      form {
+        .contac-header {
+          align-items: flex-end;
+        }
+      }
+
+      .title-header {
+        font-size: 140%;
+      }
+
+      .title-children {
+        font-size: 120%;
+      }
+
+      input {
+        background-color: #F4F8F7;
+      }
+
+      .final-sign-up {
+        margin-left: 25%;
+
+        .sign-up-role {
+          margin-top: 1rem;
+        }
+
+        .sign-up-contact {
+          margin-top: 1rem;
+        }
+
+        .but-personal {
+          white-space: normal;
+        }
+
+        .but-organization {
+          background-color: #F4F8F7;
+          border-color: #F4F8F7;
+          white-space: normal;
+          color: black;
+        }
+
+        .but-cus {
+          background-color: #008A77;
+          border-color: #008A77;
+        }
+
+        .but-continue--font {
+          font-size: 120%;
+        }
+
+        .boundary {
+          border-bottom: #D8D8D8 solid 1px;
+          width: 40%;
+          margin-bottom: 0.5rem;
+        }
+
+        .contact-out {
+          border: #D8D8D8 solid 1px;
+          // max-height: 2.25rem; // 36px
+          height: 36px;
+        }
+      }
+    }
+
+    .bot--center-content {
+      justify-content: center;
+      align-items: center;
+      // position: absolute;
+      // bottom: 0.5rem;
+      cursor: pointer;
+      text-decoration: underline;
+      // padding-right: 4rem;
+    }
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+}
+
+:host /deep/ .k-dropdown .k-select {
+  background-color: #008A77 !important;
+}
+
+:host /deep/ .k-input {
+  background-color: #F4F8F7 !important;
+}
+
+.left-side,
+.right-side {
+  label {
+    width: 10rem;
+    min-width: 10rem;
+    max-width: 10rem;
+  }
+
+  input {
+    width: 20rem;
+  }
+
+  .full-address--maxwidth {
+    background-color: #d2d2d2;
+    font-size: inherit;
+    padding: 0.75rem 1.125rem;
+    min-height: 35px;
+    width: 20rem;
+    white-space: unset;
+  }
+
+  .minwidth {
+    width: 100%;
+
+    .select-control {
+      width: 100%;
+      max-width: 20rem;
+    }
+  }
+}
+
+.disable-tag {
+  position: relative;
+
+  .disable-district {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    cursor: not-allowed;
+  }
+
+  .disable-commune {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    cursor: not-allowed;
+  }
+}
+
+.ng-select.custom-selectsearch {
+  width: 100%;
+  max-width: 20rem;
+}
+
+.ng-select.custom-selectsearch ::ng-deep .ng-select-container {
+  border-radius: 0;
+  border: none;
+  background-color: #F4F8F7;
+
+  .ng-value-container {
+
+    .ng-placeholder {
+      color: #4b4b4b;
+    }
+  }
+
+  .ng-arrow-wrapper {
+    padding-right: 1.5rem;
+  }
+}
+
+:host /deep/ .ng-select .ng-arrow-wrapper .ng-arrow {
+  border-color: black transparent transparent !important;
+}
+
+:host /deep/ .rc-anchor-checkbox-label {
+  font-size: 12px !important;
+}
+:host /deep/ .rc-anchor-error-message {
+  font-size: 12px !important;
+}
+.width-captcha{
+  width: 304px !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

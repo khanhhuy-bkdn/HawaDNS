@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss'],
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
 })
-export class SignInComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,

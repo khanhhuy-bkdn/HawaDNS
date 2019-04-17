@@ -1,0 +1,102 @@
+<div class="w-100 d-flex set-height">
+  <div class="w-40 image">
+    <div class="center-parent pt-5">
+      <img src="assets/images/logo-hawa.png" alt="" width="150px">
+    </div>
+    <div class="text-uppercase font-weight-bold text-content content-center w-100 center-parent">
+      <div class="w-80 center-parent title-header text-center modify-lineheight">
+        hệ thống giải trình<br />nguồn gốc gỗ hợp pháp
+      </div>
+    </div>
+    <div class="copy-right bot--center-content w-100 mb-3">
+      <div class="center-parent">
+        &copy; {{currentYear}} HAWA. All rights reserved.
+      </div>
+      <!-- <div class="center-parent mt-2">
+        Powered by BYS
+      </div> -->
+    </div>
+  </div>
+  <div class="w-60 sign-up">
+    <div class="sign-up-content px-5" [formGroup]="signUpGeneralForm">
+      <div class="text-right go-home__color">
+        <img class="cursor-pointer icon-go-home" src="assets/images/icon-go-home.png" width="40px" [routerLink]="['../../../pages']" title="Trở về trang chủ">
+      </div>
+      <div class="text-uppercase w-100 center-parent font-weight-bold title-header">
+        đăng ký tài khoản
+      </div>
+      <div class="form--pad">
+        <div class="input-email">
+          <input nbInput class="w-100 input-form--pad input-text" type="text" placeholder="Email" tabindex="2" formControlName="email"
+            [ngClass]="{'validate-false': formErrors.email}">
+        </div>
+        <div class="invalid-feedback" *ngIf="formErrors.email">
+          {{formErrors.email}}
+        </div>
+        <div class="input-lock">
+          <input nbInput class="w-100 input-form--pad input-text" type="password" placeholder="Mật khẩu" tabindex="3" formControlName="password"
+            [ngClass]="{'validate-false': formErrors.password}">
+        </div>
+        <div class="invalid-feedback" *ngIf="formErrors.password">
+          {{formErrors.password}}
+        </div>
+        <div class="input-lock">
+          <input nbInput class="w-100 input-form--pad input-text" type="password" placeholder="Nhập lại mật khẩu" tabindex="4" formControlName="rePassword"
+            [ngClass]="{'validate-false': formErrors.rePassword}">
+        </div>
+        <div class="invalid-feedback" *ngIf="formErrors.rePassword">
+          {{formErrors.rePassword}}
+        </div>
+      </div>
+      <div class="d-flex justify-content-between sign-up-role font-size-12">
+        Bạn đăng ký tài khoản với vai trò:
+      </div>
+      <div class="d-flex justify-content-between">
+
+        <label tabindex="5" class="btn w-45 mt-2 but-personal center-parent cursor-pointer" for="organization" [class.but-choose]="signUpGeneralForm.get('signUpRole').value"
+          [class.but-not-choose]="!signUpGeneralForm.get('signUpRole').value">
+          <img src="assets/images/check.png" alt="" style="width: 15px; height: auto;" *ngIf="signUpGeneralForm.get('signUpRole').value">
+          <span class="field-name-organization pl-2 font-size-12">Cá nhân/Hộ gia đình</span>
+          <input type="radio" [value]="true" formControlName="signUpRole" id="organization">
+        </label>
+        <label tabindex="6" class="btn w-45 mt-2 center-parent cursor-pointer" for="personal" [class.but-choose]="!signUpGeneralForm.get('signUpRole').value"
+          [class.but-not-choose]="signUpGeneralForm.get('signUpRole').value">
+          <img src="assets/images/check.png" alt="" style="width: 15px; height: auto;" *ngIf="!signUpGeneralForm.get('signUpRole').value">
+          <span class="field-name-organization pl-2 font-size-12">Doanh nghiệp/Tổ chức/Hợp tác xã</span>
+          <input type="radio" [value]="false" formControlName="signUpRole" id="personal">
+        </label>
+      </div>
+      <button nbButton tabindex="6" class="text-uppercase w-100 mt-3 cursor-pointer button-continue" (click)="submitForm()" id="continueButton">tiếp theo
+      </button>
+      <div class="w-100 d-flex sign-up-contact mb-3">
+        <div class="boundary"></div>
+        <div class="text-uppercase w-20 center-parent">hoặc</div>
+        <div class="boundary"></div>
+      </div>
+      <div class="w-100 mt-2 d-flex justify-content-between mb-4">
+        <div tabindex="7" class="w-45 pointer" (click)="signInComingSoon()" title="Đăng nhập bằng Facebook">
+          <div class="d-flex contact-out center-parent">
+            <div>
+              <img src="assets/images/icon-facebook.png" alt="" width="20px">
+            </div>
+            <div class="text-uppercase center-parent font-weight-bold but-content-medium pl-5">facebook</div>
+          </div>
+        </div>
+        <div tabindex="8" class="w-45 pointer" (click)="signInComingSoon()" title="Đăng nhập bằng Google">
+          <div class="d-flex contact-out center-parent">
+            <div>
+              <img src="assets/images/icon-google.png" alt="" width="20px">
+            </div>
+            <div class="text-uppercase enter-parent font-weight-bold but-content-medium pl-5">google</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="w-100 center-parent bot--center-content mb-3 font-size-12">
+      <span tabindex="9" [routerLink]="['../../sign-in']">
+        <a href="javascript:void(0)" target="_blank">Bạn đã có tài khoản? - Đăng nhập tại đây</a>
+      </span>
+    </div>
+  </div>
+</div>

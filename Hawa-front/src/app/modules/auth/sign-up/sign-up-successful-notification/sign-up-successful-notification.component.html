@@ -1,0 +1,97 @@
+<div class="w-100 d-flex set-height" *ngIf="isShow === 'success'">
+  <div class="w-100 sign-up">
+    <div class="sign-up-content px-5 pt-5">
+      <div class="w-100 font-weight-bold">
+        <div class="text-uppercase w-100 text-center title-header font-size--18px">xác thực tài khoản thành công</div>
+      </div>
+      <div class="logo-icon p-3">
+        <img src="assets/images/hawa_text.png" alt="Hawa DDS" />
+      </div>
+      <div class="text-center w-100 py-4">
+        <img tabindex="11" src="assets/images/icon-finish.png" alt="" width="80px">
+      </div>
+      <div class="text-center py-4">
+        <div>
+          Cảm ơn bạn đã đăng ký tài khoản trên hệ thống HAWA DDS.
+        </div>
+        <!-- <div>Mọi chi tiết chúng tôi sẽ gửi đến địa chỉ email liên kết với tài khoản đăng ký.</div> -->
+      </div>
+      <div class="d-flex text-center pt-3">
+        <div class="w-50 pr-1 d-flex justify-content-end">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus btn-block mt-3 but-continue--font cursor-pointer"
+            tabindex="10" [routerLink]="['../../../auth/sign-in/general']">trở về đăng nhập</button>
+        </div>
+        <div class="w-50 pl-1 d-flex justify-content-start">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus btn-block mt-3 but-continue--font cursor-pointer"
+            tabindex="10" [routerLink]="['/pages/infor-search']">trở về trang chủ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="w-100 d-flex set-height" *ngIf="isShow === 'TokenExpireException'">
+  <div class="w-100 sign-up">
+    <div class="sign-up-content px-5 pt-5">
+      <div class="w-100 font-weight-bold">
+        <div class="text-uppercase w-100 text-center title-header font-size--18px">QUÁ HẠN XÁC NHẬN EMAIL ĐĂNG KÝ</div>
+      </div>
+      <div class="logo-icon p-3">
+        <img src="assets/images/hawa_text.png" alt="Hawa DDS" />
+      </div>
+      <div class="text-center w-100 py-4">
+        <img tabindex="11" src="assets/images/icon_expire.png" alt="" width="80px">
+      </div>
+      <div class="text-center py-4">
+        <div>
+          Vui lòng bấm vào yêu cầu gửi lại email xác nhận. Sau đó kiểm tra lại email và nhấp vào đường dẫn để xác nhận lại tài khoản.
+        </div>
+      </div>
+      <div class="d-flex text-center pt-3">
+        <div class="w-50 pr-1 d-flex justify-content-end">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus w-50 mt-3 but-continue--font cursor-pointer"
+            tabindex="10" [routerLink]="['/pages/infor-search']">trở về trang chủ</button>
+        </div>
+        <div class="w-50 pl-1 d-flex justify-content-start">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus w-50 mt-3 but-continue--font cursor-pointer"
+            tabindex="10" (click)="resendEmail()">Yêu cầu gửi lại email xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="w-100 d-flex set-height" *ngIf="isShow === 'AccountAlreadyVerifyException'">
+  <div class="w-100 sign-up">
+    <div class="sign-up-content px-5 pt-5">
+      <div class="w-100 font-weight-bold">
+        <div class="text-uppercase w-100 text-center title-header font-size--18px">TÀI KHOẢN ĐÃ ĐƯỢC XÁC THỰC.</div>
+      </div>
+      <div class="logo-icon p-3">
+        <img src="assets/images/hawa_text.png" alt="Hawa DDS" />
+      </div>
+      <div class="text-center w-100 py-4">
+        <img tabindex="11" src="assets/images/icon-finish.png" alt="" width="80px">
+      </div>
+      <div class="text-center py-4">
+        <div>
+          Bạn có thể đăng nhập vào hệ thống.
+        </div>
+      </div>
+      <div class="d-flex text-center pt-3">
+        <div class="w-50 pr-1 d-flex justify-content-end">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus btn-block mt-3 but-continue--font cursor-pointer"
+            tabindex="10" [routerLink]="['../../../auth/sign-in/general']">trở về đăng nhập</button>
+        </div>
+        <div class="w-50 pl-1 d-flex justify-content-start">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus btn-block mt-3 but-continue--font cursor-pointer"
+            tabindex="10" [routerLink]="['/pages/infor-search']">trở về trang chủ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<loading *ngIf="loading"></loading>

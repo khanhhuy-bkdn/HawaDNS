@@ -1,0 +1,22 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup p-4 shadow-box">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="logo-icon p-2">
+        <img src="assets/images/hawa_text.png" width="190px" alt="Hawa DDS"/>
+      </div>
+    <div>
+      <div class="text-uppercase text-center font-weight-bold font-size--20px">đăng ký thành công</div>
+      <div class="text-center w-100 py-4">
+        <img class="image-sucess" src="assets/images/icon-finish.png" alt="" width="80px">
+      </div>  
+      <div class="text-center">Cảm ơn bạn đã đăng ký tài khoản trên hệ thống HAWA DDS. Vui lòng kiểm tra email và nhấp vào đường dẫn để xác nhận tài khoản.
+      </div>
+      <div class="text-center">(Nếu không nhận được email vui lòng kiểm tra hộp thư Spam)</div>
+      <div class="w-100 text-center pt-3">
+          <button nbButton class="text-uppercase text-uppercase btn btn-primary but-cus w-50 mt-3 but-continue--font cursor-pointer" tabindex="10" [routerLink]="['../../pages/infor-search']">trở về trang chủ</button>
+        </div>
+    </div>
+  </div>
+</div>

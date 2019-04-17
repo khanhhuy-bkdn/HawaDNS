@@ -9,7 +9,7 @@ import {
   NbAlertModule,
   NbButtonModule,
   NbCheckboxModule,
-  NbInputModule
+  NbInputModule,
 } from '@nebular/theme';
 import { AuthComponent } from './auth.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -29,7 +29,7 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   declarations: [
     // ... here goes our new components
-    AuthComponent
+    AuthComponent,
   ],
 })
 export class NgxAuthModule  {

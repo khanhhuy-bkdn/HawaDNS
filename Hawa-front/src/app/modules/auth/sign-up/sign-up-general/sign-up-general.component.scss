@@ -1,0 +1,230 @@
+.set-height {
+  min-height: 85vh;
+
+  .go-home__color {
+    .icon-go-home {
+      outline: none;
+    }
+  }
+
+  .modify-lineheight {
+    line-height: 3rem;
+  }
+
+  .image {
+    background: url('assets/images/logo-wood.png');
+    background-size: cover;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
+    position: relative;
+
+    .text-content {
+      color: white;
+
+      .title-header {
+        font-size: 140%;
+      }
+    }
+
+    .content-center {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+    }
+
+    .bot--center-content {
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0.5rem;
+      color: white;
+      font-size: 12px;
+    }
+  }
+
+  .sign-up {
+    position: relative;
+    background-color: white;
+    border-radius: 0rem 0.5rem 0.5rem 0rem;
+
+    .field-name-organization {
+      font-weight: 300;
+    }
+
+    .sign-up-content {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+
+      .w-45 {
+        width: 45%;
+      }
+
+      .form--pad {
+        margin-top: 1rem;
+
+        .input-form--pad {
+          margin-top: 1rem;
+        }
+      }
+
+      .sign-up-role {
+        margin-top: 1rem;
+      }
+
+      .sign-up-contact {
+        margin-top: 1rem;
+      }
+
+      .title-header {
+        font-size: 140%;
+      }
+
+      .input-user {
+        position: relative;
+
+        .input-text {
+          display: block;
+          padding-left: 2rem;
+        }
+
+        .icon-user {
+          position: absolute;
+          top: 0.8rem;
+          left: 0.55rem;
+        }
+      }
+
+      .input-email {
+        position: relative;
+
+        &::before {
+          font-family: 'FontAwesome';
+          content: "\f003";
+          position: absolute;
+          top: 25%;
+          left: 10px;
+          color: #cccccc;
+        }
+
+        .input-text {
+          display: block;
+          padding-left: 2rem;
+        }
+      }
+
+      .input-lock {
+        position: relative;
+
+        &::before {
+          font-family: 'FontAwesome';
+          content: "\f023";
+          position: absolute;
+          top: 25%;
+          left: 13px;
+          color: #cccccc;
+          font-size: 1.1rem;
+        }
+
+        .input-text {
+          display: block;
+          padding-left: 2rem;
+        }
+      }
+
+      input {
+        background-color: #F4F8F7;
+      }
+
+      .but-choose {
+        background-color: #008A77;
+        border-color: #008A77;
+        color: white;
+      }
+
+      .but-not-choose {
+        background-color: #F4F8F7;
+        border-color: #F4F8F7;
+        color: black;
+      }
+
+      .but-cus {
+        background-color: #008A77;
+        border-color: #008A77;
+      }
+
+      .btn {
+        white-space: normal;
+        text-transform: none;
+
+        input {
+          display: none;
+        }
+      }
+
+      .but-continue--font {
+        font-size: 120%;
+      }
+
+      .boundary {
+        border-bottom: #D8D8D8 solid 1px;
+        width: 40%;
+        margin-bottom: 0.5rem;
+      }
+
+      .contact-out {
+        border: #D8D8D8 solid 1px;
+        // max-height: 2.25rem; // 36px
+        height: 36px;
+      }
+    }
+
+    .bot--center-content {
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 0.5rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+}
+
+.button-continue {
+  font-weight: 300 !important;
+}
+
+.font-size-12 {
+  font-size: 12px;
+}
+
+
+// @media only screen and (max-width: 1200px) {
+//     .set-height{
+//         .sign-up{
+//             .sign-up-content{
+//                 padding-top: 1rem;
+//                 padding-bottom: 1rem;
+//                 .form--pad{
+//                     margin-top: 0.5rem;
+//                     .input-form--pad{
+//                         margin-top: 0.5rem;
+//                     }
+//                 }
+//                 .sign-up-role{
+//                     margin-top: 0.5rem;
+//                 }
+//                 .sign-up-contact{
+//                     margin-top: 0.5rem;
+//                 }
+//             }
+//         }
+//     }
+// }

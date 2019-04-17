@@ -1,0 +1,178 @@
+<form action="" [formGroup]="signUpPersonalForm">
+  <div class="w-100 d-flex set-height">
+    <div class="w-100 sign-up">
+      <div class="text-right go-home__color">
+        <img class="cursor-pointer icon-go-home__outline" src="assets/images/icon-go-home.png" width="40px" [routerLink]="['../../../pages']" title="Trở về trang chủ">
+      </div>
+      <div class="logo-icon p-3">
+        <img src="assets/images/hawa_text.png" width="190px" alt="Hawa DDS" />
+      </div>
+      <div class="sign-up-content px-5">
+        <div class="w-100 font-weight-bold">
+          <div class="text-uppercase w-100 text-center font-size--18px">hoàn tất đăng ký</div>
+          <div class="w-100 text-center title-children">(Cá nhân/Hộ gia đình)</div>
+        </div>
+
+        <!-- TODO: -->
+
+
+        <div class="row px-5 my-3">
+          <div class="col-lg-6 left-side">
+
+
+            <div class="invisible">
+              <div class="d-flex align-items-center">
+                <label class="mb-0"></label>
+                <input nbInput type="text" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex align-items-center">
+                <label for="organizationName" class="required mb-0">Họ và tên:</label>
+                <input nbInput type="text" id="organizationName" name="organizationName" class="" formControlName="organizationName" [class.validate-false]="formErrors.organizationName"
+                />
+              </div>
+              <div class="invalid-feedback d-flex" *ngIf="formErrors.organizationName">
+                <label class="w-10"></label>
+                <span>{{formErrors.organizationName}}</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex align-items-center">
+                <label for="phone" class="required mb-0">Số điện thoại:</label>
+                <input nbInput appInputNumber type="text" id="phone" name="phone" class="" formControlName="phone" [class.validate-false]="formErrors.phone"
+                />
+              </div>
+              <div class="invalid-feedback d-flex" *ngIf="formErrors.phone">
+                <label class="w-10"></label>
+                <span>{{formErrors.phone}}</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="d-flex align-items-center">
+                <label for="identityCard" class="mb-0">CMND/Thẻ căn cước:</label>
+                <input nbInput appInputNumber type="text" id="identityCard" name="identityCard" min="0" step="1" class="" formControlName="identityCard" />
+              </div>
+              <!-- <div class="invalid-feedback d-flex" *ngIf="formErrors.identityCard">
+                  <label class="w-10"></label>
+                  <span>{{formErrors.identityCard}}</span>
+                </div> -->
+            </div>
+
+
+          </div>
+          <div class="col-lg-6 right-side">
+            <h6 class="text-uppercase mb-4">địa chỉ liên hệ</h6>
+
+            <div class="d-flex align-items-center mb-3">
+              <label for="stateProvinceID" class="mb-0 mr-4">- Tỉnh/Thành phố:</label>
+              <div class="minwidth">
+                <select name="stateProvinceID" id="stateProvinceID" formControlName="stateProvinceID" class="select-control" (change)="getDistricts()">
+                  <option [ngValue]="null">---Chọn---</option>
+                  <option *ngFor="let province of stateProvinces; index as i" [ngValue]="province">
+                    {{ province.text }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+              <label for="districtID" class="mb-0 mr-4">- Quận/Huyện:</label>
+              <div class="minwidth">
+                <select name="districtID" id="districtID" formControlName="districtID" class="select-control" (change)="getWards()" [attr.disabled]="!signUpPersonalForm.get('stateProvinceID') || signUpPersonalForm.get('stateProvinceID').value === null ? '' : null"
+                  [class.cursor-not-allowed]="!signUpPersonalForm.get('stateProvinceID') || signUpPersonalForm.get('stateProvinceID').value === null">
+                  <option [ngValue]="null">---Chọn---</option>
+                  <option *ngFor="let district of districts; index as i" [ngValue]="district">
+                    {{ district.text }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+              <label for="communeID" class="mb-0 mr-4">- Phường/Xã:</label>
+              <div class="minwidth">
+                <select name="communeID" id="communeID" formControlName="communeID" class="select-control" (change)="changeCommuneID()" [attr.disabled]="(!signUpPersonalForm.get('districtID') || signUpPersonalForm.get('districtID').value === null) ? '' : null"
+                  [class.cursor-not-allowed]="!signUpPersonalForm.get('districtID') || signUpPersonalForm.get('districtID').value === null">
+                  <option [ngValue]="null">---Chọn---</option>
+                  <option *ngFor="let commune of communes; index as i" [ngValue]="commune">
+                    {{ commune.text }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+              <label for="houseNumber" class="mb-0 mr-4 mr-1">- Số nhà/Tên đường</label>
+              <input (keyup)="changeHouseNumber()" nbInput type="text" id="houseNumber" name="houseNumber" class="" formControlName="houseNumber"
+              />
+            </div>
+
+            <div class="d-flex align-items-center mb-2">
+              <label for="" class="mb-0 mr-4 mr-1">- Địa chỉ:</label>
+              <div class="full-address--maxwidth text-truncate">
+                {{ signUpPersonalForm.get('address')?.value }}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="w-50 final-sign-up">
+          <div class="d-flex justify-content-center">
+            <re-captcha (resolved)="resolved($event)" [siteKey]="recaptChaKey"></re-captcha>
+
+            <!-- Gỗ gợp pháp-->
+            <!-- <re-captcha *ngIf="production" (resolved)="resolved($event)" siteKey="6LeXYYcUAAAAABhfWIO20enVBEi0g0xUMqe1yrgm"></re-captcha> -->
+          </div>
+          <div class="d-flex justify-content-center">
+            <div class="d-flex align-items-center mt-3 width-captcha">
+              <input id="rules" tabindex="12" type="checkbox" formControlName="agreeTerms" />
+              <label class="pl-1 mb-0" for="rules">Bạn đã đồng ý với điều khoản của chúng tôi</label>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button nbButton [disabled]="captchaResponse ? false : true" [class.not-allowed]="captchaResponse ? false : true" class="text-uppercase w-100 mt-2 but-continue--font cursor-pointer width-captcha"
+              tabindex="10" (click)="submitForm()">
+              đăng ký
+            </button>
+          </div>
+
+          <!-- <div class="w-100 d-flex sign-up-contact">
+            <div class="boundary"></div>
+            <div class="text-uppercase w-20 center-parent">hoặc</div>
+            <div class="boundary"></div>
+          </div>
+          <div class="w-100 mt-2 d-flex justify-content-between">
+            <div tabindex="6" class="w-45 pointer" (click)="signInComingSoon()">
+              <div class="d-flex contact-out center-parent">
+                <div>
+                  <img src="assets/images/icon-facebook.png" alt="" width="20px">
+                </div>
+                <div class="text-uppercase center-parent font-weight-bold but-content-medium pl-5">facebook</div>
+              </div>
+            </div>
+            <div tabindex="7" class="w-45 pointer" (click)="signInComingSoon()">
+              <div class="d-flex contact-out center-parent">
+                <div>
+                  <img src="assets/images/icon-google.png" alt="" width="20px">
+                </div>
+                <div class="text-uppercase enter-parent font-weight-bold but-content-medium pl-5">google</div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <div class="w-100 center-parent bot--center-content mb-3 mt-4">
+          <span tabindex="13" [routerLink]="['../../sign-in']">
+            <a href="javascript:void(0)" target="_blank">Bạn đã có tài khoản? - Đăng nhập tại đây</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- <ngx-loading [show]="loading" [config]="{backdropBorderRadius: '10px',
+    primaryColour: '#008A77', secondaryColour: '#008A77', tertiaryColour: '#008A77' }"></ngx-loading> -->
+<loading *ngIf="loading"></loading>
