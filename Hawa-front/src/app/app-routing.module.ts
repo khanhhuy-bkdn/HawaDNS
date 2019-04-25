@@ -5,7 +5,7 @@ const routes: Routes = [
     path: 'release-notes',
     loadChildren: 'app/modules/release-notes/release-notes.module#ReleaseNotesModule',
   },
-  // { path: 'pages', loadChildren: './pages/pages.module#PagesModule' },
+  { path: 'pages', loadChildren: './pages/pages.module#PagesModule' },
   // {
   //   path: 'auth',
   //   loadChildren: './auth/auth.module#NgxAuthModule',
@@ -25,7 +25,7 @@ const routes: Routes = [
   //   ],
   // },
 
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'pages', pathMatch: 'full' },
   // { path: 'not-found', loadChildren: './pages/miscellaneous/miscellaneous.module#MiscellaneousModule'},
   // { path: '**', redirectTo: 'not-found' },
 ];

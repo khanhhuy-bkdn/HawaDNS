@@ -12,9 +12,10 @@ import { SessionService } from '../../../../shared/service/session.service';
 import { ComingSoonComponent } from '../../../../shared/components/popups/coming-soon/coming-soon.component';
 import { SavePageToLoginRequiredService } from '../../../../shared/service/save-page-to-login-required.service';
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'app-sign-in-general',
   templateUrl: './sign-in-general.component.html',
-  styleUrls: ['./sign-in-general.component.scss']
+  styleUrls: ['./sign-in-general.component.scss'],
 })
 export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy {
   dialog;
@@ -37,11 +38,11 @@ export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy 
     private alertService: AlertService,
     private logServiceService: LogServiceService,
     private sessionService: SessionService,
-    private savePageToLoginRequiredService: SavePageToLoginRequiredService
+    private savePageToLoginRequiredService: SavePageToLoginRequiredService,
   ) {
     this.authForm = this.fb.group({
       username: ['', [Validators.required, CustomValidator.loginName]],
-      password: ['', [Validators.required, CustomValidator.password]]
+      password: ['', [Validators.required, CustomValidator.password]],
     });
 
     this.authForm.valueChanges
@@ -95,6 +96,7 @@ export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy 
       const credentials = this.authForm.value;
       this.userService.attemptAuth('loginweb', credentials.username, credentials.password)
         .subscribe(data => {
+          // tslint:disable-next-line:max-line-length
           // if (this.sessionService.currentSession && this.sessionService.currentSession.role && this.sessionService.currentSession.role === 'Admin') {
           //   this.router.navigate(['/pages/infor-search/list']);
           // } else {
@@ -112,17 +114,17 @@ export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy 
 
         },
           err => {
-            if (err._body && JSON.parse(err._body).errorCode == 'UserLoginIsNotActive') {
+            if (err._body && JSON.parse(err._body).errorCode === 'UserLoginIsNotActive') {
               return this.apiErrorCode = 'Tài khoản này đã bị khoá';
-            } else if (err._body && JSON.parse(err._body).errorCode == 'NotValidatedEmail') {
+            } else if (err._body && JSON.parse(err._body).errorCode === 'NotValidatedEmail') {
               // return this.apiErrorCode = 'Tài khoản chưa được xác thực email. Vui lòng xác thực email đăng kí';
               return this.apiErrorCode = 'Tài khoản này chưa được xác nhận. Vui lòng kiểm tra email và xác nhận đăng ký';
-            } else if (err._body && JSON.parse(err._body).errorCode == 'UserLoginInvalidUserNameOrPassword') {
+            } else if (err._body && JSON.parse(err._body).errorCode === 'UserLoginInvalidUserNameOrPassword') {
               return this.apiErrorCode = 'Nhập sai email hoặc mật khẩu';
             } else {
               return this.apiErrorCode = 'Đã xảy ra lỗi';
             }
-          })
+          });
     }
   }
 
@@ -130,7 +132,7 @@ export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy 
     this.nbDialogService
       .open(ComingSoonComponent, {
         context: {
-        }
+        },
       })
       .onClose.subscribe();
   }
