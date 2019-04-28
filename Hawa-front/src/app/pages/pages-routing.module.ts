@@ -6,6 +6,7 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     { path: '', redirectTo: 'infor-search' },
+    { path: 'infor-search', loadChildren: './infor-search/infor-search.module#InforSearchModule' },
     { path: '**', redirectTo: 'not-found' },
   ],
 }];

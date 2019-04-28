@@ -1,0 +1,62 @@
+.container-search {
+  padding: 1.25rem;
+
+  .filter-bar {
+    width: 250px;
+  }
+
+  .table-bar {
+    width: calc(100% - 250px);
+  }
+
+  .action-clear-filter {
+    color: #FF1B37;
+  }
+
+  .bulkhead {
+    border-bottom: 1px solid #f1eaea
+  }
+
+  .icon-view-detail {
+    outline: none;
+  }
+}
+
+.position-relative {
+  position: relative;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+  border-radius: 0;
+  border: none;
+  background-color: #F4F8F7;
+}
+:host /deep/ .ng-select .ng-arrow-wrapper .ng-arrow{
+  border-color: black transparent transparent !important;
+}
+
+
+.alert-danger-cus-component{
+  font-size: 100%;
+  color: #721c24;
+  background-color: #f8d7da;
+  text-align: center;
+}
+
+.icon-google-map{
+  cursor: pointer;
+}
+
+.icon-map{
+  margin-right: 15px;
+}
+
+.source{
+  margin-top: -7px;
+}
+
+table{
+  .commune-value__pad{
+    padding-top: 4px;
+  }
+}
