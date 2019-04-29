@@ -5,7 +5,7 @@ import {
     Http,
     Response,
     URLSearchParams,
-    ResponseContentType
+    ResponseContentType,
 } from '@angular/http';
 // import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class ApiService {
         private http: Http,
         private sessionService: SessionService,
         private router: Router,
-        private alertService: AlertService
+        private alertService: AlertService,
     ) { }
 
     private setHeaders(): Headers {
@@ -95,7 +95,7 @@ export class ApiService {
     getFileHBC(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
         return this.http.get(`${environment.api_endpoint}${path}`, {
             headers: this.setHeaders(), search: params,
-            responseType: ResponseContentType.Blob
+            responseType: ResponseContentType.Blob,
         })
             .catch(this.formatErrors.bind(this))
             .map((res: Response) => {
@@ -103,7 +103,7 @@ export class ApiService {
                 const fileName = decodeURI(matches.split(';')[2].trim().slice(17));
                 return {
                     file: res.blob(),
-                    fileName: fileName
+                    fileName: fileName,
                 };
             });
     }
@@ -127,14 +127,14 @@ export class ApiService {
                 const fileName = decodeURI(matches.split(';')[2].trim().slice(17));
                 return {
                     file: res.blob(),
-                    fileName: fileName
+                    fileName: fileName,
                 };
             });
     }
     put(path: string, body: Object = {}): Observable<any> {
         return this.http
             .put(`${environment.api_endpoint}${path}`, JSON.stringify(body), {
-                headers: this.setHeaders()
+                headers: this.setHeaders(),
             })
             .catch(this.formatErrors.bind(this))
             .map((res: Response) => res.json());
@@ -152,7 +152,7 @@ export class ApiService {
     postFile(path: string, formData: FormData): Observable<any> {
         return this.http
             .post(`${environment.api_endpoint}${path}`, formData, {
-                headers: this.setHeadersFile()
+                headers: this.setHeadersFile(),
             })
             .catch(this.formatErrors.bind(this))
             .map((res: Response) => res.json());
@@ -161,7 +161,7 @@ export class ApiService {
     delete(path): Observable<any> {
         return this.http
             .delete(`${environment.api_endpoint}${path}`, {
-                headers: this.setHeaders()
+                headers: this.setHeaders(),
             })
             .catch(this.formatErrors.bind(this))
             .map((res: Response) => res.json());
@@ -180,8 +180,8 @@ export class ApiService {
                 {
                     headers: new Headers({
                         'Content-Type': 'application/json',
-                    })
-                }
+                    }),
+                },
             )
             .catch(this.formatErrors.bind(this))
             .map((res: Response) => res.json());

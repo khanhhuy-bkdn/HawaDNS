@@ -12,9 +12,9 @@ export const environment = {
   production: false,
   recaptChaKey: '6LesxoQUAAAAADjIwJRaSvvXMgIU5ju2ObUDnpTx',
   // build thường
-  //api_endpoint: 'http://115.79.35.119:9010/api/hawa/',
+  // api_endpoint: 'http://115.79.35.119:9010/api/hawa/',
   api_endpoint: 'http://localhost:50850/api/hawa/',
-  
+
   // prod
   // api_endpoint: 'http://112.78.1.136:81/api/hawa/',
 };
