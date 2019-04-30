@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AA\" />
+    <Folder Include="AD\" />
+    <Folder Include="AP\" />
+    <Folder Include="AR\" />
+    <Folder Include="GE\" />
+    <Folder Include="IC\" />
+    <Folder Include="Attributes\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+</Project>
