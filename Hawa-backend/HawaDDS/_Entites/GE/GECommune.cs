@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using _Entities.AR;
 
 //using _Entities.AR;
 using _Entities.Interfaces;
@@ -30,6 +31,6 @@ namespace _Entities.GE
 
         [ForeignKey("FK_GEDistrictID")] public virtual GEDistrict GEDistrict { get; set; }
 
-        //[InverseProperty("GECommune")] public ICollection<ARContactForestCommuneGroup> ARContactForestCommuneGroups { get; set; }
+        [InverseProperty("GECommune")] public ICollection<ARContactForestCommuneGroup> ARContactForestCommuneGroups { get; set; }
     }
 }

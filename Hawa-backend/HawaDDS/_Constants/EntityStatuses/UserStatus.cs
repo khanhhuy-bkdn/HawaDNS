@@ -1,4 +1,4 @@
-﻿namespace Bys.Constants.EntityStatuses
+﻿namespace _Constants.EntityStatuses
 {
     public class UserStatus
     {

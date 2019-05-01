@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language id="default">
+    <Labels>
+
+    </Labels>
+    <Mail>
+      <Subject>
+        <XacNhanDangKyTaiKhoanThanhCong>Xác nhận đăng ký tài khoản thành công</XacNhanDangKyTaiKhoanThanhCong>
+        <ThongBaoMatKhau>Kích hoạt tài khoản HAWA DDS</ThongBaoMatKhau>
+        <YeuCauDatLaiMatKhau>Yêu cầu đặt lại mật khẩu tài khoản HAWA DDS</YeuCauDatLaiMatKhau>
+      </Subject>
+      <PurposeDesc>
+      </PurposeDesc>
+    </Mail>
+    <Notification>
+      <Message>
+      </Message>
+    </Notification>
+  </language>
+</languages>

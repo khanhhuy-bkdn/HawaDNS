@@ -5,7 +5,7 @@ using _Dtos.ServiceResults;
 using _Infrastructure.ApiControllers;
 using _Infrastructure.ApiResults;
 using _Infrastructure.Filters;
-using Bys.Abstractions.Services.AD;
+using _Abstractions.Services.AD;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

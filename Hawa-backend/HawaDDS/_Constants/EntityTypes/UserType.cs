@@ -1,4 +1,4 @@
-﻿namespace Bys.Constants.EntityTypes
+﻿namespace _Constants.EntityTypes
 {
     public class UserType
     {

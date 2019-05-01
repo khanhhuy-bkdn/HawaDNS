@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.4" />
+    <PackageReference Include="MimeKit" Version="2.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\_Abstracttions\_Abstracttions.csproj" />
+    <ProjectReference Include="..\_Dtos\_Dtos.csproj" />
+    <ProjectReference Include="..\_Entites\_Entites.csproj" />
+    <ProjectReference Include="..\_EntityFrameworkCore\_EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\_Globalization\_Globalization.csproj" />
+    <ProjectReference Include="..\_RazorTemplates\_RazorTemplates.csproj" />
+  </ItemGroup>
+
+</Project>
