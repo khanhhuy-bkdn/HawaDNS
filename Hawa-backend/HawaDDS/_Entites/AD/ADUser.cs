@@ -2,10 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Bys.Entities.GE;
-using Bys.Entities.Interfaces;
+using _Entities.GE;
+using _Entities.Interfaces;
 
-namespace Bys.Entities.AD
+namespace _Entities.AD
 {
     [Table("ADUsers")]
     public class ADUser : IFullEntity

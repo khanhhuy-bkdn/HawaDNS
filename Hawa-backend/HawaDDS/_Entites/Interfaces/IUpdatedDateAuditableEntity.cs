@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bys.Entities.Interfaces
+namespace _Entities.Interfaces
 {
     public interface IUpdatedDateAuditableEntity
     {

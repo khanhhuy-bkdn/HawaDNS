@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\AD\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\_Common\_Common.csproj" />
+    <ProjectReference Include="..\_Dtos\_Dtos.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Bys.Entities.Interfaces;
+using _Entities.Interfaces;
 
-namespace Bys.Entities.GE
+namespace _Entities.GE
 {
     [Table("GECountrys")]
     public partial class GECountry : IEntity, IStatusableEntity

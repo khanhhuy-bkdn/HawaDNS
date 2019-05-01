@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Bys.Entities.AR;
-using Bys.Entities.Interfaces;
+//using _Entities.AR;
+using _Entities.Interfaces;
 
-namespace Bys.Entities.GE
+namespace _Entities.GE
 {
     [Table("GECommunes")]
     public class GECommune : IEntity, IStatusableEntity
@@ -30,6 +30,6 @@ namespace Bys.Entities.GE
 
         [ForeignKey("FK_GEDistrictID")] public virtual GEDistrict GEDistrict { get; set; }
 
-        [InverseProperty("GECommune")] public ICollection<ARContactForestCommuneGroup> ARContactForestCommuneGroups { get; set; }
+        //[InverseProperty("GECommune")] public ICollection<ARContactForestCommuneGroup> ARContactForestCommuneGroups { get; set; }
     }
 }

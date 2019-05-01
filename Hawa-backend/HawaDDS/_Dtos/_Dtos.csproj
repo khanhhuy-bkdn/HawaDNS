@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="AD\InputDtos\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\_Common\_Common.csproj" />
+  </ItemGroup>
+
 </Project>
