@@ -31,7 +31,7 @@ namespace _Infrastructure.ContainerConfigs
                         options.Filters.Add(typeof(AuditActionFilter));
                     }
                 )
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddRazorOptions(
                     options =>
                     {
