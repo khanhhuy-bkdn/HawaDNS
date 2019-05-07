@@ -1,0 +1,250 @@
+<div class="wrapper p-4">
+  <div class="wrapper__head mb-4">
+    <div class="heading d-flex">
+      <span class="center-parent">
+        <img src="assets/images/back.png" alt="" width="13px" class="cursor-pointer" (click)="routerBack()" title="Trở về">
+      </span>
+      <h4 class="mb-0 text-uppercase font-w-600 pl-2">thông tin người dùng</h4>
+    </div>
+    <div class="title d-flex justify-content-between align-items-end">
+      <h6 class="mb-0">
+        <strong>(Cá nhân/Hộ gia đình)</strong>
+      </h6>
+      <div class="button">
+        <ng-container *ngIf="action == 'create'">
+          <button nbButton type="button" class="cursor-pointer text-uppercase button__save" (click)="submitForm('create')">Lưu</button>
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1 abort-bg button__cancel" (click)="cancel()">Hủy</button>
+        </ng-container>
+        <ng-container *ngIf="action == 'info'">
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1 button__save" (click)="changePassword()">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            Thay đổi mật khẩu
+          </button>
+          <button nbButton type="button" class="cursor-pointer text-uppercase button__save ml-1" (click)="editForm()">
+            chỉnh sửa
+          </button>
+        </ng-container>
+        <ng-container *ngIf="action == 'edit'">
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1 button__save" (click)="changePassword()">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+            Thay đổi mật khẩu
+          </button>
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1 button__save" (click)="submitForm('edit')">lưu</button>
+          <button nbButton type="button" class="cursor-pointer text-uppercase ml-1 abort-bg button__cancel" (click)="cancel()">Hủy</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper__body" *ngIf="createUserForm">
+    <!-- <div class="infomation-header d-flex py-3 pl-4">
+      <div [class.infomation-header__active]="isShowBasic" [class.cursor-pointer]="!isShowBasic"
+        [class.infomation-header__underline-basic]="isShowBasic" class="mr-4 infomation-header__basic" (click)="toggleForm(isShowBasic)">
+        Thông tin cơ bản
+      </div>
+      <div [class.infomation-header__active]="!isShowBasic" [class.cursor-pointer]="isShowBasic"
+        [class.infomation-header__underline-account]="!isShowBasic" class="mr-4 infomation-header__account" (click)="toggleForm(isShowBasic)">
+        Thông tin tài khoản
+      </div>
+    </div> -->
+    <div class="infomation-content py-3 pl-4">
+      <div class="py-2" [class.row]="!isShowBasic">
+        <div *ngIf="!isShowBasic" class="col-md-3 user-avatar mb-3 d-flex justify-content-center align-items-center">
+          <div class="user-avatar__img d-flex justify-content-center align-items-center">
+            <img [src]="profileAvatar" alt="" class="w-100">
+            <span class="icon-change cursor-pointer shadow-box" (click)="changeProfilePicButton.click()" *ngIf="action !== 'info'">
+              <img src="assets/images/camera.png" alt="" class="w-100">
+              <input class="d-none" accept="image/*" type="file" #changeProfilePicButton (change)="changeProfilePic($event)" />
+            </span>
+          </div>
+        </div>
+        <div [class.col-md-9]="!isShowBasic" [class.mb-3]="!isShowBasic">
+          <form [formGroup]="createUserForm" [class.infomation-content--responsive]="isShowBasic" class="d-flex flex-wrap">
+            <ng-container *ngIf="isShowBasic">
+              <div class="modify-avatar mr-5">
+                <div class="user-avatar d-flex justify-content-center align-items-center">
+                  <div class="user-avatar__img d-flex justify-content-center align-items-center">
+                    <img [src]="profileAvatar" alt="" class="w-100" [class.border-img-create]="action === 'create'">
+                    <span class="icon-change cursor-pointer shadow-box" (click)="changeProfilePicButton.click()" *ngIf="action !== 'info'">
+                      <img src="assets/images/camera.png" alt="" class="w-100">
+                      <input class="d-none" accept="image/*" type="file" #changeProfilePicButton (change)="changeProfilePic($event)" />
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="left-side mr-5">
+                <div class="mb-3">
+                  <div class="d-flex align-items-center">
+                    <label for="name" class="mb-0 w-10" [class.required]="action !== 'info'">Họ và tên:</label>
+                    <input *ngIf="action !== 'info'" nbInput type="text" id="name" name="name" class="" formControlName="name"
+                      [class.validate-false]="formErrors.name" />
+                    <div class="field--view" *ngIf="action === 'info'">{{ infoUser.organizationName }}</div>
+                  </div>
+                  <div class="invalid-feedback d-flex" *ngIf="formErrors.name">
+                    <label class="w-10"></label>
+                    <span>{{formErrors.name}}</span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex align-items-center">
+                    <label for="phone" class="mb-0 w-10" [class.required]="action !== 'info'">Số điện thoại:</label>
+                    <input *ngIf="action !== 'info'" appInputNumber nbInput type="text" id="phone" name="phone" min=0
+                      step=1 class="" formControlName="phone" />
+                    <div class="field--view" *ngIf="action === 'info'">{{ infoUser.phone }}</div>
+                  </div>
+                  <div class="invalid-feedback d-flex" *ngIf="formErrors.phone">
+                    <label class="w-10"></label>
+                    <span>{{formErrors.phone}}</span>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <div class="d-flex align-items-center">
+                    <label for="identification" class="mb-0 w-10">CMND/Thẻ căn cước:</label>
+                    <input *ngIf="action !== 'info'" nbInput appInputNumber type="text" id="identification" name="identification"
+                      min="0" step="1" class="" formControlName="identification" />
+                    <div class="field--view" *ngIf="action === 'info'">{{ infoUser.identityCard }}</div>
+                  </div>
+                  <!-- <div class="invalid-feedback d-flex" *ngIf="formErrors.identification">
+                    <label class="w-10"></label>
+                    <span>{{formErrors.identification}}</span>
+                  </div> -->
+                </div>
+                <div class="mb-3">
+                  <div class="d-flex align-items-center">
+                    <label for="email" class="mb-0 w-10" [class.required]="action !== 'info'">Email tài khoản:</label>
+                    <!-- <input *ngIf="action !== 'info'" nbInput type="email" id="email" name="email" class=""
+                      formControlName="email" /> -->
+                    <div class="field--view">
+                      <a href="mailto:{{ infoUser.email }}?Subject=HAWA%20DDS" target="_blank">{{ infoUser.email }}</a>
+                    </div>
+                  </div>
+                  <div class="invalid-feedback d-flex" *ngIf="formErrors.email">
+                    <label class="w-10"></label>
+                    <span>{{formErrors.email}}</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="address right-side">
+                <h6 class="text-uppercase">địa chỉ liên hệ</h6>
+                <div class="pr-3 pl-3 address-container">
+                  <div class="d-flex align-items-center mb-3">
+                    <label for="province" class="mb-0 mr-4 mr-1">- Tỉnh/Thành phố:</label>
+                    <div class=" minwidth">
+                      <ng-container *ngIf="action !== 'info'">
+                        <select name="province" id="province" formControlName="province" class="select-control"
+                          (change)="getDistricts($event.target.value)">
+                          <option value="null">---Chọn---</option>
+                          <option *ngFor="let province of listOfProvince; index as i" [value]="province.key">
+                            {{ province.text }}
+                          </option>
+                        </select>
+                      </ng-container>
+                      <ng-container *ngIf="action == 'info'">
+                        <div class="selectbox--view">
+                          {{ infoUser.stateProvince ? infoUser.stateProvince.text : '' }}
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-3">
+                    <label for="district" class="mb-0 mr-4 mr-1">- Quận/Huyện:</label>
+                    <div class=" minwidth">
+                      <ng-container *ngIf="action !== 'info'">
+                        <select name="district" id="district" formControlName="district" class="select-control"
+                          [class.not-allowed]="isDisableDistrict" (change)="getWards($event.target.value)">
+                          <option value="null">---Chọn---</option>
+                          <option *ngFor="let district of listOfDistrict; index as i" [value]="district.key">
+                            {{ district.text }}
+                          </option>
+                        </select>
+                      </ng-container>
+                      <ng-container *ngIf="action == 'info'">
+                        <div class="selectbox--view">
+                          {{ infoUser.district ? infoUser.district.text : '' }}
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-3">
+                    <label for="ward" class="mb-0 mr-4 mr-1">- Phường/Xã:</label>
+                    <div class=" minwidth">
+                      <ng-container *ngIf="action !== 'info'">
+                        <select name="ward" id="ward" formControlName="ward" (change)="getFullAddress()" class="select-control"
+                          [class.not-allowed]="isDisableWard">
+                          <option value="null">---Chọn---</option>
+                          <option *ngFor="let ward of listOfWard; index as i" [value]="ward.key">
+                            {{ ward.text }}
+                          </option>
+                        </select>
+                      </ng-container>
+                      <ng-container *ngIf="action == 'info'">
+                        <div class="selectbox--view">
+                          {{ infoUser.commune ? infoUser.commune.text : '' }}
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center mb-3">
+                    <label for="home" class="mb-0 mr-4 mr-1">- Số nhà/Tên đường</label>
+                    <input *ngIf="action !== 'info'" (input)="getFullAddress()" nbInput type="text" id="home" name="home"
+                      class="" formControlName="home" />
+                    <div class="field--view" *ngIf="action === 'info'">{{ infoUser.houseNumber }}</div>
+                  </div>
+
+                  <div class="d-flex align-items-center mb-2">
+                    <label for="" class="mb-0 mr-4 mr-1">- Địa chỉ:</label>
+                    <div class="full-address--maxwidth text-truncate" *ngIf="action !== 'info'">
+                      {{ createUserForm.get('fulladdress')?.value }}
+                    </div>
+                    <div class="field--view text-truncate" *ngIf="action == 'info'" style="white-space: unset;">
+                      {{ infoUser.address ? infoUser.address : '' }}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!isShowBasic">
+              <!-- <div class="d-flex flex-column disabled-view">
+                <div class="disabled-view__cover"></div>
+                <div class="mb-3">
+                  <div class="d-flex align-items-center">
+                    <label for="email" class="mb-0 w-10" [class.required]="action !== 'info'">Email tài khoản:</label>
+                    <input nbInput type="email" id="email" name="email" class="" formControlName="email" />
+                  </div>
+                  <div class="invalid-feedback d-flex" *ngIf="formErrors.email">
+                    <label class="w-10"></label>
+                    <span>{{formErrors.email}}</span>
+                  </div>
+                </div>
+                <div class="mb-3" *ngIf="action !== 'create'">
+                  <div class=" d-flex align-items-center disabled-status">
+                    <label for="" class="mb-0 w-10">Loại người dùng:</label>
+                    <div class="field--view">{{ infoUser.type?.text }}</div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center mb-3 disabled-rating">
+                  <label for="" class="mb-0 w-10">T/tin đánh giá (rating)</label>
+                  <rate-star [score]="5" [step]="0.5" [color]="" [default]="infoUser?.evaluate" (newvalue)="getRateValue($event)"></rate-star>
+                  <div class="curver-rating" *ngIf="true"></div>
+                </div>
+              </div> -->
+            </ng-container>
+          </form>
+          <div class="change-password" *ngIf="!isShowBasic && action == 'edit'">
+            <button nbButton type="button" class="form-button" (click)="changePassword()">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+              Thay đổi mật khẩu
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="action--view" *ngIf="action == 'info'"></div> -->
+    </div>
+  </div>
+</div>
