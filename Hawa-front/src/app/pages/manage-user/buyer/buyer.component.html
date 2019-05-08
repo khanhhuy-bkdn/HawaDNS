@@ -1,0 +1,216 @@
+<div class="wrapper">
+  <ng-container *ngIf="isShowListTable">
+    <h4 class="text-uppercase font-weight-bold">danh sách người dùng</h4>
+
+    <div class="search-bar d-flex flex-row-reverse">
+      <button nbButton (click)="redirectToOther()" type="button" class="text-uppercase ml-1 cursor-pointer"
+        [routerLink]="['./create']">
+        tạo mới
+      </button>
+      <div class="search-action d-flex">
+        <input nbInput class="search-action__input input-height--36" type="text" placeholder="Tìm kiếm theo tên, email, CMND, số điện thoại"
+          (keyup)="searchTerm$.next($event.target.value)" [(ngModel)]="searchTerm$.value" />
+        <button nbButton type="button" class="cursor-pointer search-action__submit d-flex justify-content-center">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between">
+      <div class="action-menu d-flex">
+        <div class="action-menu__item mr-3 d-flex flex-column">
+          <label for="typeofuser">Loại người dùng</label>
+          <select class="select-control" name="typeofuser" [(ngModel)]="userBuyerFilter.type" id="typeofuser">
+            <option [value]="''">Tất cả</option>
+            <option *ngFor="let type of userTypes" [value]="type.key">{{ type.code }}</option>
+          </select>
+        </div>
+        <div class="action-menu__item mr-3 d-flex flex-column">
+          <label for="province">Tỉnh/Thành phố</label>
+          <select class="select-control" name="province" id="province" [(ngModel)]="userBuyerFilter.stateProvinceID"
+            (change)="getDistricts($event.target.value)">
+            <option [value]="''">Tất cả</option>
+            <option *ngFor="let province of listOfProvince" [value]="province.key">{{ province.text }}</option>
+          </select>
+        </div>
+        <div class="action-menu__item mr-3 d-flex flex-column">
+          <label for="district">Quận/Huyện</label>
+          <select class="select-control" [class.not-allowed]="isDisableDistrict" [disabled]="isDisableDistrict" name="district"
+            id="district" [(ngModel)]="userBuyerFilter.districtID" (change)="getWards($event.target.value)">
+            <option [value]="''">Tất cả</option>
+            <option *ngFor="let district of listOfDistrict" [value]="district.key">{{ district.text }}</option>
+          </select>
+        </div>
+        <div class="action-menu__item mr-3 d-flex flex-column">
+          <label for="ward">Phường/Xã</label>
+          <select class="select-control" [class.not-allowed]="isDisableWard" [disabled]="isDisableWard" name="ward" id="ward"
+            [(ngModel)]="userBuyerFilter.communeID">
+            <option [value]="''">Tất cả</option>
+            <option *ngFor="let ward of listOfWard" [value]="ward.key">{{ ward.text }}</option>
+          </select>
+        </div>
+        <div class="action-menu__item mr-3 d-flex flex-column">
+          <label for="status">Trạng thái</label>
+          <select class="select-control" name="status" id="status" [(ngModel)]="userBuyerFilter.status">
+            <option [value]="''">Tất cả</option>
+            <option *ngFor="let status of userStatuss" [value]="status.key">{{ status.code }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="action-button d-flex flex-row-reverse align-items-end mt-3">
+        <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+        <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+      </div>
+    </div>
+
+    <div class="mt-3 shadow-box list-user">
+      <div class="">
+        <table class="w-100">
+          <thead>
+            <tr>
+              <th class="text-center index-checkbox">
+                <div class="d-flex align-items-center">
+                  <input class="ml-1 mr-2 checkbox__item" type="checkbox" (change)="onSelectAll($event.target.checked)" />
+                  <span>STT</span>
+                </div>
+              </th>
+              <th class="col-max">
+                <span class="cursor-pointer" (click)="sortName.click()">Họ và tên</span>&nbsp;
+                <span class="cursor-pointer" #sortName (click)="sortTable('name')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="col-max">
+                <span class="cursor-pointer" (click)="sortType.click()">Loại người dùng</span>&nbsp;
+                <span class="cursor-pointer" #sortType (click)="sortTable('type')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="col-max">
+                <span class="cursor-pointer" (click)="sortEmail.click()">Email</span>&nbsp;
+                <span class="cursor-pointer" #sortEmail (click)="sortTable('email')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="col-min">
+                <span>ĐT di động</span>
+              </th>
+              <!-- <th class="col-min">
+                <span>ĐT cố định</span>
+              </th> -->
+              <th class="col-min">
+                <span class="cursor-pointer" (click)="sortProvince.click()">Tỉnh/T Phố</span>&nbsp;
+                <span class="cursor-pointer" #sortProvince (click)="sortTable('province')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="col-min">
+                <span class="cursor-pointer" (click)="sortDistrict.click()">Quận/Huyện</span>&nbsp;
+                <span class="cursor-pointer" #sortDistrict (click)="sortTable('district')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="col-min">
+                <span class="cursor-pointer" (click)="sortWard.click()">Phường/Xã</span>&nbsp;
+                <span class="cursor-pointer" #sortWard (click)="sortTable('ward')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="modify-manipulation">
+                <span class="cursor-pointer" (click)="sortStatus.click()">Trạng thái</span>&nbsp;
+                <span class="cursor-pointer" #sortStatus (click)="sortTable('status')">
+                  <i class="fa fa-sort" aria-hidden="true"></i>
+                </span>
+              </th>
+              <th class="text-center modify-manipulation">
+                <span>Thao tác</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of userBuyerList; index as i">
+              <td class="text-center index-checkbox">
+                <div class="d-flex align-items-center">
+                  <input class="ml-1 mr-2 checkbox__item" type="checkbox" [class.invisible]="!user.status || user.status.key === 'Inactive'"
+                    [(ngModel)]="user.checked" />
+                  <span>{{ i+1 }}</span>
+                </div>
+              </td>
+              <td [title]="user.organizationName ? user.organizationName : ''" class="text-truncate col-max">
+                <a [routerLink]="['./info', user.id]" (click)="redirectToOther()">{{ user.organizationName }}</a>
+              </td>
+              <td [title]="user.type ? user.type.text : ''" class="text-truncate col-max">
+                {{ user.type?.text }}
+              </td>
+              <td [title]="user.email ? user.email : ''" class="text-truncate col-max">
+                <a href="mailto:{{ user.email }}?Subject=HAWA%20DDS" target="_blank">{{ user.email }}</a>
+              </td>
+              <td [title]="user.phone ? user.phone : ''" class="text-truncate col-min">
+                {{ user.phone }}
+              </td>
+              <!-- <td [title]="user.homePhone ? user.homePhone : ''" class="text-truncate">
+                {{ user.homePhone }}
+              </td> -->
+              <td [title]="user.stateProvince ? user.stateProvince.text : ''" class="text-truncate col-min">
+                {{ user.stateProvince?.text }}
+              </td>
+              <td [title]="user.district ? user.district.text : ''" class="text-truncate col-min">
+                {{ user.district?.text }}
+              </td>
+              <td [title]="user.commune ? user.commune.text : ''" class="text-truncate col-min">
+                {{ user.commune?.text }}
+              </td>
+              <td [title]="user.status ? user.status.text : ''" class="text-truncate modify-manipulation"
+                [class.inactive-text]="user.status && user.status.key === 'Inactive'">
+                {{ user.status?.text }}
+              </td>
+              <td class="modify-manipulation">
+                <div class="table-action d-flex justify-content-between pr-2 align-items-center">
+                  <span class="cursor-pointer table-action__detail text-warning" (click)="redirectToOther()" title="Xem chi tiết tài khoản"
+                    [routerLink]="['./info', user.id]">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  </span>
+                  <ng-container *ngIf="user.status && user.status.key !== 'Inactive'">
+                    <span class="cursor-pointer table-action__edit" (click)="redirectToOther()" title="Sửa thông tin tài khoản"
+                      [routerLink]="['./edit', user.id]">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </span>
+                    <span class="cursor-pointer table-action__delete text-danger" title="Vô hiệu hóa tài khoản" (click)="deActiveUsers(user.status, user.id, i)">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    </span>
+                    <span class="cursor-pointer table-action__permission text-secondary" title="Đặt lại mật khẩu tài khoản"
+                      (click)="resetPassword(user.id)">
+                      <i class="fa fa-key" aria-hidden="true"></i>
+                    </span>
+                  </ng-container>
+                  <!-- <ng-container *ngIf="user.status.key === 'Unapproved'">
+                    <span class="cursor-pointer table-action__approve" (click)="approveUser(user.id)">
+                      Duyệt tài khoản
+                    </span>
+                  </ng-container> -->
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="userBuyerList.length == 0">
+              <td colspan="10">
+                <h6 class="mb-0 text-center">Không có dữ liệu</h6>
+              </td>
+            </tr>
+            <loading *ngIf="loadingtable"></loading>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="w-100 p-4 mt-4">
+        <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!isShowListTable">
+    <router-outlet></router-outlet>
+  </ng-container>
+
+  <loading *ngIf="loading"></loading>
+
+</div>

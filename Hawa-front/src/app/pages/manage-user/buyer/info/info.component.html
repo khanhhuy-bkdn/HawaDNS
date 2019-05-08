@@ -1,0 +1,21 @@
+<h5 class="text-uppercase font-weight-bold">
+  <span>
+      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer" (click)="redirectBack()" title="Trở về">
+  </span>
+  xem chi tiết thông tin người dùng
+</h5>
+
+<div class="d-flex align-items-end pb-4 pl-4">
+  <div class="d-flex">
+    <h6 *ngIf="typeUser && typeUser == 'Personal'" class="mb-0 mr-5">(Cá nhân/Hộ gia đình)</h6>
+    <h6 *ngIf="typeUser && typeUser == 'Organization'" class="mb-0 mr-5">(Doanh nghiệp/Tổ chức/Hợp tác xã)</h6>
+  </div>
+</div>
+
+<ng-container *ngIf="typeUser == 'Personal'">
+  <personal (createdUser)="createdUser()" [action]="action" [infoUser]="infoUser"></personal>
+</ng-container>
+
+<ng-container *ngIf="typeUser == 'Organization'">
+  <organization (createdUser)="createdUser()" [action]="action" [infoUser]="infoUser"></organization>
+</ng-container>

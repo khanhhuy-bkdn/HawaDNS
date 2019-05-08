@@ -1,0 +1,28 @@
+<h5 class="text-uppercase font-weight-bold">
+  <span>
+    <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer" (click)="redirectBack()" title="Trở về">
+  </span>
+  chỉnh sửa thông tin người dùng
+</h5>
+
+<div class="option-bar d-flex align-items-end pb-4 pl-4">
+  <div class="option-user d-flex">
+    <h6 class="mb-0 mr-5">Loại người dùng</h6>
+    <div class="option-user__checkbox mr-5">
+      <input name="typyuser" id="personal" type="radio" value="Personal" (click)="toggleTypeOfUser('Personal')" />
+      <label for="personal" class="mb-0">Cá nhân/Hộ gia đình</label>
+    </div>
+    <div class="option-user__checkbox">
+      <input name="typyuser" id="organization" type="radio" value="Organization" (click)="toggleTypeOfUser('Organization')" />
+      <label for="organization" class="mb-0">Doanh nghiệp/Tổ chức/Hợp tác xã</label>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="typeUser == 'Personal'">
+  <personal (createdUser)="createdUser()" [action]="action" [infoUser]="infoUser"></personal>
+</ng-container>
+
+<ng-container *ngIf="typeUser == 'Organization'">
+  <organization (createdUser)="createdUser()" [action]="action" [infoUser]="infoUser"></organization>
+</ng-container>

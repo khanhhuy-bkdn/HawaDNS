@@ -122,47 +122,17 @@
         </div>
         <div class="w-50 final-sign-up">
           <div class="d-flex justify-content-center">
-            <re-captcha (resolved)="resolved($event)" [siteKey]="recaptChaKey"></re-captcha>
-
-            <!-- Gỗ gợp pháp-->
-            <!-- <re-captcha *ngIf="production" (resolved)="resolved($event)" siteKey="6LeXYYcUAAAAABhfWIO20enVBEi0g0xUMqe1yrgm"></re-captcha> -->
-          </div>
-          <div class="d-flex justify-content-center">
             <div class="d-flex align-items-center mt-3 width-captcha">
               <input id="rules" tabindex="12" type="checkbox" formControlName="agreeTerms" />
               <label class="pl-1 mb-0" for="rules">Bạn đã đồng ý với điều khoản của chúng tôi</label>
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <button nbButton [disabled]="captchaResponse ? false : true" [class.not-allowed]="captchaResponse ? false : true" class="text-uppercase w-100 mt-2 but-continue--font cursor-pointer width-captcha"
+            <button nbButton class="text-uppercase w-100 mt-2 but-continue--font cursor-pointer width-captcha"
               tabindex="10" (click)="submitForm()">
               đăng ký
             </button>
           </div>
-
-          <!-- <div class="w-100 d-flex sign-up-contact">
-            <div class="boundary"></div>
-            <div class="text-uppercase w-20 center-parent">hoặc</div>
-            <div class="boundary"></div>
-          </div>
-          <div class="w-100 mt-2 d-flex justify-content-between">
-            <div tabindex="6" class="w-45 pointer" (click)="signInComingSoon()">
-              <div class="d-flex contact-out center-parent">
-                <div>
-                  <img src="assets/images/icon-facebook.png" alt="" width="20px">
-                </div>
-                <div class="text-uppercase center-parent font-weight-bold but-content-medium pl-5">facebook</div>
-              </div>
-            </div>
-            <div tabindex="7" class="w-45 pointer" (click)="signInComingSoon()">
-              <div class="d-flex contact-out center-parent">
-                <div>
-                  <img src="assets/images/icon-google.png" alt="" width="20px">
-                </div>
-                <div class="text-uppercase enter-parent font-weight-bold but-content-medium pl-5">google</div>
-              </div>
-            </div>
-          </div> -->
         </div>
         <div class="w-100 center-parent bot--center-content mb-3 mt-4">
           <span tabindex="13" [routerLink]="['../../sign-in']">
