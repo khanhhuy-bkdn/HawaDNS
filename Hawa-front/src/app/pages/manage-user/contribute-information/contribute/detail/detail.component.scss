@@ -1,0 +1,127 @@
+.wrapper {
+  padding: 2.25rem 2.25rem 0.75rem;
+  .search-bar {
+    .search-action {
+      &__input {
+        background-color: #ffffff;
+        width: 25rem;
+        max-width: 25rem;
+      }
+  
+      &__submit {
+        max-width: 3rem;
+        padding: 0.5rem 1.5rem;
+      }
+    }
+  }
+  .border-bottom {
+    border-bottom: 1px solid #eeeeee;
+  }
+
+  .mr-10 {
+    margin-right: 10rem;
+  }
+
+  .rate-action {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 15px;
+    font-size: .8rem;
+  }
+
+  .star-evaluate {
+    color: #007bff;
+    font-size: 1rem;
+
+    &::after {
+      font-size: inherit;
+      font-family: FontAwesome;
+      display: inline-block;
+      content: "\f005";
+      color: #FFD700;
+    }
+  }
+
+  .status-action {
+    text-align: center;
+    color: #ffffff;
+    font-size: .8rem;
+    padding: .25rem;
+  }
+}
+
+.input-bg{
+  background-color: white;
+}
+
+
+.unapproved{
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.2rem;
+  font-size: 85%;
+  background-color: #e65140;
+  width: 84px;
+}
+.not-verified{
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.2rem;
+  font-size: 85%;
+  background-color: #fdbd3d;
+  width: 84px;
+}
+.approved{
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.2rem;
+  font-size: 85%;
+  background-color: #81c95a;
+  width: 84px;
+}
+.cancel{
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 0.2rem;
+  font-size: 85%;
+  background-color: #909191 ;
+  width: 84px;
+}
+.table-evaluate{
+  min-width: 110px;
+}
+.table-manipulation{
+  width: 70px;
+}
+.text-right__float{
+  float: right;
+}
+.star-high{
+  color: #ffc01e;
+}
+.manipulation{
+  text-align: center;
+  color: white;
+  padding: 0.1rem 0.1rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  // font-size: 10px!important;
+  font-size: 85%;
+  background-color: #2b8ee8;
+  width: 65px;
+}
+.fix-layout-table{
+  table-layout: fixed;
+}
+.opacity-none{
+  opacity: 0;
+  cursor: default;
+}

@@ -25,8 +25,8 @@ namespace _Services.Internal.Implementations
     /// </summary>
     public abstract class EmailSenderBase : IEmailSender
     {
-        public const string DefaultFromAddress = "phuong.vo@_vn";
-        public const string DefaultFromDisplayName = "BYS Team";
+        public const string DefaultFromAddress = "huy.nguyen@bys.vn";
+        public const string DefaultFromDisplayName = "Khanh Huy";
 
         private readonly SmtpConfig _config;
 

@@ -1,0 +1,173 @@
+<div class="wrapper">
+  <h4 class="text-uppercase font-weight-bold">
+    <span>
+      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer" [routerLink]="[ '/pages/contribute-information/contribute/list' ]" title="Trở về">
+    </span>
+    danh sách thông tin đóng góp
+  </h4>
+  <h6 class="font-weight-bold">
+    {{pagedResult?.extraData?.stateProvince?.text}}
+    <span *ngIf="pagedResult?.extraData?.stateProvince?.text && pagedResult?.extraData?.district?.text">|</span>
+    {{pagedResult?.extraData?.district?.text}}
+    <span *ngIf="(pagedResult?.extraData?.stateProvince?.text && pagedResult?.extraData?.commune?.text) || (pagedResult?.extraData?.district?.text && pagedResult?.extraData?.commune?.text)">|</span>
+    {{pagedResult?.extraData?.commune?.text}}
+  </h6>
+  <div class="search-bar d-flex flex-row-reverse">
+    <button nbButton type="button" class="text-uppercase ml-1 cursor-pointer" (click)="contributeInformation('create', null)">
+      đóng góp mới
+    </button>
+    <!-- <div class="search-action d-flex">
+      <input nbInput class="search-action__input input-bg" type="text" placeholder="Người đóng góp, Tên chủ thể, Email" (keyup)="searchTerm$.next($event.target.value)"
+      />
+      <button nbButton type="button" class="cursor-pointer search-action__submit d-flex justify-content-center">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div> -->
+    <div class="search-action d-flex">
+      <input nbInput class="search-action__input input-height--36" type="text" placeholder="Người đóng góp, Tên chủ thể, Email"
+        (keyup)="searchTerm$.next($event.target.value)" />
+      <button nbButton type="button" class="cursor-pointer search-action__submit d-flex justify-content-center">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between bg-white">
+    <div class="action-menu d-flex align-items-center">
+      <label for="contactStatuse" class="mb-0 mr-4">Trạng thái</label>
+      <select class="select-control" name="contactStatuse" id="contactStatuse" [(ngModel)]="contactStatuseFilter.contactStatus">
+        <option [value]="''">Tất cả</option>
+        <option *ngFor="let contactStatuse of contactStatuses" [value]="contactStatuse.key">{{ contactStatuse.code }}</option>
+      </select>
+    </div>
+    <div class="action-button d-flex flex-row-reverse align-items-end">
+      <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+      <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+    </div>
+  </div>
+  <div class="bg-white p-4 mt-3">
+    <div class="header-table d-flex flex-wrap py-3 border-bottom">
+      <p class="mb-0 font-weight-bold mr-10">Tổng thông tin đóng góp:&nbsp;
+        <span class="font-weight-normal">{{pagedResult?.extraData?.total}}</span>
+      </p>
+      <p class="mb-0 mr-5">Chưa duyệt: {{pagedResult?.extraData?.chuaDuyet}}</p>
+      <p class="mb-0 mr-5">Đang xác minh: {{pagedResult?.extraData?.dangXacMinh}}</p>
+      <p class="mb-0 mr-5">Đã duyệt: {{pagedResult?.extraData?.daDuyet}}</p>
+      <p class="mb-0 mr-5">Hủy bỏ: {{pagedResult?.extraData?.huyBo}}</p>
+    </div>
+    <div class="mt-4 shadow-box list-user">
+      <div class="">
+        <table class="w-100 fix-layout-table">
+          <thead>
+            <tr>
+              <th>
+                <span>Tên chủ thể</span>
+              </th>
+              <th>
+                <span>Người liên hệ</span>
+              </th>
+              <th>
+                <span>Điện thoại 1</span>
+              </th>
+              <th>
+                <span>Email</span>
+              </th>
+              <th>
+                <span>Người đóng góp</span>
+              </th>
+              <th>
+                <span>Ngày đóng góp</span>
+              </th>
+              <th class="table-evaluate">
+                <span>Thông tin đánh giá</span>
+              </th>
+              <th>
+                <span>Trạng thái</span>
+              </th>
+              <th class="table-manipulation">
+                <span>Thao tác</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of pagedResult.items">
+              <td class="text-truncate" [title]="item?.contactName ? item?.contactName : ''">
+                {{item?.contactName}}
+              </td>
+              <td class="text-truncate" [title]="item?.userContact ? item?.userContact : ''">
+                {{item?.userContact}}
+              </td>
+              <td class="text-truncate" [title]="item?.phone1 ? item?.phone1 : ''">
+                {{item?.phone1}}
+              </td>
+              <td class="text-truncate" [title]="item.email ? 'Gửi mail' : ''">
+                <a href="mailto:{{ item.email }}?Subject=HAWA%20DDS" target="_blank">{{ item.email }}</a>
+              </td>
+              <td class="text-truncate" [title]="item?.contributor?.organizationName ? item?.contributor?.organizationName : ''">
+                {{item?.contributor?.organizationName}}
+              </td>
+              <td [title]="item.contributeDate ? (item.contributeDate*1000 | date:'dd/MM/yyyy': '+0000') : ''">
+                {{item.contributeDate*1000 | date:'dd/MM/yyyy': '+0000'}}
+              </td>
+              <!-- <td>
+                <div class="d-flex align-items-center flex-wrap">
+                  <span class="star-evaluate">
+                    {{item.averageRating ? item.averageRating : '0'}}
+                  </span>
+                  &nbsp;&nbsp;
+                  <span class="cursor-pointer py-1 px-2 rate-action">
+                    Đánh giá
+                  </span>
+                </div>
+              </td> -->
+              <td>
+                <div class="d-flex text-right__float">
+                  <div>
+                    <i class="fa fa-star star-high"></i>
+                  </div>
+                  <div class="ml-1" style="width: 20px" [title]="item?.averageRating ? item?.averageRating : ''">{{item?.averageRating ? item?.averageRating : '0'}}</div>
+                  <div class="manipulation ml-1" [class.opacity-none]="(contributor === item?.contributor) || (item?.status?.key === 'HuyBo')"
+                    [class.cursor-pointer]="contributor !== item?.contributor && (item?.status?.key !== 'HuyBo')" (click)="evaluateContact(item)"
+                    title="Đánh giá">
+                    Đánh giá
+                  </div>
+                </div>
+              </td>
+              <td [title]="item?.status.text ? item?.status.text : ''">
+                <!-- <div class="status-action" [class.bg-warning]="item?.status?.key === 'ChuaDuyet'" [class.bg-secondary]="item?.status?.key === 'DangXacMinh'"
+                  [class.bg-danger]="item?.status?.key === 'DaDuyet'" [class.bg-success]="item?.status?.key === 'HuyBo'">
+                  {{item?.status?.text}}
+                </div> -->
+                <div *ngIf="item?.status?.key === 'ChuaDuyet'" class="unapproved">
+                  {{item?.status.text}}
+                </div>
+                <div *ngIf="item?.status?.key === 'DangXacMinh'" class="not-verified">
+                  {{item?.status.text}}
+                </div>
+                <div *ngIf="item?.status?.key === 'DaDuyet'" class="approved">
+                  {{item?.status.text}}
+                </div>
+                <div *ngIf="item?.status?.key === 'HuyBo'" class="cancel">
+                  {{item?.status.text}}
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-between px-2">
+                  <span [class.invisible]="item?.status?.key === 'HuyBo'" class="cursor-pointer text-warning" (click)="contributeInformation('view', item)" title="Xem chi tiết">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  </span>
+                  <span class="cursor-pointer table-action__delete text-danger" (click)="deleteContribute(item?.id)" title="Xóa">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="pagedResult && (pagedResult.items || []).length === 0" class="text-center">Không có dữ liệu</div>
+      <div class="w-100 px-4">
+        <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+      </div>
+
+    </div>
+  </div>

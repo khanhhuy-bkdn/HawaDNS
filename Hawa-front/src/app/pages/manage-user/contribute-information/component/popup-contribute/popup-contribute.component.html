@@ -1,0 +1,214 @@
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup shadow-box py-3 px-4 w-80">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup(false)">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+
+    <div class="header-popup mb-3 d-flex justify-content-between align-items-end flex-wrap" [class.pb-3]="action == 'info'" [class.border-bottom]="action == 'info'">
+      <div class="header-popup__title">
+        <h5 class="mb-0 mr-3 text-center d-inline-block text-uppercase font-weight-bold">
+          chi tiết thông tin đóng góp
+        </h5>
+        <div class="text-uppercase status d-inline-block py-3 px-4"
+        [class.bg-warning]="true" [class.bg-secondary]="false" [class.bg-danger]="false" [class.bg-success]="false">
+          chưa duyệt
+        </div>
+      </div>
+      <div class="header-popup__control d-flex flex-wrap flex-row-reverse mt-2">
+        <button nbButton type="button" class="cursor-pointer text-uppercase ml-1">bắt đầu xác minh</button>
+        <button nbButton type="button" class="cursor-pointer text-uppercase ml-1">duyệt</button>
+        <button nbButton type="button" class="cursor-pointer text-uppercase">hủy bỏ</button>
+      </div>
+    </div>
+
+    <form action="" [formGroup]="detailContributeForm">
+      <div class="content-popup row">
+        <div class="col-md-6 mt-3 left-side">
+
+          <h6 class="text-uppercase">thông tin chung</h6>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="title" class="mb-0 w-10">Tiêu đề đóng góp:</label>
+              <input nbInput type="text" id="title" name="title" class="w-60" formControlName="title" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="target" class="required mb-0 w-10">Đối tượng liên hệ:</label>
+              <input nbInput type="text" id="target" name="target" class="w-60" formControlName="target" />
+            </div>
+            <div class="invalid-feedback d-flex" *ngIf="formErrors.target">
+              <label class="w-10"></label>
+              <span>{{formErrors.target}}</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="host" class="required mb-0 w-10">Tên chủ thể:</label>
+              <input nbInput type="text" id="host" name="host" class="w-60" formControlName="host" />
+            </div>
+            <div class="invalid-feedback d-flex" *ngIf="formErrors.host">
+              <label class="w-10"></label>
+              <span>{{formErrors.host}}</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="acronymname" class="mb-0 w-10">Tên viết tắt:</label>
+              <input nbInput type="text" id="acronymname" name="acronymname" class="w-60" formControlName="acronymname" />
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6 mt-3 right-side">
+          <h6 class="text-uppercase">địa chỉ liên hệ</h6>
+
+          <div class="d-flex align-items-center mb-3">
+            <label for="province" class="mb-0">Tỉnh/Thành phố:</label>
+            <div class=" minwidth w-50">
+              <select name="province" id="province" formControlName="province" class="select-control w-100">
+                <option value="null">---Chọn---</option>
+                <option *ngFor="let province of listOfProvince; index as i" [value]="province.key">
+                  {{ province.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-3">
+            <label for="district" class="mb-0">Quận/Huyện:</label>
+            <div class=" minwidth w-50">
+              <select name="district" id="district" formControlName="district" class="select-control w-100">
+                <option value="null">---Chọn---</option>
+                <option *ngFor="let district of listOfDistrict; index as i" [value]="district.key">
+                  {{ district.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-3">
+            <label for="ward" class="mb-0">Phường/Xã:</label>
+            <div class=" minwidth w-50">
+              <select name="ward" id="ward" formControlName="ward" class="select-control w-100">
+                <option value="null">---Chọn---</option>
+                <option *ngFor="let ward of listOfWard; index as i" [value]="ward.key">
+                  {{ ward.text }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="houseNo" class="mb-0 w-10">Số nhà, Tên đường:</label>
+              <input nbInput type="text" id="houseNo" name="houseNo" class="w-60" formControlName="houseNo" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="address" class="mb-0 w-10">Địa chỉ:</label>
+              <input nbInput type="text" id="address" name="address" class="w-60" formControlName="address" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="content-popup row">
+        <div class="col-md-6 mt-3 left-side">
+          <h6 class="text-uppercase">thông tin liên hệ</h6>
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="contact" class="required mb-0 w-10">Người liên hệ:</label>
+              <input nbInput type="text" id="contact" name="contact" class="w-60" formControlName="contact" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="firstPhone" class="required mb-0 w-10">Điện thoại 1:</label>
+              <input nbInput type="number" id="firstPhone" name="firstPhone" class="w-60" formControlName="firstPhone" />
+            </div>
+            <div class="invalid-feedback d-flex" *ngIf="formErrors.phone">
+              <label class="w-10"></label>
+              <span>{{formErrors.phone}}</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="secondPhone" class="mb-0 w-10">Điện thoại 2:</label>
+              <input nbInput type="number" id="secondPhone" name="secondPhone" class="w-60" formControlName="secondPhone" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="email" class="mb-0 w-10">Email:</label>
+              <input nbInput type="text" id="email" name="email" class="w-60" formControlName="email" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-center">
+              <label for="website" class="mb-0 w-10">Website:</label>
+              <input nbInput type="text" id="website" name="website" class="w-60" formControlName="website" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mt-3 right-side">
+          <h6 class="text-uppercase">ghi chú + đính kèm</h6>
+          <div class="mb-3">
+            <div class="d-flex align-items-start">
+              <label for="note" class="mb-0 w-10">Ghi chú thêm:</label>
+              <!-- <input nbInput type="text" id="note" name="note" class="" formControlName="note" /> -->
+              <textarea name="note" id="note" rows="3" formControlName="note" class="w-60"></textarea>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex align-items-start">
+              <label for="" class="mb-0 w-10">Ảnh đính kèm:</label>
+              <div>
+
+                <div class="image-demo-img">
+                  <input type="file" accept="image/*" class="d-none" multiple #uploadImageAttach (change)="uploadImage($event)">
+
+                  <ng-container *ngFor="let url of attachmentImages; index as i">
+                    <div class="display-img" (click)="viewFullScreenImage(attachmentImages, i)">
+                      <img [src]="url.largeSizeUrl">
+                      <div class="icon-delete-image" (click)="deleteImage(url)">
+                        <i class="fa fa-times delete-icon" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="attachment-image cursor-pointer d-flex justify-content-center align-items-center flex-column"
+                    (click)="uploadImageAttach.click()">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <p class="mb-0">Image</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+    <div class="footer-popup">
+      <div class="text-right mb-1" *ngIf="action == 'info'">
+        <em>Được <u><a class="cursor-pointer">Nguyễn B</a></u> đóng góp vào ngày 15/10/2018</em>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button nbButton type="button" class="text-uppercase mr-1">lưu</button>
+        <button nbButton type="button" class="text-uppercase abort-bg">hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
