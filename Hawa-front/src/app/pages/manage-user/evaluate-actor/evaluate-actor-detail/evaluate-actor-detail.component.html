@@ -1,0 +1,129 @@
+<div class="wrapper">
+  <h5 class="text-uppercase font-weight-bold">
+    <span>
+      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer no-outline" [routerLink]="['/pages/evaluate-actor']" title="Trở về">
+    </span>
+    chi tiết đánh giá chủ rừng
+  </h5>
+  <div class="shadow-box">
+
+    <div class="p-4 detail_contact bg-white">
+      <div class="font-weight-bold font-size--15px">Thông tin chủ rừng</div>
+      <div class="font-weight-bold mt-2">
+        Lô {{detailActorManagerForest?.forestPlot?.plotCode}} | Khoảnh {{detailActorManagerForest?.forestPlot?.subCompartment?.code}} | Tiểu khu {{detailActorManagerForest?.forestPlot?.compartment?.code}}
+        | {{detailActorManagerForest?.forestPlot?.commune?.text}} | {{detailActorManagerForest?.forestPlot?.district?.text}} | {{detailActorManagerForest?.forestPlot?.stateProvince?.text}}
+      </div>
+      <div class="d-flex w-100 mt-4 mb-2">
+        <div style="min-width: 120px; width: 33%" class="center-parent">
+          <img [src]="detailActorManagerForest?.avatar ? detailActorManagerForest.avatar.thumbSizeUrl : 'assets/images/avatar.svg'"
+            [alt]="detailActorManagerForest?.name" width="150px" height="150px" class="img-avatar">
+        </div>
+        <div style="min-width: 100px; width: 17%">
+          <div class="mt-3">Tên:</div>
+          <div class="mt-3">Loại chủ rừng:</div>
+          <div class="mt-3">Email:</div>
+          <div class="mt-3">Điện thoại:</div>
+          <div class="mt-3">Website:</div>
+        </div>
+        <div style="width: 50%">
+          <div class="mt-3">{{detailActorManagerForest?.name}}</div>
+          <div class="mt-3">{{detailActorManagerForest?.type?.name}}</div>
+          <div class="mt-3">
+            <a href="mailto:{{ detailActorManagerForest?.email }}?Subject=HAWA%20DDS" target="_blank">{{ detailActorManagerForest?.email }}</a>
+          </div>
+          <div class="mt-3">{{detailActorManagerForest?.phone}}</div>
+          <div class="mt-3">
+            <a href="http://{{detailActorManagerForest?.website}}" target="_blank">{{detailActorManagerForest?.website}}</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="px-4 pb-4 content">
+      <div class="row title">
+        <div class="col-md-4 d-flex flex-column align-items-center left-title pb-2">
+          <div class="pt-4">
+            <h5 class="text-capitalize m-0">đánh giá trung bình</h5>
+            <div class="score-rate text-center">
+              {{detailActorManagerForest?.averageRating}}/5
+            </div>
+            <div class="star-bar text-center">
+              <rate-star [change]="averageRatingRounding" [disabledRate]="true" [name]="'percent'" [score]="5" [step]="0.5" [color]=""
+                [default]="averageRatingRounding"></rate-star>
+            </div>
+            <p class="text-center">
+              ({{pagedResultReview?.total}} nhận xét)
+            </p>
+          </div>
+        </div>
+        <div class="col-md-8 right-title pt-4">
+          <ng-container *ngIf="detailActorManagerForest">
+            <ng-container *ngFor="let aggregateOfRating of (detailActorManagerForest.aggregateOfRatings || [])">
+              <div class="d-flex rate-bar mt-1">
+                <div>
+                  {{aggregateOfRating.rating}}
+                </div>
+                <div class="pl-1">
+                  <i class="fa fa-star star-high icon-start"></i>
+                </div>
+                <div class="center-parent pl-1 w-40">
+                  <nb-progress-bar class="progress w-100" [value]="aggregateOfRating.percent" status="success" size="xs"></nb-progress-bar>
+                </div>
+                <div class="pl-1">
+                  {{aggregateOfRating.percent}} %
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div *ngIf="pagedResultReview && pagedResultReview.items">
+        <div class="review-list px-4 pb-3 mt-2" *ngFor="let itemComment of (pagedResultReview.items || []); let i = index">
+          <div class="d-flex flex-row-reverse">
+            <span *ngIf="!(itemComment && itemComment.hidden)" class="action text-center bg-secondary cursor-pointer" (click)="actionEvaluate('Ẩn', itemComment?.id)">Ẩn</span>
+            <span *ngIf="itemComment && itemComment.hidden" class="action text-center cursor-pointer show__bg" (click)="actionEvaluate('Hiện', itemComment?.id)">Hiện</span>
+            <span class="action text-center cursor-pointer hidden__bg" (click)="actionEvaluate('Xóa', itemComment?.id)">Xóa</span>
+          </div>
+          <div class="row">
+            <div class="col-md-2 d-flex">
+              <div class="index__pad">
+                {{pagedResultComment?.currentPage * pagedResultComment?.pageSize + i + 1 }}.
+              </div>
+              <div class="text-center pl-2 info-userReivew__width">
+                <div>
+                  <!-- class="d-flex" -->
+                  <div>
+                    <img [src]="itemComment?.reviewUser?.avatar?.thumbSizeUrl ? itemComment?.reviewUser?.avatar?.thumbSizeUrl : 'assets/images/avatar.svg'"
+                      [alt]="itemComment?.reviewUser?.avatar?.thumbSizeUrl" width="40px" height="40px" class="img-avatar">
+                  </div>
+                  <div class="center-parent pl-2">
+                    {{itemComment?.reviewUser?.organizationName}}
+                  </div>
+                </div>
+                <div class="mt-1 font-time">
+                  <i>{{itemComment?.reviewDate === 0 ? '' : (itemComment?.reviewDate)*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div>
+                <span>{{itemComment?.rating}}</span>
+                <span class="mr-2 ml-1 star">
+                  <i class="fa fa-star star-high icon-start"></i>
+                </span>
+                <h6 class="font-weight-bold d-inline-block">{{itemComment?.title}}</h6>
+              </div>
+              <div class="review-with-newlines">
+                {{itemComment?.content}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-pagination [(pagedResult)]="pagedResultReview" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+      <div *ngIf="pagedResultReview && (pagedResultReview.items || []).length === 0" class="text-center pt-4">Không có đánh giá nào.</div>
+    </div>
+  </div>
+
+</div>

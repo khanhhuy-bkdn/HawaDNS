@@ -1,0 +1,149 @@
+<div class="wrapper">
+  <h4 class="text-uppercase font-weight-bold">đánh giá chủ rừng</h4>
+  <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between bg-white">
+    <div class="action-menu d-flex">
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="province">Tỉnh/Thành phố</label>
+        <select class="select-control" name="province" id="province" [(ngModel)]="filterModel.stateProvinceId" (change)="getDistricts($event.target.value)">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let province of stateProvinces" [value]="province.key">{{ province.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="district">Quận/Huyện</label>
+        <select class="select-control" name="district" id="district" [(ngModel)]="filterModel.districtId" (change)="getWards($event.target.value)"
+          [disabled]="!filterModel.stateProvinceId || filterModel.stateProvinceId === 'null'" [class.not-allowed]="!filterModel.stateProvinceId || filterModel.stateProvinceId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let district of districts" [value]="district.key">{{ district.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="ward">Phường/Xã</label>
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.communeId" (change)="getCompartments($event.target.value)" [disabled]="!filterModel.districtId || filterModel.districtId === 'null'"
+          [class.not-allowed]="!filterModel.districtId || filterModel.districtId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let ward of communes" [value]="ward.key">{{ ward.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="ward">Tiểu khu</label>
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.compartmentId" (change)="getSubcompartments($event.target.value)" [disabled]="!filterModel.communeId || filterModel.communeId === 'null'"
+          [class.not-allowed]="!filterModel.communeId || filterModel.communeId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let compartment of compartments" [value]="compartment.key">{{ compartment.code }}</option>
+        </select>
+      </div>
+      <!-- <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="ward">Khoảnh</label>
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.subCompartmentId" [disabled]="!filterModel.compartmentId || filterModel.compartmentId === 'null'"
+          [class.not-allowed]="!filterModel.compartmentId || filterModel.compartmentId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let subCompartment of subCompartments" [value]="subCompartment.key">{{ subCompartment.code }}</option>
+        </select>
+      </div> -->
+    </div>
+    <div class="action-button d-flex flex-row-reverse align-items-end mt-3">
+      <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+      <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+    </div>
+  </div>
+
+  <div class="mt-3 shadow-box list-user">
+    <div class="">
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th class="text-uppercase index-checkbox">
+              <span class="pl-3">stt</span>
+            </th>
+            <th>
+              <span>Chủ rừng</span>
+              <!-- (click)="sortName.click()" -->
+            </th>
+            <!-- (click)="sortEvaluator.click()" -->
+            <th>
+              <span>Tỉnh/Thành phố</span>
+            </th>
+            <th>
+              <span>Quận/Huyện</span>
+            </th>
+            <th>
+              <span>Phường/Xã</span>
+            </th>
+            <th>
+              <span>Tiểu Khu</span>
+            </th>
+            <th>
+              <span>Khoảnh</span>&nbsp;
+            </th>
+            <th>
+              <span>Lô</span>&nbsp;
+            </th>
+            <th class="text-center">
+              <span>Số lượng đánh giá</span>
+              <!-- (click)="sortAverage.click()" -->
+            </th>
+            <th class="text-center">
+              <span>Điểm trung bình</span>
+              <!-- (click)="sortAverage.click()" -->
+            </th>
+            <th class="text-center modify-manipulation width-5">
+              <div class="text-center">
+                Thao tác
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pagedResult.items; let i = index">
+            <td class="index-checkbox">
+              <span class="pl-3">{{i+1}}</span>
+            </td>
+            <td [title]="item?.name" class="text-truncate ">
+              {{item?.name}}
+            </td>
+            <td [title]="item?.forestPlot?.stateProvince?.text" class="text-truncate ">
+              {{item?.forestPlot?.stateProvince?.text}}
+            </td>
+            <td [title]="item?.forestPlot?.district?.text" class="text-truncate ">
+              {{item?.forestPlot?.district?.text}}
+            </td>
+            <td [title]="item?.forestPlot?.commune?.text" class="text-truncate ">
+              {{item?.forestPlot?.commune?.text}}
+            </td>
+            <td [title]="item?.forestPlot?.compartment?.code" class="text-truncate text-center">
+              {{item?.forestPlot?.compartment?.code}}
+            </td>
+            <td [title]="item?.forestPlot?.subCompartment?.code" class="text-truncate text-center">
+              {{item?.forestPlot?.subCompartment?.code}}
+            </td>
+            <td [title]="item?.forestPlot?.plotCode" class="text-truncate text-center">
+              {{item?.forestPlot?.plotCode}}
+            </td>
+            <td [title]="item?.reviewCount" class="text-truncate text-center">
+              {{item?.reviewCount}}
+            </td>
+            <td [title]="item?.averageRating" class="text-truncate text-center">
+              <span>
+                <i class="fa fa-star star-high"></i>
+              </span>
+              <span class="ml-2">
+                {{item.averageRating ? item.averageRating : 0}}
+              </span>
+            </td>
+            <td class="text-truncate text-center">
+              <div [title]="'Chi tiết'" class="text-center" (click)="viewDetail(item?.forestPlot?.id)">
+                <img class="cursor-pointer" src="assets/images/icon-view.svg" alt="">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="w-100 p-4 mt-4">
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+  </div>
+  <!-- <loading *ngIf="loading"></loading> -->
+
+</div>

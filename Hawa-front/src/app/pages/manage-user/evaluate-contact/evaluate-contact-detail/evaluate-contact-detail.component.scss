@@ -1,0 +1,141 @@
+.wrapper {
+  padding: 2.25rem 2.25rem 0.75rem;
+  position: relative;
+
+  .detail_contact{
+    position: relative;
+    .action-view{
+      width: 7rem;
+      padding: 0.3rem 0;
+      color: #ffffff;
+      border-radius: 15px;
+      margin-left: .5rem;
+      transform: translateY(50%);
+    }
+
+    .but__position{
+      top: 0;
+      position: absolute;
+      right: 0;
+    }
+    
+  }
+
+  
+
+  .title {
+    position: relative;
+
+    &::before {
+      content: '';
+      border: .5px solid #cccccc;
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+
+    &::after {
+      content: '';
+      border: .5px solid #cccccc;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+  }
+
+  .content {
+    background-color: #ffffff;
+
+    .left-title {
+      position: relative;
+      padding: 0 3rem;
+
+      
+
+      &::after {
+        position: absolute;
+        right: 0;
+        content: '';
+        border: .5px solid #cccccc;
+        height: 100%;
+      }
+    }
+
+    .right-title {
+      padding-left: 5rem;
+    }
+
+    .rate-bar {
+      font-size: 1.2rem;
+    }
+
+    .score-rate {
+      color: #ff0000;
+      font-size: 3rem;
+      font-weight: 500;
+    }
+
+    .star-bar {
+      transform: scale(1.4)
+    }
+
+    .star {
+      color: #FFD700;
+    }
+
+    .font-time {
+      font-size: 80%;
+    }
+
+    .action {
+      width: 3rem;
+      padding: 0.3rem 0;
+      color: #ffffff;
+      border-radius: 15px;
+      margin-left: .5rem;
+      transform: translateY(50%);
+    }
+
+
+
+    .review-list {
+      margin-left: -1.5rem;
+
+      &:nth-child(odd) {
+        background-color: #F3F8F7;
+      }
+
+      .index__pad{
+        padding-top: 13px;
+      }
+    }
+  }
+}
+.no-outline{
+  outline: none;
+}
+.show__bg{
+  background-color: #82c95b;
+}
+.hidden__bg{
+  background-color: #007bff
+}
+.detail__bg{
+  background-color: #ffaf26
+}
+.w-12{
+  width: 12%;
+}
+.w-88{
+  width: 88%;
+}
+.info-userReivew__width{
+  width: 150px;
+}
+.img-avatar{
+  border-radius: 50%;
+  object-fit: cover;
+}
+.review-with-newlines {
+  white-space: pre-line;
+}

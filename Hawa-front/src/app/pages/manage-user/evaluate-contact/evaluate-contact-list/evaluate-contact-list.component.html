@@ -1,0 +1,143 @@
+<div class="wrapper">
+  <h4 class="text-uppercase font-weight-bold">đánh giá liên hệ</h4>
+
+  <!-- <div class="action-bar mt-3 py-3 d-flex justify-content-end flex-wrap align-items-end">
+    <div class="action-button d-flex flex-row-reverse align-items-end ml-1">
+      <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+      <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+    </div>
+  </div> -->
+
+  <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between bg-white">
+    <div class="action-menu d-flex">
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="province">Tỉnh/Thành phố</label>
+        <select class="select-control" name="province" id="province" [(ngModel)]="filterModel.contactStateProvinceId" (change)="getDistricts($event.target.value)">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let province of stateProvinces" [value]="province.key">{{ province.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="district">Quận/Huyện</label>
+        <select class="select-control" name="district" id="district" [(ngModel)]="filterModel.contactDistrictId" (change)="getWards($event.target.value)"
+          [disabled]="!filterModel.contactStateProvinceId || filterModel.contactStateProvinceId === 'null'" [class.not-allowed]="!filterModel.contactStateProvinceId || filterModel.contactStateProvinceId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let district of districts" [value]="district.key">{{ district.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="ward">Phường/Xã</label>
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.contactCommuneId" [disabled]="!filterModel.contactDistrictId || filterModel.contactDistrictId === 'null'"
+          [class.not-allowed]="!filterModel.contactDistrictId || filterModel.contactDistrictId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let ward of communes" [value]="ward.key">{{ ward.text }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="action-button d-flex flex-row-reverse align-items-end mt-3">
+      <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+      <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+    </div>
+  </div>
+
+  <div class="mt-3 shadow-box list-user">
+    <div class="">
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th class="text-uppercase index-checkbox">
+              <span class="pl-3">stt</span>
+            </th>
+            <th class="">
+              Tên liên hệ gián tiếp
+            </th>
+            <th class="">
+              <span class="cursor-pointer" >Tên chủ thể</span>&nbsp;
+              <!-- (click)="sortName.click()" -->
+              <!-- <span class="cursor-pointer" #sortName (click)="sortTable('name')">
+                <i class="fa fa-sort" aria-hidden="true"></i>
+              </span> -->
+            </th>
+            <th class="">
+              <span class="cursor-pointer" >Người liên hệ</span>&nbsp;
+              <!-- (click)="sortEvaluator.click()" -->
+              <!-- <span class="cursor-pointer" #sortEvaluator (click)="sortTable('evaluator')">
+                <i class="fa fa-sort" aria-hidden="true"></i>
+              </span> -->
+            </th>
+            <th class="">
+              <span class="cursor-pointer" >SĐT</span>&nbsp;
+              <!-- (click)="sortDate.click()" -->
+              <!-- <span class="cursor-pointer" #sortDate (click)="sortTable('date')">
+                <i class="fa fa-sort" aria-hidden="true"></i>
+              </span> -->
+            </th>
+            <th class="text-center">
+              <span class="cursor-pointer" >Số lượng đánh giá</span>&nbsp;
+              <!-- (click)="sortAverage.click()" -->
+              <!-- <span class="cursor-pointer" #sortAverage (click)="sortTable('average')">
+                <i class="fa fa-sort" aria-hidden="true"></i>
+              </span> -->
+            </th>
+            <th class="text-center">
+              <span class="cursor-pointer" >Điểm trung bình</span>&nbsp;
+              <!-- (click)="sortAverage.click()" -->
+              <!-- <span class="cursor-pointer" #sortAverage (click)="sortTable('average')">
+                <i class="fa fa-sort" aria-hidden="true"></i>
+              </span> -->
+            </th>
+            <th class="text-center modify-manipulation width-5">
+              <div class="text-center">
+                Thao tác
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pagedResult.items; let i = index">
+            <td class="index-checkbox">
+              <span class="pl-3">{{i+1}}</span>
+            </td>
+            <td [title]="item?.contact?.titleContribute ? item?.contact?.titleContribute : ''" class="text-truncate ">
+              {{item?.titleContribute}}
+            </td>
+            <td [title]="item?.contactName ? item?.contactName : ''" class="text-truncate ">
+              {{item?.contactName}}
+            </td>
+            <td [title]="item?.userContact ? item?.userContact : ''" class="text-truncate ">
+              {{item?.userContact}}
+            </td>
+            <td [title]="item?.phone1 ? item?.phone1 : ''" class="text-truncate ">
+              {{item?.phone1}}
+            </td>
+            <td [title]="item.reviewCount ? item.reviewCount : '0'" class="text-truncate text-center">
+              {{item.reviewCount}}
+            </td>
+            <td class="text-truncate text-center">
+              <span>
+                <i class="fa fa-star star-high"></i>
+              </span>
+              <span class="ml-2" [title]="item?.averageRating ? item?.averageRating : '0'">
+                {{item.averageRating ? item.averageRating : 0}}
+              </span>
+            </td>
+            <td class="text-truncate text-center">
+              <!-- <div [title]="'Chi tiết'" class="view--detail text-center p-2 width-5 cursor-pointer no-outline" (click)="viewDetail(item?.id)">
+                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Chi tiết
+              </div> -->
+
+              <div [title]="'Xem chi tiết'" class="text-center" (click)="viewDetail(item?.id)">
+                <img class="cursor-pointer" src="assets/images/icon-view.svg" alt="">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="w-100 p-4 mt-4">
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+  </div>
+  <!-- <loading *ngIf="loading"></loading> -->
+
+</div>

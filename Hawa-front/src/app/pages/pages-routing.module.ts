@@ -13,6 +13,8 @@ const routes: Routes = [{
     { path: 'buyer', loadChildren: './manage-user/buyer/buyer.module#BuyerModule', canActivate: [AuthAdminService] },
     // tslint:disable-next-line:max-line-length
     { path: 'contribute-information', loadChildren: './manage-user/contribute-information/contribute-information.module#ContributeInformationModule', canActivate: [AuthAdminService] },
+    { path: 'evaluate-contact', loadChildren: './manage-user/evaluate-contact/evaluate-contact.module#EvaluateContactModule', canActivate: [AuthAdminService] },
+    { path: 'evaluate-actor', loadChildren: './manage-user/evaluate-actor/evaluate-actor.module#EvaluateActorModule', canActivate: [AuthAdminService] },
     { path: '**', redirectTo: 'not-found' },
   ],
 }];

@@ -1,0 +1,306 @@
+<div class="wrapper">
+  <h5 class="text-uppercase font-weight-bold">
+    <span>
+      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer no-outline" [routerLink]="['/pages/evaluate-contact']" title="Trở về">
+    </span>
+    chi tiết đánh giá liên hệ
+  </h5>
+  <div class="shadow-box">
+
+    <div class="p-4 detail_contact bg-white">
+      <div class="font-weight-bold font-size--14px">Thông tin liên hệ gián tiếp</div>
+      <div class="d-flex w-100">
+        <div class="w-20">
+          <div class="mt-3">Tên liên hệ gián tiếp:</div>
+          <div class="mt-3">Tên chủ thể:</div>
+          <div class="mt-3">Người liên hệ:</div>
+          <div class="mt-3">Số điện thoại:</div>
+          <div class="mt-3">Địa bàn hỗ trợ:</div>
+        </div>
+        <div class="w-80">
+          <div class="mt-3">
+            {{contacDetailItem.titleContribute ? contacDetailItem.titleContribute : 'Không có'}}
+          </div>
+          <div class="mt-3">{{contacDetailItem.contactName ? contacDetailItem.contactName : 'Không có'}}</div>
+          <div class="mt-3">
+            {{contacDetailItem.userContact ? contacDetailItem.userContact : 'Không có'}}
+          </div>
+          <div class="mt-3">{{contacDetailItem.phone1 ? contacDetailItem.phone1 : 'Không có'}}</div>
+          <div class="mt-3">
+            <ng-container *ngIf="contacDetailItem.locationInCharge">
+              <span *ngFor="let item of contacDetailItem.locationInCharge; let i = index">
+                <span>{{item?.stateProvince?.text}} - {{item?.district?.text}} - {{item?.commune?.text}}</span>
+                <span *ngIf="i !== (contacDetailItem.locationInCharge.length - 1)">,&nbsp;</span>
+              </span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end w-100 but__position pr-5 pt-4">
+        <button nbButton class="cursor-pointer text-uppercase" (click)="viewDetail()">Xem chi tiết</button>
+      </div>
+    </div>
+
+    <div class="px-4 pb-4 content">
+      <div class="row title">
+        <div class="col-md-4 d-flex flex-column align-items-center left-title">
+          <div class="pt-4">
+            <h5 class="text-capitalize m-0">đánh giá trung bình</h5>
+            <div class="score-rate text-center">
+              {{contacDetailItem?.averageRating}}/5
+            </div>
+            <div class="star-bar text-center">
+              <rate-star [change]="averageRatingRounding" [disabledRate]="true" [name]="'percent'" [score]="5" [step]="0.5" [color]=""
+                [default]="averageRatingRounding"></rate-star>
+            </div>
+            <p class="text-center">
+              ({{pagedResultComment?.total}} nhận xét)
+            </p>
+          </div>
+        </div>
+        <div class="col-md-8 right-title pt-4">
+          <ng-container *ngIf="contacDetailItem">
+            <ng-container *ngFor="let item of (contacDetailItem.aggregateOfRatings || [])">
+              <div class="d-flex rate-bar">
+                <div>{{item.rating}}</div>
+                <div class="pl-1">
+                  <i class="fa fa-star star-high icon-start"></i>
+                </div>
+                <div class="center-parent pl-1 w-40">
+                  <nb-progress-bar class="progress w-100" [value]="item.percent" status="success" size="xs"></nb-progress-bar>
+                </div>
+                <div class="pl-1">{{ item.percent }} %</div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <!-- pt-1 mt-4 -->
+      <div class="review-list px-4 pb-3 mt-2" *ngFor="let itemComment of pagedResultComment.items; let i = index">
+        <div class="d-flex flex-row-reverse">
+          <span *ngIf="!(itemComment && itemComment.hidden)" class="action text-center bg-secondary cursor-pointer" (click)="actionEvaluate('Ẩn', itemComment?.id)">Ẩn</span>
+          <span *ngIf="itemComment && itemComment.hidden" class="action text-center cursor-pointer show__bg" (click)="actionEvaluate('Hiện', itemComment?.id)">Hiện</span>
+          <span class="action text-center cursor-pointer hidden__bg" (click)="actionEvaluate('Xóa', itemComment?.id)">Xóa</span>
+        </div>
+        <div class="row">
+          <div class="col-md-2 d-flex">
+            <div class="index__pad">
+              {{pagedResultComment?.currentPage * pagedResultComment?.pageSize + i + 1 }}.
+            </div>
+            <div class="text-center pl-2 info-userReivew__width">
+              <div >
+                  <!-- class="d-flex" -->
+                <div>
+                  <img [src]="itemComment?.reviewUser?.avatar?.thumbSizeUrl ? itemComment?.reviewUser?.avatar?.thumbSizeUrl : 'assets/images/avatar.svg'"
+                    [alt]="itemComment?.reviewUser?.avatar?.thumbSizeUrl" width="40px" height="40px" class="img-avatar">
+                </div>
+                <div class="center-parent pl-2">
+                  {{itemComment?.reviewUser?.organizationName}}
+                </div>
+              </div>
+              <div class="mt-1 font-time">
+                <i>{{itemComment?.reviewDate === 0 ? '' : (itemComment?.reviewDate)*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</i>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <div>
+              <!-- <a href="javascript:void(0)"></a> -->
+              <span>{{itemComment?.rating}}</span>
+              <span class="mr-2 ml-1 star">
+                <i class="fa fa-star star-high icon-start"></i>
+              </span>
+              <h6 class="font-weight-bold d-inline-block">{{itemComment?.title}}</h6>
+            </div>
+            <div class="review-with-newlines">
+              {{itemComment?.content}}
+            </div>
+          </div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-10">
+            {{itemComment?.content}}
+          </div>
+        </div> -->
+      </div>
+
+      <!-- FAKE -->
+      <!-- <div class="review-list px-4 pb-3 pt-1">
+      <div class="d-flex flex-row-reverse">
+        <span class="action text-center bg-secondary">Ẩn</span>
+        <span class="action text-center" style="background-color: #82c95b;">Hiện</span>
+        <span class="action text-center" style="background-color: #007bff">Xóa</span>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          1.&nbsp;&nbsp;
+          <a href="javascript:void(0)">Nguyễn Văn A</a>
+          <div class="mt-1 font-time">
+            <i>14/12/2018, 15:00AM</i>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <a href="javascript:void(0)">5.0</a>
+          <span class="mr-2 ml-1 star">
+            <i class="fa fa-star star-high icon-start"></i>
+          </span>
+          <h6 class="font-weight-bold d-inline-block">Doanh nghiệp lớn, uy tín</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat corrupti perspiciatis eligendi ratione voluptas blanditiis
+          soluta, dicta mollitia rerum maxime doloremque. Expedita veniam pariatur quas modi facere sapiente non voluptate
+          iste delectus. Doloremque quas, iure deleniti quis aliquam soluta suscipit illum nobis illo inventore, eos dolorum
+          vel excepturi ab! Sed nemo molestiae corrupti quo assumenda voluptatum repudiandae harum maiores laudantium, labore
+          minima nihil veniam voluptates autem et laborum sit enim doloremque repellendus ipsam placeat! Laborum nulla quod
+          unde, vitae culpa aliquid ea, sequi expedita sint aspernatur recusandae reiciendis, eum quia.
+        </div>
+      </div>
+    </div>
+    <div class="review-list px-4 pb-3 pt-1">
+      <div class="d-flex flex-row-reverse">
+        <span class="action text-center bg-secondary">Ẩn</span>
+        <span class="action text-center" style="background-color: #82c95b;">Hiện</span>
+        <span class="action text-center" style="background-color: #007bff">Xóa</span>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          1.&nbsp;&nbsp;
+          <a href="javascript:void(0)">Nguyễn Văn A</a>
+          <div class="mt-1 font-time">
+            <i>14/12/2018, 15:00AM</i>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <a href="javascript:void(0)">5.0</a>
+          <span class="mr-2 ml-1 star">
+            <i class="fa fa-star star-high icon-start"></i>
+          </span>
+          <h6 class="font-weight-bold d-inline-block">Doanh nghiệp lớn, uy tín</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat corrupti perspiciatis eligendi ratione voluptas blanditiis
+          soluta, dicta mollitia rerum maxime doloremque. Expedita veniam pariatur quas modi facere sapiente non voluptate
+          iste delectus. Doloremque quas, iure deleniti quis aliquam soluta suscipit illum nobis illo inventore, eos dolorum
+          vel excepturi ab! Sed nemo molestiae corrupti quo assumenda voluptatum repudiandae harum maiores laudantium, labore
+          minima nihil veniam voluptates autem et laborum sit enim doloremque repellendus ipsam placeat! Laborum nulla quod
+          unde, vitae culpa aliquid ea, sequi expedita sint aspernatur recusandae reiciendis, eum quia.
+        </div>
+      </div>
+    </div>
+    <div class="review-list px-4 pb-3 pt-1">
+      <div class="d-flex flex-row-reverse">
+        <span class="action text-center bg-secondary">Ẩn</span>
+        <span class="action text-center" style="background-color: #82c95b;">Hiện</span>
+        <span class="action text-center" style="background-color: #007bff">Xóa</span>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          1.&nbsp;&nbsp;
+          <a href="javascript:void(0)">Nguyễn Văn A</a>
+          <div class="mt-1 font-time">
+            <i>14/12/2018, 15:00AM</i>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <a href="javascript:void(0)">5.0</a>
+          <span class="mr-2 ml-1 star">
+            <i class="fa fa-star star-high icon-start"></i>
+          </span>
+          <h6 class="font-weight-bold d-inline-block">Doanh nghiệp lớn, uy tín</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat corrupti perspiciatis eligendi ratione voluptas blanditiis
+          soluta, dicta mollitia rerum maxime doloremque. Expedita veniam pariatur quas modi facere sapiente non voluptate
+          iste delectus. Doloremque quas, iure deleniti quis aliquam soluta suscipit illum nobis illo inventore, eos dolorum
+          vel excepturi ab! Sed nemo molestiae corrupti quo assumenda voluptatum repudiandae harum maiores laudantium, labore
+          minima nihil veniam voluptates autem et laborum sit enim doloremque repellendus ipsam placeat! Laborum nulla quod
+          unde, vitae culpa aliquid ea, sequi expedita sint aspernatur recusandae reiciendis, eum quia.
+        </div>
+      </div>
+    </div>
+    <div class="review-list px-4 pb-3 pt-1">
+      <div class="d-flex flex-row-reverse">
+        <span class="action text-center bg-secondary">Ẩn</span>
+        <span class="action text-center" style="background-color: #82c95b;">Hiện</span>
+        <span class="action text-center" style="background-color: #007bff">Xóa</span>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          1.&nbsp;&nbsp;
+          <a href="javascript:void(0)">Nguyễn Văn A</a>
+          <div class="mt-1 font-time">
+            <i>14/12/2018, 15:00AM</i>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <a href="javascript:void(0)">5.0</a>
+          <span class="mr-2 ml-1 star">
+            <i class="fa fa-star star-high icon-start"></i>
+          </span>
+          <h6 class="font-weight-bold d-inline-block">Doanh nghiệp lớn, uy tín</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat corrupti perspiciatis eligendi ratione voluptas blanditiis
+          soluta, dicta mollitia rerum maxime doloremque. Expedita veniam pariatur quas modi facere sapiente non voluptate
+          iste delectus. Doloremque quas, iure deleniti quis aliquam soluta suscipit illum nobis illo inventore, eos dolorum
+          vel excepturi ab! Sed nemo molestiae corrupti quo assumenda voluptatum repudiandae harum maiores laudantium, labore
+          minima nihil veniam voluptates autem et laborum sit enim doloremque repellendus ipsam placeat! Laborum nulla quod
+          unde, vitae culpa aliquid ea, sequi expedita sint aspernatur recusandae reiciendis, eum quia.
+        </div>
+      </div>
+    </div>
+    <div class="review-list px-4 pb-3 pt-1">
+      <div class="d-flex flex-row-reverse">
+        <span class="action text-center bg-secondary">Ẩn</span>
+        <span class="action text-center" style="background-color: #82c95b;">Hiện</span>
+        <span class="action text-center" style="background-color: #007bff">Xóa</span>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          1.&nbsp;&nbsp;
+          <a href="javascript:void(0)">Nguyễn Văn A</a>
+          <div class="mt-1 font-time">
+            <i>14/12/2018, 15:00AM</i>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <a href="javascript:void(0)">5.0</a>
+          <span class="mr-2 ml-1 star">
+            <i class="fa fa-star star-high icon-start"></i>
+          </span>
+          <h6 class="font-weight-bold d-inline-block">Doanh nghiệp lớn, uy tín</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat corrupti perspiciatis eligendi ratione voluptas blanditiis
+          soluta, dicta mollitia rerum maxime doloremque. Expedita veniam pariatur quas modi facere sapiente non voluptate
+          iste delectus. Doloremque quas, iure deleniti quis aliquam soluta suscipit illum nobis illo inventore, eos dolorum
+          vel excepturi ab! Sed nemo molestiae corrupti quo assumenda voluptatum repudiandae harum maiores laudantium, labore
+          minima nihil veniam voluptates autem et laborum sit enim doloremque repellendus ipsam placeat! Laborum nulla quod
+          unde, vitae culpa aliquid ea, sequi expedita sint aspernatur recusandae reiciendis, eum quia.
+        </div>
+      </div>
+    </div> -->
+      <!-- .FAKE -->
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+      <div *ngIf="pagedResult && (pagedResult.items || []).length === 0" class="text-center pt-4">Không có đánh giá nào.</div>
+    </div>
+  </div>
+
+</div>
