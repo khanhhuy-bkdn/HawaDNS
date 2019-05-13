@@ -1,0 +1,72 @@
+<div class="wrapper">
+  <h4 class="text-uppercase font-weight-bold">phản hồi hệ thống</h4>
+
+  <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between bg-white">
+      <!-- class="action-bar mt-3 py-3 d-flex justify-content-end flex-wrap align-items-end" -->
+    <div class="action-menu__item mr-3 flex-column">
+      <label for="typefb" class="pr-4">Loại phản hồi</label>
+      <select class="select-control" name="typefb" id="typefb" [(ngModel)]="filterText">
+        <option selected [value]="''">Tất cả</option>
+        <option [value]="'true'">Hữu ích</option>
+        <option [value]="'false'">Không hữu ích</option>
+      </select>
+    </div>
+
+    <div class="action-button d-flex flex-row-reverse align-items-end ml-1">
+      <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+      <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+    </div>
+  </div>
+
+
+  <div class="shadow-box p-4 content mt-3">
+
+    <div class="review-list px-4 pb-4 pt-2" *ngFor="let feedback of listOfFeedbacks; index as i">
+      <div class="d-flex flex-row-reverse">
+        <span class="action text-center cursor-pointer" style="background-color: #007bff" (click)="deleteFeedback(feedback.id)">
+          Xóa phản hồi</span>
+      </div>
+      <div class="row">
+        <div class="col-md-2 d-flex">
+          <div>
+            {{pagedResult?.currentPage * pagedResult?.pageSize + i + 1 }}.&nbsp;&nbsp;
+          </div>
+          <div>
+            <a href="javascript:void(0)">{{ feedback.user ? feedback.user.organizationName : 'Ẩn danh' }}</a>
+            <div class="mt-1 font-time">
+              <!-- <i>{{ (feedback.date*1000 - 7*60*60*1000) | amCalendar }}</i> -->
+              <i>{{feedback?.date === 0 ? '' : (feedback?.date)*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <h6 class="font-weight-bold d-inline-block">{{ feedback.isLike ? 'Hữu ích' : 'Không hữu ích' }}</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10" *ngIf="!showMore(feedback.id)">
+          {{ feedback.content | truncateText : 600 }} &nbsp;
+          <span (click)="toggleFormat(feedback.id)" *ngIf="feedback.content?.length >=   600">
+            <a href="javascript:void(0)">
+              <i>Xem thêm</i>
+            </a>
+          </span>
+        </div>
+        <div class="col-md-10" *ngIf="showMore(feedback.id)">
+          {{ feedback.content }} &nbsp;
+          <span (click)="toggleFormat(feedback.id)">
+            <a href="javascript:void(0)">
+              <i>Rút gọn</i>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    <div *ngIf="pagedResult && (pagedResult.items || []).length === 0" class="text-center pt-4">Không có phản hồi nào.</div>
+  </div>
+
+  <!-- <loading *ngIf="loading"></loading> -->
+
+</div>

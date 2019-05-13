@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <h4 class="text-uppercase font-weight-bold">cài đặt hệ thống</h4>
+  <div class="menu w-100 px-4 mt-3 shadow-box">
+    <a class="py-3 text-uppercase menu__item d-inline-block" [routerLink]="['/pages/setting/treespecgroup']"
+      routerLinkActive="routerlink-active">
+      <span>
+        nhóm loài cây
+      </span>
+    </a>
+    <a class="py-3 text-uppercase menu__item d-inline-block" [routerLink]="['/pages/setting/province-city']"
+    routerLinkActive="routerlink-active">
+      <span>
+        tỉnh/thành phố
+      </span>
+    </a>
+    <!-- <a class="py-3 text-uppercase menu__item d-inline-block">
+      <span>
+        Lorem ipsum
+      </span>
+    </a> -->
+  </div>
+  <div class="mt-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.wrapper {
+  padding: 2.25rem 2.25rem 0.75rem;
+  position: relative;
+}
+
+.search-action {
+  background-color: #ffffff;
+
+  select {
+    border: 0.5px solid #008A77;
+    border-radius: 3px;
+  }
+}
+
+.title {
+  position: relative;
+
+  &::after {
+    content: '';
+    border: .5px solid #cccccc;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+}
+
+.content {
+  background-color: #ffffff;
+
+  .font-time {
+    font-size: 80%;
+  }
+
+  .action {
+    width: 90px;
+    padding: 0.3rem 0;
+    color: #ffffff;
+    border-radius: 15px;
+    margin-left: .5rem;
+    // transform: translateY(50%);
+  }
+
+  .review-list {
+    margin-left: -1.5rem;
+
+    &:nth-child(even) {
+      background-color: #F3F8F7;
+    }
+  }
+}

@@ -1,0 +1,92 @@
+<script src="create-tree-spec-group-popup.component.ts"></script>
+<div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
+  <div class="popup shadow-box px-5 pt-5 pb-4" *ngIf="treeSpecGroupForm">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closedPopup()">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+
+    <h5 class="mb-4 text-uppercase font-weight-bold">
+      {{ title }}
+    </h5>
+    <div>
+      <form [formGroup]="treeSpecGroupForm">
+        <div class="d-flex align-items-center mb-3">
+          <label for="name" class="" [class.required]="true">Tên nhóm cây:</label>
+          <input id="name" type="text" class="w-100 type" (input)="changeData()" [class.validate-false]="formErrors.name" formControlName="name" />
+        </div>
+        <div class="d-flex align-items-center mb-2 custom-alert" *ngIf="formErrors.name">
+          <label for="name" class="invisible"></label>
+          <span class="text-danger">{{formErrors.name}}</span>
+        </div>
+        <div class="d-flex align-items-center mb-3">
+          <label for="desc" class="">Mô tả:</label>
+          <input id="desc" type="text" class="w-100 type" (input)="changeData()" formControlName="desc" />
+        </div>
+      </form>
+      <div class="d-flex align-items-start">
+        <div class="d-inline-block table-list">
+          <h6 class="text-uppercase title-list py-2 px-3 mb-0">danh sách loài cây trong hệ thống</h6>
+          <div class="py-2 px-3 list-treespec">
+            <div class="search">
+              <input type="text" placeholder="Tìm kiếm theo tên" (keyup)="searchTerm$.next($event.target.value)"
+                [(ngModel)]="searchTerm$.value" class="w-100 search__input mb-2 pr-5" />
+              <span>
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+            <div class="list-items pt-2" style="height: 85%">
+              <div class="select-item d-flex justify-content-between pr-3 mb-3" *ngFor="let item of listOfTreeSpecShow">
+                <label [for]="item.id" class="mb-0 flex-grow-1 cursor-pointer label-item">{{ item.id }} - {{ item.name }}</label>
+                <input type="checkbox" [id]="item.id" [(ngModel)]="item.checked" *ngIf="action !== 'detail'" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column mx-4 align-self-center" [class.invisible]="action == 'detail'">
+          <span class="action cursor-pointer mb-2" (click)="selectAll()">
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+          </span>
+          <span class="action cursor-pointer mb-2" (click)="selectTreeSpec()">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </span>
+          <span class="action cursor-pointer mb-2" (click)="unselectTreeSpec()">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          </span>
+          <span class="action cursor-pointer" (click)="removeAll()">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+          </span>
+        </div>
+
+
+        <div class="d-inline-block table-list">
+          <h6 class="text-uppercase title-list py-2 px-3 mb-0">loài cây thuộc nhóm</h6>
+          <div class="py-2 px-3 list-treespec">
+            <!-- <div class="search">
+              <input type="text" placeholder="Tìm kiếm theo tên" (keyup)="searchTermSelected$.next($event.target.value)" [(ngModel)]="searchTermSelected$.value" class="w-100 search__input mb-2 pr-5" />
+              <span>
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div> -->
+            <div class="list-items" style="height: 100%">
+              <div class="select-item d-flex justify-content-between pr-3 mb-3" *ngFor="let itemselected of listOfTreeSpecSelected">
+                <label [for]="'selected'+itemselected.id" class="mb-0 flex-grow-1 cursor-pointer label-item">
+                  {{ itemselected.id }} - {{ itemselected.name }}</label>
+                <input type="checkbox" [id]="'selected'+itemselected.id" [(ngModel)]="itemselected.checked" *ngIf="action !== 'detail'" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+      <button *ngIf="action !== 'detail'" nbButton type="button" class="text-center text-uppercase cursor-pointer" (click)="submitForm()">
+        lưu
+      </button>
+      <button *ngIf="action == 'detail'" nbButton type="button" class="text-center text-uppercase cursor-pointer"
+        (click)="editForm()">
+        chỉnh sửa
+      </button>
+    </div>
+  </div>
+</div>

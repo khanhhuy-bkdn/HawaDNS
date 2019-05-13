@@ -1,0 +1,76 @@
+<div class="wrapper p-3">
+  <div class="search-bar d-flex flex-row-reverse">
+    <button nbButton type="button" class="text-uppercase ml-1 cursor-pointer" (click)="createTreeSpecGroup()">
+      tạo mới
+    </button>
+    <div class="search-action d-flex">
+      <input nbInput class="search-action__input input-height--36 pl-3" type="text" placeholder="Nhập tên, mô tả"
+        (keyup)="searchTerm$.next($event.target.value)"  />
+        <!-- [(ngModel)]="searchTerm$.value" -->
+      <button nbButton type="button" class="cursor-pointer search-action__submit d-flex justify-content-center">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <hr />
+  <div class="position-relative">
+    <table class="w-100">
+      <thead>
+        <tr>
+          <th class="text-center">
+            <div class="d-flex align-items-center">
+              <!-- <input class="ml-1 mr-2 checkbox__item" type="checkbox" (change)="onSelectAll($event.target.checked)" /> -->
+              <span class="ml-3">Tên nhóm loài cây</span>
+            </div>
+          </th>
+          <th class="">
+            Mô tả nhóm
+          </th>
+          <th class="">
+            Ngày tạo nhóm
+          </th>
+          <th class="">
+            Số lượng
+          </th>
+          <th class="text-center">
+            Thao tác
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let treeSpecGroup of listOfTreeSpecGroup; index as i">
+          <td class="text-center">
+            <div class="d-flex align-items-center">
+              <!-- <input class="ml-1 mr-2 checkbox__item" type="checkbox" [(ngModel)]="treeSpecGroup.checked" /> -->
+              <a href="javascript:void(0)" class="ml-3" (click)="detailTreeSpecGroup(treeSpecGroup.id)">{{ treeSpecGroup.name }}</a>
+            </div>
+          </td>
+          <td [title]="" class="text-truncate">
+            {{ treeSpecGroup.desc }}
+          </td>
+          <td [title]="" class="text-truncate">
+            {{ treeSpecGroup.createdDate*1000 | date:'dd/MM/yyyy': '+0000'}}
+          </td>
+          <td [title]="" class="text-truncate">
+            <a href="javascript:void(0)" (click)="detailTreeSpecGroup(treeSpecGroup.id)">
+              Có {{ treeSpecGroup.treeSpecs?.length }} loài cây
+            </a>
+          </td>
+          <td class="modify-manipulation">
+            <div class="table-action d-flex justify-content-center align-items-center">
+              <span class="cursor-pointer table-action__edit mx-2" title="Sửa thông tin" (click)="editTreeSpecGroup(treeSpecGroup.id)">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </span>
+              <span class="cursor-pointer table-action__delete text-danger mx-2" title="Xóa thông tin" (click)="deleteTreeSpecGroup(treeSpecGroup.name, treeSpecGroup.id)">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <loading *ngIf="loading"></loading>
+  </div>
+  <div *ngIf="listOfTreeSpecGroup && (listOfTreeSpecGroup || []).length === 0" class="text-center py-3">Không có dữ liệu</div>
+  <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+</div>
