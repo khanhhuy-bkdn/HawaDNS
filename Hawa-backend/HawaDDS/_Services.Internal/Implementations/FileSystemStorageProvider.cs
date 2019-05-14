@@ -236,7 +236,7 @@ namespace _Services.Internal.Implementations
 
             if (!Directory.Exists(_config.ThumbImageAbsolutePhysicalPath))
             {
-                Directory.CreateDirectory(_config.ImageAbsolutePhysicalPath);
+                Directory.CreateDirectory(_config.ThumbImageAbsolutePhysicalPath);
             }
 
             return Path.Combine(_config.ThumbImageAbsolutePhysicalPath, id + CommonConstants.DefaultImageExtension);

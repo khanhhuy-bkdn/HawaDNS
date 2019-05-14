@@ -1,0 +1,35 @@
+.flex-centered {
+  margin: auto;
+}
+nb-card-body {
+  display: flex;
+}
+
+.title {
+  text-align: center;
+  color: #6c6d71;
+}
+
+.sub-title {
+  text-align: center;
+  display: block;
+  margin-bottom: 3rem;
+  font-size: 100%;
+}
+
+.btn {
+  margin-bottom: 2rem;
+  color: #ffffff;
+  background-color: #008A77;
+  border-color: transparent;
+}
+
+.btn:hover{
+  background-color: #249a8a;
+}
+
+.boxshaw-down__none{
+  box-shadow: none;
+}
+
+

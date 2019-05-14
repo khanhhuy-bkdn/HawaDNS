@@ -26,8 +26,8 @@ const routes: Routes = [
   // },
 
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  // { path: 'not-found', loadChildren: './pages/miscellaneous/miscellaneous.module#MiscellaneousModule'},
-  // { path: '**', redirectTo: 'not-found' },
+  { path: 'not-found', loadChildren: './pages/miscellaneous/miscellaneous.module#MiscellaneousModule'},
+  { path: '**', redirectTo: 'not-found' },
 ];
 
 const config: ExtraOptions = {

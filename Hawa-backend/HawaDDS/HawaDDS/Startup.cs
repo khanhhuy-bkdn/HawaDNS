@@ -54,6 +54,7 @@ namespace HawaDDS
             services.Configure<RazorViewEngineOptions>(
                 options =>
                 {
+                    options.FileProviders.Clear();
                     options.FileProviders.Add(fileProvider);
                 });
 
