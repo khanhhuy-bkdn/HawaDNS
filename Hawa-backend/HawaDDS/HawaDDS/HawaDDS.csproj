@@ -20,7 +20,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\SendMailResetPasswordUser.cshtml" />
+    <Content Remove="Views\SendMailSetPasswordUser.cshtml" />
+    <Content Remove="Views\SendMailVerifyUser.cshtml" />
+    <Content Remove="Views\_Layout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\SendMailResetPasswordUser.cshtml" />
+    <None Include="Views\SendMailSetPasswordUser.cshtml" />
+    <None Include="Views\SendMailVerifyUser.cshtml" />
+    <None Include="Views\_Layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

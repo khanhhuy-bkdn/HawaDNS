@@ -72,11 +72,7 @@ namespace _RazorTemplates
         public async Task<string> RenderToStringAsync<TModel>(string viewName, TModel model)
         {
             viewName = "~/Views/" + viewName;
-
-            var httpContext = _httpContextAccessor.HttpContext ?? new DefaultHttpContext
-            {
-                RequestServices = _serviceProvider
-            };
+            var httpContext = _httpContextAccessor.HttpContext ?? new DefaultHttpContext { RequestServices = _serviceProvider };
             var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
 
             using (var sw = new StringWriter())

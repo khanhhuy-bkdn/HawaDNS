@@ -54,7 +54,6 @@ namespace HawaDDS
             services.Configure<RazorViewEngineOptions>(
                 options =>
                 {
-                    options.FileProviders.Clear();
                     options.FileProviders.Add(fileProvider);
                 });
 
@@ -83,9 +82,9 @@ namespace HawaDDS
                             TermsOfService = "None",
                             Contact = new Contact
                             {
-                                Name = "Vo Duc Phuong",
-                                Email = "phuong.vo@bys.vn",
-                                Url = "phuong.vo@bys.vn"
+                                Name = "Nguyen Khanh Huy",
+                                Email = "huy.nguyen@bys.vn",
+                                Url = "huy.nguyen@bys.vn"
                             },
                             License = new License
                             {

@@ -175,7 +175,7 @@ namespace _Services.Internal.Implementations
                     await client.DisconnectAsync(true).ConfigureAwait(false);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new SendEmailException();
             }

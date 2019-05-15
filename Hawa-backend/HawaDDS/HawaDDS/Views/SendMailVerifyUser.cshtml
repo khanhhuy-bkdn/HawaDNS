@@ -1,0 +1,17 @@
+﻿@using _RazorTemplates.ViewModels
+@model SendMailVerifyUserViewModel
+
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<b>ĐĂNG KÍ TÀI KHOẢN THÀNH CÔNG!</b><br>
+<p>Chào bạn @Model.Name,</p>
+<p>Cảm ơn bạn đã đăng kí tài khoản với Hệ thống Giải trình nguồn gốc gỗ hợp pháp HAWA DDS!</p>
+<p>       Email đăng ký: @Model.Email</p>
+<p>Chúng tôi đã nhận được thông tin đăng ký của bạn.</p>
+<p>Vui lòng chọn vào đường link bên dưới để xác nhận đây chính là email của bạn:<br/>@Model.GotoUrl</p>
+<p><i>Lưu ý: Link xác nhận chỉ có giá trị trong vòng 02 ngày kể từ ngày đăng ký.</i></p>
+<p>Mọi chi tiết chúng tôi sẽ gửi đến địa chỉ email liên kết với tài khoản đã đăng ký.</p>
+<p>Trận trọng.</p>
+<p>HAWA DDS.</p>
