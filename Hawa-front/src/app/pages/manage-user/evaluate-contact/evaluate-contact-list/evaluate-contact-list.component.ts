@@ -39,6 +39,7 @@ export class EvaluateContactListComponent implements OnInit {
   stateProvinces: AdministrativeUnit[];
   districts: AdministrativeUnit[];
   communes: AdministrativeUnit[];
+  loading: boolean;
   constructor(
     private manageEvaluateService: ManageEvaluateService,
     private dataGeneralService: DataGeneralService,
@@ -56,6 +57,7 @@ export class EvaluateContactListComponent implements OnInit {
       this.filterModel.contactDistrictId = null;
       this.filterModel.contactCommuneId = null;
     }
+    this.loading = true;
     this.dataGeneralService.getProvinces().switchMap(data => {
       this.stateProvinces = data;
       if (this.manageEvaluateService.filterModelListContact) {
@@ -91,6 +93,7 @@ export class EvaluateContactListComponent implements OnInit {
   }
 
   render(pagedResult) {
+    this.loading = false;
     this.pagedResult = pagedResult;
     (this.pagedResult.items || []).forEach( item => {
       item.averageRating = +item.averageRating.toFixed(1);
@@ -193,6 +196,7 @@ export class EvaluateContactListComponent implements OnInit {
   }
 
   filter() {
+    this.loading = true;
     this.manageEvaluateService.contactListForEvaluate(this.filterModel, 0, 10).subscribe(response => {
       this.render(response);
     })

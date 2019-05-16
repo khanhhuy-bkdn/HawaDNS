@@ -21,6 +21,7 @@ export class ListComponent implements OnInit {
   listOfCompartments: AdministrativeUnit[];
   pagedResult: PagedResult<ContacListIndirect> = new PagedResult<ContacListIndirect>();
   filterModel = new FilterContactListIndirect();
+  loading: boolean;
   constructor(
     private dataGeneralService: DataGeneralService,
     private contactListsIndirectlyAdminService: ContactListsIndirectlyAdminService,
@@ -28,6 +29,7 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.filterModel.stateProvinceId = '';
     this.filterModel.communeId = '';
     this.filterModel.districtId = '';
@@ -61,6 +63,7 @@ export class ListComponent implements OnInit {
     this.filter();
   }
   filter() {
+    this.loading = true;
     this.contactListsIndirectlyAdminService
       .filterContactLists(this.filterModel, 0, this.pagedResult.pageSize)
       .subscribe(result => this.render(result));
@@ -72,6 +75,7 @@ export class ListComponent implements OnInit {
   }
 
   render(pagedResult) {
+    this.loading = false;
     this.pagedResult = pagedResult;
   }
 

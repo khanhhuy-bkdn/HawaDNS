@@ -25,7 +25,10 @@ namespace _Services.ConvertHelpers
                     Phone = entity.APActorPhone,
                     Name = entity.APActorName,
                     Website = entity.APActorWebsite,
-                    Avatar = entity.APActorAvatar.ToImageUrl()
+                    Avatar = entity.APActorAvatar.ToImageUrl(),
+                    ContactName = entity.APActorContactName,
+                    ContactPhone = entity.APActorContactPhone,
+                    Note = entity.APActorNote
                 };
         }
 
@@ -55,7 +58,10 @@ namespace _Services.ConvertHelpers
                     StateProvince = entity.GEStateProvince.ToDictionaryItemDto(),
                     Type = entity.APActorType.ToActorTypeDto(),
                     Roles = entity.APActorRoles.ConvertArray(x => x?.APRole.ToDictionaryItemDto()),
-                    Status = entity.APActorStatus.ToDictionaryItemDto<UserStatus>()
+                    Status = entity.APActorStatus.ToDictionaryItemDto<UserStatus>(),
+                    ContactName = entity.APActorContactName,
+                    ContactPhone = entity.APActorContactPhone,
+                    Note = entity.APActorNote
                 };
         }
 
@@ -99,7 +105,8 @@ namespace _Services.ConvertHelpers
                     ReviewDate = entity.APActorReviewDate.ToSecondsTimestamp(),
 
                     //ForestPlot = entity.ICForestPlot.ToForestPlotDetailDto()
-                    Hidden = entity.APActorReviewIsHide.GetValueOrDefault(false)
+                    Hidden = entity.APActorReviewIsHide.GetValueOrDefault(false),
+                    ForestPlotId = entity.FK_ICForestPlotID.GetValueOrDefault()
                 };
         }
 
@@ -109,7 +116,7 @@ namespace _Services.ConvertHelpers
                 ? null
                 : new ActorDto
                 {
-                    Id = entity.Id,
+                    Id = entity.APActor.Id,
                     Email = entity.APActor.APActorEmail,
                     Phone = entity.APActor.APActorPhone,
                     Name = entity.APActor.APActorName,
@@ -130,7 +137,10 @@ namespace _Services.ConvertHelpers
                     Type = entity.APActor.APActorType.ToActorTypeDto(),
                     Roles = entity.APActor.APActorRoles.ConvertArray(x => x?.APRole.ToDictionaryItemDto()),
                     Status = entity.APActor.APActorStatus.ToDictionaryItemDto<UserStatus>(),
-                    ForestPlot = entity.ToForestPlotDto()
+                    ForestPlot = entity.ToForestPlotDto(),
+                    ContactName = entity.APActor.APActorContactName,
+                    ContactPhone = entity.APActor.APActorContactPhone,
+                    Note = entity.APActor.APActorNote
                 };
         }
 

@@ -5,16 +5,19 @@ using _Abstractions.Services.AP;
 using _Common.Exceptions;
 using _Common.Runtime.Session;
 using _Common.Timing;
+using _Constants.EntityTypes;
 using _Dtos;
 using _Dtos.AP.InputDtos;
 using _Dtos.AR;
 using _Dtos.Shared;
 using _Dtos.Shared.Inputs;
+using _Entities.AD;
 using _Entities.AP;
 using _Entities.IC;
 using _EntityFrameworkCore.Helpers;
 using _EntityFrameworkCore.UnitOfWork;
 using _Services.ConvertHelpers;
+using _Services.Internal;
 using _Services.Internal.Helpers.PagedResult;
 
 using Microsoft.EntityFrameworkCore;
@@ -25,11 +28,13 @@ namespace _Services.Implementations.AP
     {
         private readonly IBysSession _bysSession;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
 
-        public ForestPlotActorReviewService(IUnitOfWork unitOfWork, IBysSession bysSession)
+        public ForestPlotActorReviewService(IUnitOfWork unitOfWork, IBysSession bysSession, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _bysSession = bysSession;
+            _notificationService = notificationService;
         }
 
         public async Task<ReviewItemDto> ReviewAsync(ReviewForestPlotActorDto dto)
@@ -73,6 +78,16 @@ namespace _Services.Implementations.AP
             forestPlotActorFromDb.ICForestPlotLatestReviewDate = actorReviewToCreate.APActorReviewDate;
 
             await _unitOfWork.CompleteAsync();
+
+            await _notificationService.CreateNotificationAsync(
+                new CreateNotificationDto
+                {
+                    UserId = _bysSession.UserId,
+                    NotificationType = NotificationType.AddedActorEvaluation,
+                    NotificationObjectType = "APActorReviews",
+                    NotificationObjectId = actorReview.Id,
+                    NotificationContent = _unitOfWork.GetRepository<ADUser>().Get(_bysSession.UserId)?.ADUserOrganizationName + " đã thêm đánh giá chủ rừng " + forestPlotActorFromDb.APActor?.APActorName
+                });
 
             return await GetReviewAsync(actorReview.Id);
         }

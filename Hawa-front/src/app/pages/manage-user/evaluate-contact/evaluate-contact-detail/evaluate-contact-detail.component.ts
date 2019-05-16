@@ -12,8 +12,7 @@ import { ContactDetail } from '../../../../shared/model/contact/contact-detail.m
 import { LookForInfoService } from '../../../../shared/service/look-for-info.service';
 import { AlertService } from '../../../../shared/service/alert.service';
 import { PopupComponent } from '../../../../shared/components/popups/popup/popup.component';
-import { OverviewForest } from '../../../../shared/model/overview-forest.model';
-
+import {Location} from '@angular/common';
 @Component({
   selector: 'evaluate-contact-detail',
   templateUrl: './evaluate-contact-detail.component.html',
@@ -33,6 +32,7 @@ export class EvaluateContactDetailComponent implements OnInit, OnDestroy {
     private contactService: ContactService,
     private lookForInfoService: LookForInfoService,
     private alertService: AlertService,
+    private _location: Location
   ) { }
 
   ngOnInit() {
@@ -180,5 +180,8 @@ export class EvaluateContactDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  routerBack() {
+    this._location.back();
+  }
 
 }

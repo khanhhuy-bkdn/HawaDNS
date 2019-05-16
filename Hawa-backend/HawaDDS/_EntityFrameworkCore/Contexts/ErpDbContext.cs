@@ -50,6 +50,8 @@ namespace _EntityFrameworkCore.Contexts
         public DbSet<ARContactReview> ARContactReviews { get; set; }
 
         public DbSet<ARContactForestCommuneGroup> ARContactForestCommuneGroups { get; set; }
+
+        public DbSet<ARNotification> ARNotifications { get; set; }
         #endregion
 
         #region GE

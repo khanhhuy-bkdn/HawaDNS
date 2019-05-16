@@ -5,11 +5,13 @@ import { EvaluateActorListComponent } from './evaluate-actor-list/evaluate-actor
 import { SharedModule } from '../../../shared/shared.module';
 import { EvaluateActorRoutingModule } from './evaluate-actor-routing.module';
 import { EvaluateActorDetailComponent } from './evaluate-actor-detail/evaluate-actor-detail.component';
+import { EvaluateActorFormComponent } from './evaluate-actor-form/evaluate-actor-form.component';
 @NgModule({
   declarations: [
     EvaluateActorComponent,
     EvaluateActorListComponent,
-    EvaluateActorDetailComponent
+    EvaluateActorDetailComponent,
+    EvaluateActorFormComponent
   ],
   imports: [
     CommonModule,

@@ -62,6 +62,7 @@ export class BuyerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loadingtable = true;
     this.getProvinces();
     this.getMasterData();
     this.subscription = this.manageBuyerService.followDirectToBuyer().subscribe(value => {

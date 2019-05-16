@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-
+using _Dtos;
 using _Dtos.IC;
 using _Dtos.IC.InputDtos;
 using _Dtos.Migration;
@@ -23,5 +23,7 @@ namespace _Abstractions.Services.IC
         Task UpdatePlotsAsync();
 
         Task<UpdateTreeSpecForestPlotReportDto> UpdateTreeSpecForestPlotsAsync();
+
+        Task<StatisticDto> StatisticAsync();
     }
 }

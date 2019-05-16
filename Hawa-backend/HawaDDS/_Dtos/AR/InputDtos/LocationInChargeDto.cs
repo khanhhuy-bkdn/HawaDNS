@@ -4,7 +4,7 @@
     {
         public int ForestStateProvinceID { get; set; }
 
-        public int ForestDistrictID { get; set; }
+        public int? ForestDistrictID { get; set; }
 
         public int? ForestCommuneID { get; set; }
     }

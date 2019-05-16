@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ManageEvaluateService } from '../../../../shared/service/manage-user-account/manage-evaluate.service';
 import { PagedResult } from '../../../../shared/model/dictionary/paging-result.model';
@@ -10,7 +10,7 @@ import { LookForInfoService } from '../../../../shared/service/look-for-info.ser
 import { ActorReviewModel } from '../../../../shared/model/actor/actor-review.model';
 import { PopupComponent } from '../../../../shared/components/popups/popup/popup.component';
 import { AlertService } from '../../../../shared/service/alert.service';
-
+import {Location} from '@angular/common';
 @Component({
   selector: 'evaluate-actor-detail',
   templateUrl: './evaluate-actor-detail.component.html',
@@ -22,24 +22,34 @@ export class EvaluateActorDetailComponent implements OnInit {
   detailActorManagerForest: DetailActorManagerForest;
   averageRatingRounding = 4;
   pagedResultReview: PagedResult<ActorReviewModel> = new PagedResult<ActorReviewModel>();
+  actorId: number;
   constructor(
     private activatedRoute: ActivatedRoute,
     private manageEvaluateService: ManageEvaluateService,
     private nbDialogService: NbDialogService,
     private lookForInfoService: LookForInfoService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private _location: Location
   ) { }
 
   ngOnInit() {
     this.queryParamsSubscription = this.activatedRoute.params.subscribe(data => {
       this.forestPlotId = data.id;
     });
-    this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId).subscribe(response => {
-      this.render(response);
+    // forkJoin(
+    //   this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId),
+    //   this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, 0, 10)
+    // ).subscribe(([res1, res2]) => {
+    //   this.render(res1);
+    //   this.renderReivew(res2);
+    // });
+    this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId).switchMap(res1 => {
+      this.actorId = res1.id;
+      this.render(res1);
+      return this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, 0, 10)
+    }).subscribe(res2 => {
+      this.renderReivew(res2);
     });
-    this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, 0, 10).subscribe(response => {
-      this.renderReivew(response);
-    })
   }
 
   renderReivew(pagedResultReview) {
@@ -155,6 +165,10 @@ export class EvaluateActorDetailComponent implements OnInit {
     this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, pagedResult.currentPage, pagedResult.pageSize).subscribe(response => {
       this.renderReivew(response);
     })
+  }
+
+  routerBack() {
+    this._location.back();
   }
 
 }

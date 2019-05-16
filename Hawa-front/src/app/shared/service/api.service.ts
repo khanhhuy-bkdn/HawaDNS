@@ -5,7 +5,7 @@ import {
     Http,
     Response,
     URLSearchParams,
-    ResponseContentType,
+    ResponseContentType
 } from '@angular/http';
 // import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';

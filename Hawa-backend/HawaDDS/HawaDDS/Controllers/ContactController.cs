@@ -40,7 +40,7 @@ namespace HawaDDS.Controllers
         ///     Tạo mới liên hệ
         /// </summary>
         [HttpPost("contact/create")]
-        [SwaggerResponse(200, "", typeof(IPagedResultDto<ContactDto>))]
+        [SwaggerResponse(200, "", typeof(ContactDto))]
         public async Task<IActionResult> Create([FromBody] CreateContactDto dto)
         {
             var result = await _contactService.CreateContactAsync(dto);

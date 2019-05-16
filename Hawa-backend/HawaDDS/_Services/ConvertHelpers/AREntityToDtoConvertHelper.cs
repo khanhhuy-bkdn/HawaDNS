@@ -51,7 +51,8 @@ namespace _Services.ConvertHelpers
                             Commune = x.GECommune.ToDictionaryItemDto(),
                             District = x.GECommune?.GEDistrict.ToDictionaryItemDto(),
                             StateProvince = x.GECommune?.GEDistrict?.GEStateProvince.ToDictionaryItemDto()
-                        })
+                        }),
+                    Status = entity.ARContactStatus.ToDictionaryItemDto<ContactStatus>()
                 };
         }
 
@@ -131,9 +132,9 @@ namespace _Services.ConvertHelpers
                     StateProvince = entity.GEDistrict?.GEStateProvince.ToDictionaryItemDto(),
                     Commune = entity.ToDictionaryItemDto(),
                     District = entity.GEDistrict.ToDictionaryItemDto(),
-                    ReviewCount = entity.ARContactForestCommuneGroups.Count,
-                    NotConfirmStatusCount = entity.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.ChuaDuyet),
-                    PendingStatusCount = entity.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.DangXacMinh)
+                    ReviewCount = entity.ARContactForestCommuneGroups.Count + entity.GEDistrict.ARContactForestCommuneGroups.Count(x => x.FK_GECommuneID == null) + entity.GEDistrict.GEStateProvince.ARContactForestCommuneGroups.Count(x => x.FK_GECommuneID == null && x.FK_GEDistrictID == null),
+                    NotConfirmStatusCount = entity.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.ChuaDuyet) + entity.GEDistrict.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.ChuaDuyet && x.FK_GECommuneID == null) + entity.GEDistrict.GEStateProvince.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.ChuaDuyet && x.FK_GECommuneID == null && x.FK_GEDistrictID == null),
+                    PendingStatusCount = entity.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.DangXacMinh) + entity.GEDistrict.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.DangXacMinh && x.FK_GECommuneID == null) + entity.GEDistrict.GEStateProvince.ARContactForestCommuneGroups.Count(x => x.ARContact?.ARContactStatus == ContactStatus.DangXacMinh && x.FK_GECommuneID == null && x.FK_GEDistrictID == null)
                 };
         }
 

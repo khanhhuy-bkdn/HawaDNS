@@ -38,6 +38,9 @@ import { AgmCoreModule } from '@agm/core';
 import { PopupErrorComponent } from './shared-components/popup-error/popup-error.component';
 import { TreeSpeciesComponent } from './components/popups/tree-species/tree-species.component';
 import {ToastyModule} from 'ng2-toasty';
+import { ChartsModule } from '@progress/kendo-angular-charts';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import 'hammerjs';
 @NgModule({
   imports: [
     HttpClientModule,
@@ -68,7 +71,9 @@ import {ToastyModule} from 'ng2-toasty';
     RecaptchaModule.forRoot(),
     NgbDropdownModule.forRoot(),
     Ng5SliderModule ,
-    ToastyModule.forRoot()
+    ToastyModule.forRoot(),
+    ChartsModule,
+    NgxDaterangepickerMd.forRoot()
   ],
   declarations: [
     InputNumberDirective,
@@ -121,7 +126,9 @@ import {ToastyModule} from 'ng2-toasty';
     Ng5SliderModule,
     GoogleMapComponent,
     PopupErrorComponent,
-    NgbDropdownModule
+    NgbDropdownModule,
+    ChartsModule,
+    NgxDaterangepickerMd
   ],
   entryComponents: [
     ActorPopupComponent,

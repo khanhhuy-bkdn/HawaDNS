@@ -21,6 +21,7 @@ export class IndirectContactAssessmentComponent implements OnInit {
   pagedResult: PagedResultContactList<ReviewContactList> = new PagedResultContactList<ReviewContactList>();
   @Input() averageRating: number;
   @Input() aggregateOfRatings: ContactPercent[];
+  @Input() isContributor: boolean;
   averageRatingRounding: number;
   refeshDefault: number;
   minor = 1;
@@ -37,6 +38,7 @@ export class IndirectContactAssessmentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('this.isContributor', this.isContributor);
     this.createContactReview.rating = 0;
     this.averageRating = +this.averageRating.toFixed(1);
     this.aggregateOfRatings.forEach(item => {

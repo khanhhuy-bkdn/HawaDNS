@@ -62,4 +62,5 @@ export class ActorReviewModel {
     content: string;
     reviewDate: number;
     hidden: boolean;
+    forestPlotId: number;
 }

@@ -1,41 +1,78 @@
 <div class="wrapper">
-  <h5 class="text-uppercase font-weight-bold">
-    <span>
-      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer no-outline" [routerLink]="['/pages/evaluate-actor']" title="Trở về">
-    </span>
-    chi tiết đánh giá chủ rừng
-  </h5>
+  <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex align-items-end">
+      <h5 class="text-uppercase font-weight-bold mb-0">
+        <span>
+          <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer no-outline"
+          [routerLink]="['/pages/evaluate-actor']" title="Trở về">
+        </span>
+        chi tiết đánh giá chủ rừng
+      </h5>
+    </div>
+    <div>
+      <button nbButton type="button" class="cursor-pointer text-uppercase button__save ml-1" [routerLink]="['/pages/evaluate-actor/form', actorId]"
+        [queryParams]="{forestPlotId: forestPlotId}">
+        chỉnh sửa
+      </button>
+    </div>
+  </div>
+
   <div class="shadow-box">
 
     <div class="p-4 detail_contact bg-white">
       <div class="font-weight-bold font-size--15px">Thông tin chủ rừng</div>
       <div class="font-weight-bold mt-2">
-        Lô {{detailActorManagerForest?.forestPlot?.plotCode}} | Khoảnh {{detailActorManagerForest?.forestPlot?.subCompartment?.code}} | Tiểu khu {{detailActorManagerForest?.forestPlot?.compartment?.code}}
-        | {{detailActorManagerForest?.forestPlot?.commune?.text}} | {{detailActorManagerForest?.forestPlot?.district?.text}} | {{detailActorManagerForest?.forestPlot?.stateProvince?.text}}
+        Lô {{detailActorManagerForest?.forestPlot?.plotCode}} | Khoảnh
+        {{detailActorManagerForest?.forestPlot?.subCompartment?.code}} | Tiểu khu
+        {{detailActorManagerForest?.forestPlot?.compartment?.code}}
+        | {{detailActorManagerForest?.forestPlot?.commune?.text}} |
+        {{detailActorManagerForest?.forestPlot?.district?.text}} |
+        {{detailActorManagerForest?.forestPlot?.stateProvince?.text}}
       </div>
-      <div class="d-flex w-100 mt-4 mb-2">
-        <div style="min-width: 120px; width: 33%" class="center-parent">
+      <div class="row w-100 mt-4 mb-2">
+        <div style="min-width: 120px; width: 33%" class="center-parent col-md-4">
           <img [src]="detailActorManagerForest?.avatar ? detailActorManagerForest.avatar.thumbSizeUrl : 'assets/images/avatar.svg'"
             [alt]="detailActorManagerForest?.name" width="150px" height="150px" class="img-avatar">
         </div>
-        <div style="min-width: 100px; width: 17%">
-          <div class="mt-3">Tên:</div>
-          <div class="mt-3">Loại chủ rừng:</div>
-          <div class="mt-3">Email:</div>
-          <div class="mt-3">Điện thoại:</div>
-          <div class="mt-3">Website:</div>
-        </div>
-        <div style="width: 50%">
-          <div class="mt-3">{{detailActorManagerForest?.name}}</div>
-          <div class="mt-3">{{detailActorManagerForest?.type?.name}}</div>
-          <div class="mt-3">
-            <a href="mailto:{{ detailActorManagerForest?.email }}?Subject=HAWA%20DDS" target="_blank">{{ detailActorManagerForest?.email }}</a>
+        <div class="col-md-4 d-flex">
+          <div style="min-width: 100px; width: 50%">
+            <div class="mt-3">Tên chủ rừng:</div>
+            <div class="mt-3">Loại chủ rừng:</div>
+            <div class="mt-3">Email:</div>
+            <div class="mt-3">Điện thoại:</div>
+            <div class="mt-3">Website:</div>
+
+            <div class="mt-3">Ghi chú:</div>
           </div>
-          <div class="mt-3">{{detailActorManagerForest?.phone}}</div>
-          <div class="mt-3">
-            <a href="http://{{detailActorManagerForest?.website}}" target="_blank">{{detailActorManagerForest?.website}}</a>
+          <div style="width: 50%">
+            <div class="mt-3">{{detailActorManagerForest?.name}}</div>
+            <div class="mt-3">{{detailActorManagerForest?.type?.name}}</div>
+            <div class="mt-3">
+              <a href="mailto:{{ detailActorManagerForest?.email }}?Subject=HAWA%20DDS" target="_blank">{{
+                detailActorManagerForest?.email }}</a>
+            </div>
+            <div class="mt-3">{{detailActorManagerForest?.phone}}</div>
+            <div class="mt-3">
+              <a href="http://{{detailActorManagerForest?.website}}" target="_blank">{{detailActorManagerForest?.website}}</a>
+            </div>
+
+            <div class="mt-3">{{detailActorManagerForest?.note}}</div>
           </div>
         </div>
+        <div class="col-md-4 mt-3">
+          <div class="title-contact-actor">Liên hệ</div>
+          <div class="d-flex">
+            <div style="min-width: 100px; width: 50%">
+              <div class="mt-3">Người liên hệ:</div>
+              <div class="mt-3">Điện thoại di động:</div>
+            </div>
+            <div style="min-width: 100px; width: 50%">
+              <div class="mt-3">{{detailActorManagerForest?.contactName}}</div>
+              <div class="mt-3">{{detailActorManagerForest?.contactPhone}}</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -49,8 +86,8 @@
               {{detailActorManagerForest?.averageRating}}/5
             </div>
             <div class="star-bar text-center">
-              <rate-star [change]="averageRatingRounding" [disabledRate]="true" [name]="'percent'" [score]="5" [step]="0.5" [color]=""
-                [default]="averageRatingRounding"></rate-star>
+              <rate-star [change]="averageRatingRounding" [disabledRate]="true" [name]="'percent'" [score]="5" [step]="0.5"
+                [color]="" [default]="averageRatingRounding"></rate-star>
             </div>
             <p class="text-center">
               ({{pagedResultReview?.total}} nhận xét)
@@ -81,7 +118,8 @@
       <div *ngIf="pagedResultReview && pagedResultReview.items">
         <div class="review-list px-4 pb-3 mt-2" *ngFor="let itemComment of (pagedResultReview.items || []); let i = index">
           <div class="d-flex flex-row-reverse">
-            <span *ngIf="!(itemComment && itemComment.hidden)" class="action text-center bg-secondary cursor-pointer" (click)="actionEvaluate('Ẩn', itemComment?.id)">Ẩn</span>
+            <span *ngIf="!(itemComment && itemComment.hidden)" class="action text-center bg-secondary cursor-pointer"
+              (click)="actionEvaluate('Ẩn', itemComment?.id)">Ẩn</span>
             <span *ngIf="itemComment && itemComment.hidden" class="action text-center cursor-pointer show__bg" (click)="actionEvaluate('Hiện', itemComment?.id)">Hiện</span>
             <span class="action text-center cursor-pointer hidden__bg" (click)="actionEvaluate('Xóa', itemComment?.id)">Xóa</span>
           </div>
@@ -102,7 +140,8 @@
                   </div>
                 </div>
                 <div class="mt-1 font-time">
-                  <i>{{itemComment?.reviewDate === 0 ? '' : (itemComment?.reviewDate)*1000 | date:'dd/MM/yyyy HH:mm': '+0000'}}</i>
+                  <i>{{itemComment?.reviewDate === 0 ? '' : (itemComment?.reviewDate)*1000 | date:'dd/MM/yyyy HH:mm':
+                    '+0000'}}</i>
                 </div>
               </div>
             </div>
@@ -122,7 +161,8 @@
         </div>
       </div>
       <app-pagination [(pagedResult)]="pagedResultReview" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
-      <div *ngIf="pagedResultReview && (pagedResultReview.items || []).length === 0" class="text-center pt-4">Không có đánh giá nào.</div>
+      <div *ngIf="pagedResultReview && (pagedResultReview.items || []).length === 0" class="text-center pt-4">Không có
+        đánh giá nào.</div>
     </div>
   </div>
 

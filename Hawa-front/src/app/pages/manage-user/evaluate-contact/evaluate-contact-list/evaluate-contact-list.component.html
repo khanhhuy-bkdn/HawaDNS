@@ -12,15 +12,17 @@
     <div class="action-menu d-flex">
       <div class="action-menu__item mr-3 d-flex flex-column">
         <label for="province">Tỉnh/Thành phố</label>
-        <select class="select-control" name="province" id="province" [(ngModel)]="filterModel.contactStateProvinceId" (change)="getDistricts($event.target.value)">
+        <select class="select-control" name="province" id="province" [(ngModel)]="filterModel.contactStateProvinceId"
+          (change)="getDistricts($event.target.value)">
           <option [value]="null">Tất cả</option>
           <option *ngFor="let province of stateProvinces" [value]="province.key">{{ province.text }}</option>
         </select>
       </div>
       <div class="action-menu__item mr-3 d-flex flex-column">
         <label for="district">Quận/Huyện</label>
-        <select class="select-control" name="district" id="district" [(ngModel)]="filterModel.contactDistrictId" (change)="getWards($event.target.value)"
-          [disabled]="!filterModel.contactStateProvinceId || filterModel.contactStateProvinceId === 'null'" [class.not-allowed]="!filterModel.contactStateProvinceId || filterModel.contactStateProvinceId === 'null'">
+        <select class="select-control" name="district" id="district" [(ngModel)]="filterModel.contactDistrictId"
+          (change)="getWards($event.target.value)" [disabled]="!filterModel.contactStateProvinceId || filterModel.contactStateProvinceId === 'null'"
+          [class.not-allowed]="!filterModel.contactStateProvinceId || filterModel.contactStateProvinceId === 'null'">
           <option [value]="null">Tất cả</option>
           <option *ngFor="let district of districts" [value]="district.key">{{ district.text }}</option>
         </select>
@@ -41,7 +43,7 @@
   </div>
 
   <div class="mt-3 shadow-box list-user">
-    <div class="">
+    <div>
       <table class="w-100">
         <thead>
           <tr>
@@ -52,35 +54,35 @@
               Tên liên hệ gián tiếp
             </th>
             <th class="">
-              <span class="cursor-pointer" >Tên chủ thể</span>&nbsp;
+              <span class="cursor-pointer">Tên chủ thể</span>&nbsp;
               <!-- (click)="sortName.click()" -->
               <!-- <span class="cursor-pointer" #sortName (click)="sortTable('name')">
                 <i class="fa fa-sort" aria-hidden="true"></i>
               </span> -->
             </th>
             <th class="">
-              <span class="cursor-pointer" >Người liên hệ</span>&nbsp;
+              <span class="cursor-pointer">Người liên hệ</span>&nbsp;
               <!-- (click)="sortEvaluator.click()" -->
               <!-- <span class="cursor-pointer" #sortEvaluator (click)="sortTable('evaluator')">
                 <i class="fa fa-sort" aria-hidden="true"></i>
               </span> -->
             </th>
             <th class="">
-              <span class="cursor-pointer" >SĐT</span>&nbsp;
+              <span class="cursor-pointer">SĐT</span>&nbsp;
               <!-- (click)="sortDate.click()" -->
               <!-- <span class="cursor-pointer" #sortDate (click)="sortTable('date')">
                 <i class="fa fa-sort" aria-hidden="true"></i>
               </span> -->
             </th>
             <th class="text-center">
-              <span class="cursor-pointer" >Số lượng đánh giá</span>&nbsp;
+              <span class="cursor-pointer">Số lượng đánh giá</span>&nbsp;
               <!-- (click)="sortAverage.click()" -->
               <!-- <span class="cursor-pointer" #sortAverage (click)="sortTable('average')">
                 <i class="fa fa-sort" aria-hidden="true"></i>
               </span> -->
             </th>
             <th class="text-center">
-              <span class="cursor-pointer" >Điểm trung bình</span>&nbsp;
+              <span class="cursor-pointer">Điểm trung bình</span>&nbsp;
               <!-- (click)="sortAverage.click()" -->
               <!-- <span class="cursor-pointer" #sortAverage (click)="sortTable('average')">
                 <i class="fa fa-sort" aria-hidden="true"></i>
@@ -94,45 +96,50 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of pagedResult.items; let i = index">
-            <td class="index-checkbox">
-              <span class="pl-3">{{i+1}}</span>
-            </td>
-            <td [title]="item?.contact?.titleContribute ? item?.contact?.titleContribute : ''" class="text-truncate ">
-              {{item?.titleContribute}}
-            </td>
-            <td [title]="item?.contactName ? item?.contactName : ''" class="text-truncate ">
-              {{item?.contactName}}
-            </td>
-            <td [title]="item?.userContact ? item?.userContact : ''" class="text-truncate ">
-              {{item?.userContact}}
-            </td>
-            <td [title]="item?.phone1 ? item?.phone1 : ''" class="text-truncate ">
-              {{item?.phone1}}
-            </td>
-            <td [title]="item.reviewCount ? item.reviewCount : '0'" class="text-truncate text-center">
-              {{item.reviewCount}}
-            </td>
-            <td class="text-truncate text-center">
-              <span>
-                <i class="fa fa-star star-high"></i>
-              </span>
-              <span class="ml-2" [title]="item?.averageRating ? item?.averageRating : '0'">
-                {{item.averageRating ? item.averageRating : 0}}
-              </span>
-            </td>
-            <td class="text-truncate text-center">
-              <!-- <div [title]="'Chi tiết'" class="view--detail text-center p-2 width-5 cursor-pointer no-outline" (click)="viewDetail(item?.id)">
-                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Chi tiết
-              </div> -->
-
-              <div [title]="'Xem chi tiết'" class="text-center" (click)="viewDetail(item?.id)">
-                <img class="cursor-pointer" src="assets/images/icon-view.svg" alt="">
-              </div>
-            </td>
-          </tr>
+          <ng-container *ngIf="!loading && pagedResult && (pagedResult.items || []).length !== 0">
+            <tr *ngFor="let item of pagedResult.items; let i = index">
+              <td class="index-checkbox">
+                <span class="pl-3">{{i+1}}</span>
+              </td>
+              <td [title]="item?.titleContribute ? item?.titleContribute : ''" class="text-truncate ">
+                {{item?.titleContribute}}
+              </td>
+              <td [title]="item?.contactName ? item?.contactName : ''" class="text-truncate ">
+                {{item?.contactName}}
+              </td>
+              <td [title]="item?.userContact ? item?.userContact : ''" class="text-truncate ">
+                {{item?.userContact}}
+              </td>
+              <td [title]="item?.phone1 ? item?.phone1 : ''" class="text-truncate ">
+                {{item?.phone1}}
+              </td>
+              <td [title]="item.reviewCount ? item.reviewCount : '0'" class="text-truncate text-center">
+                {{item.reviewCount}}
+              </td>
+              <td class="text-truncate text-center">
+                <span>
+                  <i class="fa fa-star star-high"></i>
+                </span>
+                <span class="ml-2" [title]="item?.averageRating ? item?.averageRating : '0'">
+                  {{item.averageRating ? item.averageRating : 0}}
+                </span>
+              </td>
+              <td class="text-truncate text-center">
+                <!-- <div [title]="'Chi tiết'" class="view--detail text-center p-2 width-5 cursor-pointer no-outline" (click)="viewDetail(item?.id)">
+                      <i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Chi tiết
+                    </div> -->
+                <div [title]="'Xem chi tiết'" class="text-center" (click)="viewDetail(item?.id)">
+                  <img class="cursor-pointer" src="assets/images/icon-view.svg" alt="">
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          <loading *ngIf="loading"></loading>
         </tbody>
       </table>
+    </div>
+    <div *ngIf="!loading && pagedResult && (pagedResult.items || []).length === 0" class="text-center py-3">
+      <h6>Không có dữ liệu</h6>
     </div>
     <div class="w-100 p-4 mt-4">
       <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>

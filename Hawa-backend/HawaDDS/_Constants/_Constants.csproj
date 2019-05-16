@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="EntityStatuses\" />
-    <Folder Include="EntityTypes\" />
   </ItemGroup>
 
 </Project>

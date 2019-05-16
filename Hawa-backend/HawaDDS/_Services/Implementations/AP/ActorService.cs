@@ -69,6 +69,7 @@ namespace _Services.Implementations.AP
 
         public async Task<ActorDto> UpdateActorAsync(EditActorDto dto)
         {
+            ValidateActorDto(dto);
             var actorToUpdate = await _unitOfWork.GetRepository<APActor>().GetAsync(dto.Id);
             UpdateActorDto(actorToUpdate, dto);
 
@@ -152,6 +153,7 @@ namespace _Services.Implementations.AP
         {
             var forestPlotIds = await _unitOfWork.GetRepository<ICForestPlot>()
                 .GetAll()
+                .SearchByFields(filterDto.SearchTerm, x => x.APActor.APActorName)
                 .Where(x => x.APActor != null)
                 .WhereIf(filterDto.StateProvinceID > 0, x => x.FK_GEStateProvinceID == filterDto.StateProvinceID)
                 .WhereIf(filterDto.DistrictID > 0, x => x.FK_GEDistrictID == filterDto.DistrictID)
@@ -202,10 +204,20 @@ namespace _Services.Implementations.AP
             entity.APActorPhone = dto.Phone;
             entity.APActorTaxNumber = dto.TaxNumber;
             entity.FK_GECommuneID = dto.CommuneID;
+            entity.GECommuneCode = dto.CommuneCode;
+            entity.GEDistrictCode = dto.DistrictCode;
+            entity.GEStateProvinceCode = dto.StateProvinceCode;
             entity.FK_GEDistrictID = dto.DistrictID;
             entity.FK_GEStateProvinceID = dto.StateProvinceID;
             entity.APActorRepresentative = dto.Representative;
             entity.APActorWebsite = dto.Website;
+            entity.APActorEmail = dto.Email;
+            entity.APActorAvatar = dto.Avartar;
+            entity.APActorCode = dto.ActorTypeCode;
+            entity.FK_APActorTypeID = dto.ActorTypeID;
+            entity.APActorContactName = dto.ContactName;
+            entity.APActorContactPhone = dto.ContactPhone;
+            entity.APActorNote = dto.Note;
         }
 
         private IQueryable<APActor> GetFilterActorsQuery(FilterActorDto filter)
@@ -226,6 +238,24 @@ namespace _Services.Implementations.AP
                 .WhereIf(filter.StateProvinceID.HasValue, x => x.FK_GEStateProvinceID == filter.StateProvinceID)
                 .WhereIf(filter.DistrictID.HasValue, x => x.FK_GEDistrictID == filter.DistrictID)
                 .WhereIf(filter.CommuneID.HasValue, x => x.FK_GECommuneID == filter.CommuneID);
+        }
+
+        private void ValidateActorDto(EditActorDto dto)
+        {
+            if (dto.Name.IsNullOrEmpty())
+            {
+                throw new BusinessException("Tên chủ rừng không được để trống.");
+            }
+
+            if (dto.Phone.IsNullOrEmpty())
+            {
+                throw new BusinessException("Số điện thoại chủ rừng không được để trống.");
+            }
+
+            if (!dto.Phone.IsNumber())
+            {
+                throw new BusinessException("Số điện thoại không đúng định dạng.");
+            }
         }
     }
 }

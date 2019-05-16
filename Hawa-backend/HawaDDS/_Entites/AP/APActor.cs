@@ -80,5 +80,11 @@ namespace _Entities.AP
         public string GEDistrictCode { get; set; }
 
         public string GEStateProvinceCode { get; set; }
+
+        public string APActorContactName { get; set; }
+
+        public string APActorContactPhone { get; set; }
+
+        public string APActorNote { get; set; }
     }
 }

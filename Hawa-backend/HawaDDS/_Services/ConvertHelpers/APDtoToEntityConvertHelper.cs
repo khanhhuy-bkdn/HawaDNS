@@ -40,7 +40,17 @@ namespace _Services.ConvertHelpers
                 FK_GEStateProvinceID = dto.StateProvinceID,
                 APActorRepresentative = dto.Representative,
                 APActorWebsite = dto.Website,
-                APActorStatus = UserStatus.Active
+                APActorStatus = UserStatus.Active,
+                GECommuneCode = dto.CommuneCode,
+                GEDistrictCode = dto.DistrictCode,
+                GEStateProvinceCode = dto.StateProvinceCode,
+                APActorEmail = dto.Email,
+                APActorAvatar = dto.Avartar,
+                APActorCode = dto.ActorTypeCode,
+                FK_APActorTypeID = dto.ActorTypeID,
+                APActorContactName = dto.ContactName,
+                APActorContactPhone = dto.ContactPhone,
+                APActorNote = dto.Note
             };
         }
     }

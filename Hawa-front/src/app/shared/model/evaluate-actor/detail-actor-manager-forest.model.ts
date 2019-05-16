@@ -78,5 +78,8 @@ export class DetailActorManagerForest {
         compartment: Dictionary;
         subCompartment: Dictionary;
         plotCode: string;
-    }
+    };
+    contactName: string;
+    contactPhone: string;
+    note: string;
 }

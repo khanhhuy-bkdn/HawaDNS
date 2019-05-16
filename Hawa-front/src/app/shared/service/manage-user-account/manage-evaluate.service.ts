@@ -17,6 +17,7 @@ export class ManageEvaluateService {
   filterModelListContact = new FilterEvaluateContactListManager();
   currentPageContact = null;
   pageSizeContact = null;
+  searchTermActor = null;
   filterModelListActor = new EvaluateActorFilterManager();
   currentPageActor = null;
   pageSizeActor = null;
@@ -124,7 +125,12 @@ export class ManageEvaluateService {
               text: item.commune.text,
             }
           }
-        })
+        }),
+        status: result.contact.status && {
+          key: result.contact.status.key,
+          code: result.contact.status.code,
+          text: result.contact.status.text,
+        }
       } : null,
       reviewUser: result.reviewUser ? {
         id: result.reviewUser.id,
@@ -436,11 +442,12 @@ export class ManageEvaluateService {
   }
   // Danh sách đánh giá chủ rừng theo lô
   actorListForEvaluate(
+    searchTerm: string,
     filterModel: EvaluateActorFilterManager,
     page: number | string,
     pageSize: number | string
   ): Observable<PagedResult<EvaluateActorListManager>> {
-    const url = `forestplotactor/filter/${page}/${pageSize}`;
+    const url = `forestplotactor/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
     const urlParams = this.createFilterParamsActorForEvaluate(filterModel);
     return this.apiService.get(url, urlParams).map(response => {
       const result = response.result;
@@ -453,7 +460,32 @@ export class ManageEvaluateService {
       }
     });
   }
+  // Danh sách đánh giá chủ rừng theo lô màn hình Admin có search
+  actorListForEvaluateSearchKeyWord(
+    searchTerm: Observable<string>,
+    filterModel: EvaluateActorFilterManager,
+    page: number | string,
+    pageSize: number | string
+  ): Observable<PagedResult<EvaluateActorListManager>> {
+    const filterUrl = `forestplotactor/filter/${page}/${pageSize}?searchTerm=`;
+    return searchTerm
+      .debounceTime(600)
+      .distinctUntilChanged()
+      .switchMap(term => {
+        const urlParams = this.createFilterParamsActorForEvaluate(filterModel);
+        return this.apiService.get(filterUrl + term, urlParams).map(response => {
+          const result = response.result;
+          return {
+            currentPage: result.pageIndex,
+            pageSize: result.pageSize,
+            pageCount: result.totalPages,
+            total: result.totalCount,
+            items: (result.items || []).map(this.mappingActorForEvaluate)
+          }
+        });
+      });
 
+  }
   // mapping Chi tiết chủ rừng theo lô
   mappingDetailAtorForForestPlotId(result: any): DetailActorManagerForest {
     return {
@@ -645,7 +677,10 @@ export class ManageEvaluateService {
           text: result.forestPlot.subCompartment.text,
         },
         plotCode: result.forestPlot.plotCode,
-      }
+      },
+      contactName: result.contactName,
+      contactPhone: result.contactPhone,
+      note: result.note,
     }
   }
   // Chi tiết chủ rừng theo lô

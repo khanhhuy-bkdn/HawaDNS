@@ -48,5 +48,10 @@ namespace _Dtos.AP
         public ReviewItemDto[] Reviews { get; set; }
 
         public ForestPlotDto ForestPlot { get; set; }
+        public string ContactName { get; set; }
+
+        public string ContactPhone { get; set; }
+
+        public string Note { get; set; }
     }
 }

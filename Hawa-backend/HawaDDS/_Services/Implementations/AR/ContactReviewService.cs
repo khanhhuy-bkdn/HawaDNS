@@ -5,16 +5,19 @@ using _Abstractions.Services.AR;
 using _Common.Exceptions;
 using _Common.Runtime.Session;
 using _Common.Timing;
+using _Constants.EntityTypes;
 using _Dtos;
 using _Dtos.AR;
 using _Dtos.AR.InputDtos;
 using _Dtos.AR.Inputs;
 using _Dtos.Shared;
 using _Dtos.Shared.Inputs;
+using _Entities.AD;
 using _Entities.AR;
 using _EntityFrameworkCore.Helpers.Linq;
 using _EntityFrameworkCore.UnitOfWork;
 using _Services.ConvertHelpers;
+using _Services.Internal;
 using _Services.Internal.Helpers.PagedResult;
 
 using Microsoft.EntityFrameworkCore;
@@ -25,11 +28,13 @@ namespace _Services.Implementations.AR
     {
         private readonly IBysSession _bysSession;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
 
-        public ContactReviewService(IUnitOfWork unitOfWork, IBysSession bysSession)
+        public ContactReviewService(IUnitOfWork unitOfWork, IBysSession bysSession, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _bysSession = bysSession;
+            _notificationService = notificationService;
         }
 
         public async Task<ReviewItemDto> ReviewAsync(ReviewContactDto dto)
@@ -62,7 +67,7 @@ namespace _Services.Implementations.AR
             if (contactFromDb != null)
             {
                 throw new BusinessException("Bạn không thể đánh giá liên hệ do chính mình đóng góp thông tin.");
-            }
+            } 
 
             var contactReviewToCreate = dto.ToARContactReviewEntity(_bysSession);
 
@@ -71,6 +76,16 @@ namespace _Services.Implementations.AR
             await _unitOfWork.CompleteAsync();
 
             await UpdateContactEvalution(dto.ContactId);
+
+            await _notificationService.CreateNotificationAsync(
+                new CreateNotificationDto
+                {
+                    UserId = _bysSession.UserId,
+                    NotificationType = NotificationType.AddedContactEvaluation,
+                    NotificationObjectType = "ARContactReviews",
+                    NotificationObjectId = contactReview.Id,
+                    NotificationContent = _unitOfWork.GetRepository<ADUser>().Get(_bysSession.UserId)?.ADUserOrganizationName + " đã thêm đánh giá liên hệ " +  _unitOfWork.GetRepository<ARContact>().Get(dto.ContactId)?.ARContactName
+                });
 
             return await GetContactReviewAsync(contactReview.Id);
         }

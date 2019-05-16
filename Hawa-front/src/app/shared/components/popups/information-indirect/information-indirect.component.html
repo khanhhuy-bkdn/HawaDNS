@@ -143,9 +143,10 @@
                 <i class="fa fa-star star-high"></i>
               </div>
               <div class="ml-1" style="width: 20px" [title]="item?.averageRating ? item?.averageRating : '0'">{{item?.averageRating ? item?.averageRating : '0'}}</div>
-              <div class="manipulation ml-1" [class.opacity-none]="contributorID === item?.contributor?.id" [class.cursor-pointer]="contributorID !== item?.contributor?.id"
-                (click)="evaluateContact(item)">
-                Đánh giá
+              <div class="manipulation ml-1 cursor-pointer" 
+                (click)="evaluateContact(item)" [title]="(contributorID === item?.contributor?.id) ? 'Xem' : 'Đánh giá'">
+                <!-- [class.opacity-none]="contributorID === item?.contributor?.id" [class.cursor-pointer]="contributorID !== item?.contributor?.id" -->
+                {{(contributorID === item?.contributor?.id) ? 'Xem' : 'Đánh giá'}}
               </div>
             </div>
           </td>

@@ -1,0 +1,104 @@
+:host /deep/  .k-chart-surface{
+    height: 500px !important;
+}
+:host ::ng-deep {
+    .wrapper {
+        padding: 2.25rem 2.25rem 0.75rem;
+        position: relative;
+    }
+    .action-bar {
+        background-color: #ffffff;
+    
+        .action-menu {
+            &__item {
+            font-weight: 500;
+            }
+        }
+    }
+    .total-reserves{
+        border-radius: 50%;
+        background-color: #00c0c8;
+        height: 0.8rem;
+        width: 0.8rem;
+    }
+    
+    .total-area{
+        border-radius: 50%;
+        background-color: #fb9679;
+        height: 0.8rem;
+        width: 0.8rem;
+    }
+    
+    .total-actor{
+        border-radius: 50%;
+        background-color: #ab8ce3;
+        height: 0.8rem;
+        width: 0.8rem;
+    }
+    
+    .title-char{
+        font-size: 18px;
+        font-weight: bold;
+    }    
+    
+    .detail-char{
+        .quatity{
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .reserves{
+            background-color: #82c95b;
+            border-radius: 50%;
+            height: 4rem;
+            width: 4rem;
+        }
+        .acreage{
+            background-color: #2c8fe8;
+            border-radius: 50%;
+            height: 4rem;
+            width: 4rem;
+        }
+        .user{
+            background-color: #fdbe3d;
+            border-radius: 50%;
+            height: 4rem;
+            width: 4rem;
+        }
+        .message{
+            background-color: #e65240;
+            border-radius: 50%;
+            height: 4rem;
+            width: 4rem;
+        }
+    }
+    
+    .notification {
+        .title-notification{
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .view-all{
+            cursor: pointer;
+            background-color: #3491e5;
+            border-radius: 1rem;
+            color: white;
+        }
+        .item-notifi{
+            font-size: 14px;
+            background-color: #f7f7f7;
+            cursor: pointer;
+        }
+        .not-read-notifi{
+            border-left: 4px solid #e45346;
+        }
+        .note{
+            font-size: 12px;
+            font-style: italic;
+            .user-form{
+                color: #2c89d8;
+                
+            }
+        }
+        
+    }
+}

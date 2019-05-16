@@ -1,5 +1,21 @@
 <div class="wrapper">
-  <h4 class="text-uppercase font-weight-bold">đánh giá chủ rừng</h4>
+  <h4 class="text-uppercase font-weight-bold">Quản lý chủ rừng</h4>
+
+  <div class="search-bar d-flex flex-row-reverse">
+    <div class="ml-1">
+      <button nbButton type="button" class="cursor-pointer" (click)="importDataActor.click()">Import dữ liệu chủ rừng</button>
+      <input type="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        class="display--none" (change)="importDataActorFuc($event)" #importDataActor />
+    </div>
+    <div class="search-action d-flex">
+      <input nbInput class="search-action__input input-height--36" type="text" placeholder="Tìm kiếm theo tên chủ rừng"
+        (keyup)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value"/>
+      <button nbButton type="button" class="cursor-pointer search-action__submit d-flex justify-content-center">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
   <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between bg-white">
     <div class="action-menu d-flex">
       <div class="action-menu__item mr-3 d-flex flex-column">
@@ -19,16 +35,16 @@
       </div>
       <div class="action-menu__item mr-3 d-flex flex-column">
         <label for="ward">Phường/Xã</label>
-        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.communeId" (change)="getCompartments($event.target.value)" [disabled]="!filterModel.districtId || filterModel.districtId === 'null'"
-          [class.not-allowed]="!filterModel.districtId || filterModel.districtId === 'null'">
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.communeId" (change)="getCompartments($event.target.value)"
+          [disabled]="!filterModel.districtId || filterModel.districtId === 'null'" [class.not-allowed]="!filterModel.districtId || filterModel.districtId === 'null'">
           <option [value]="null">Tất cả</option>
           <option *ngFor="let ward of communes" [value]="ward.key">{{ ward.text }}</option>
         </select>
       </div>
       <div class="action-menu__item mr-3 d-flex flex-column">
         <label for="ward">Tiểu khu</label>
-        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.compartmentId" (change)="getSubcompartments($event.target.value)" [disabled]="!filterModel.communeId || filterModel.communeId === 'null'"
-          [class.not-allowed]="!filterModel.communeId || filterModel.communeId === 'null'">
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.compartmentId" (change)="getSubcompartments($event.target.value)"
+          [disabled]="!filterModel.communeId || filterModel.communeId === 'null'" [class.not-allowed]="!filterModel.communeId || filterModel.communeId === 'null'">
           <option [value]="null">Tất cả</option>
           <option *ngFor="let compartment of compartments" [value]="compartment.key">{{ compartment.code }}</option>
         </select>
@@ -99,31 +115,31 @@
             <td class="index-checkbox">
               <span class="pl-3">{{i+1}}</span>
             </td>
-            <td [title]="item?.name" class="text-truncate ">
+            <td [title]="item?.name ? item?.name : ''" class="text-truncate ">
               {{item?.name}}
             </td>
-            <td [title]="item?.forestPlot?.stateProvince?.text" class="text-truncate ">
+            <td [title]="item?.forestPlot?.stateProvince?.text ? item?.forestPlot?.stateProvince?.text : ''" class="text-truncate ">
               {{item?.forestPlot?.stateProvince?.text}}
             </td>
-            <td [title]="item?.forestPlot?.district?.text" class="text-truncate ">
+            <td [title]="item?.forestPlot?.district?.text ? item?.forestPlot?.district?.text : ''" class="text-truncate ">
               {{item?.forestPlot?.district?.text}}
             </td>
-            <td [title]="item?.forestPlot?.commune?.text" class="text-truncate ">
+            <td [title]="item?.forestPlot?.commune?.text ? item?.forestPlot?.commune?.text : ''" class="text-truncate ">
               {{item?.forestPlot?.commune?.text}}
             </td>
-            <td [title]="item?.forestPlot?.compartment?.code" class="text-truncate text-center">
+            <td [title]="item?.forestPlot?.compartment?.code ? item?.forestPlot?.compartment?.code : ''" class="text-truncate text-center">
               {{item?.forestPlot?.compartment?.code}}
             </td>
-            <td [title]="item?.forestPlot?.subCompartment?.code" class="text-truncate text-center">
+            <td [title]="item?.forestPlot?.subCompartment?.code ? item?.forestPlot?.subCompartment?.code : ''" class="text-truncate text-center">
               {{item?.forestPlot?.subCompartment?.code}}
             </td>
-            <td [title]="item?.forestPlot?.plotCode" class="text-truncate text-center">
+            <td [title]="item?.forestPlot?.plotCode ? item?.forestPlot?.plotCode : ''" class="text-truncate text-center">
               {{item?.forestPlot?.plotCode}}
             </td>
-            <td [title]="item?.reviewCount" class="text-truncate text-center">
+            <td [title]="item?.reviewCount ? item?.reviewCount : '0'" class="text-truncate text-center">
               {{item?.reviewCount}}
             </td>
-            <td [title]="item?.averageRating" class="text-truncate text-center">
+            <td [title]="item?.averageRating ? item?.averageRating : ''" class="text-truncate text-center">
               <span>
                 <i class="fa fa-star star-high"></i>
               </span>
@@ -137,6 +153,12 @@
               </div>
             </td>
           </tr>
+          <tr *ngIf="pagedResult && pagedResult.items && pagedResult.items.length == 0">
+            <td colspan="11">
+              <h6 class="mb-0 text-center">Không có dữ liệu</h6>
+            </td>
+          </tr>
+          <loading *ngIf="loadingtable"></loading>
         </tbody>
       </table>
     </div>
@@ -147,3 +169,6 @@
   <!-- <loading *ngIf="loading"></loading> -->
 
 </div>
+
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '10px',
+    primaryColour: '#008A77', secondaryColour: '#008A77', tertiaryColour: '#008A77' }"></ngx-loading>

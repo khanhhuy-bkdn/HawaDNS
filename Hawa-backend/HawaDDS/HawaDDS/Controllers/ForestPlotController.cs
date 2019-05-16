@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Swashbuckle.AspNetCore.Annotations;
+using _Dtos;
 
 namespace HawaDDS.Controllers
 {
@@ -119,6 +120,18 @@ namespace HawaDDS.Controllers
                     TreeSpecID = treespecId,
                     CommuneID = communeId
                 });
+
+            return Success(result);
+        }
+
+        /// <summary>
+        /// Thống kê cơ bản
+        /// </summary>
+        [HttpGet("statistic")]
+        [SwaggerResponse(200, "", typeof(StatisticDto))]
+        public async Task<IActionResult> Statistic()
+        {
+            var result = await _forestPlotService.StatisticAsync();
 
             return Success(result);
         }

@@ -31,4 +31,7 @@ export class ActorForesplot {
         subCompartment: Dictionary;
         plotCode: string;
     }
+    contactName: string;
+    contactPhone: string;
+    note: string;
 }

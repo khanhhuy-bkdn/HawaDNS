@@ -120,15 +120,16 @@
                 </div>
               </td> -->
               <td>
-                <div class="d-flex text-right__float">
+                <div class="d-flex">
                   <div>
                     <i class="fa fa-star star-high"></i>
                   </div>
                   <div class="ml-1" style="width: 20px" [title]="item?.averageRating ? item?.averageRating : ''">{{item?.averageRating ? item?.averageRating : '0'}}</div>
-                  <div class="manipulation ml-1" [class.opacity-none]="(contributor === item?.contributor) || (item?.status?.key === 'HuyBo')"
-                    [class.cursor-pointer]="contributor !== item?.contributor && (item?.status?.key !== 'HuyBo')" (click)="evaluateContact(item)"
-                    title="Đánh giá">
-                    Đánh giá
+                  <div class="manipulation ml-1" [class.opacity-none]="(item?.status?.key === 'HuyBo')"
+                    [class.cursor-pointer]="(item?.status?.key !== 'HuyBo')" (click)="evaluateContact(item)"
+                    [title]="(contributorID === item?.contributor?.id) ? 'Xem' : 'Đánh giá'">
+                    <!-- (contributorID === item?.contributor?.id) ||  // contributorID !== item?.contributor?.id && -->
+                    {{(contributorID === item?.contributor?.id) ? 'Xem' : 'Đánh giá'}}
                   </div>
                 </div>
               </td>

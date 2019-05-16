@@ -103,13 +103,14 @@ export class InformationIndirectComponent implements OnInit {
   }
 
   evaluateContact(item: ContactList) {
-    if ((item && !item.contributor) || item && item.contributor && this.contributorID !== item.contributor.id) {
+    // if ((item && !item.contributor) || item && item.contributor && this.contributorID !== item.contributor.id) {
       this.nbDialogService
         .open(IndirectContactAssessmentComponent, {
           context: {
             contactId: item.id,
             averageRating: item.averageRating,
             aggregateOfRatings: item.aggregateOfRatings,
+            isContributor: this.contributorID === (item && item.contributor && item.contributor.id),
           }
         })
         .onClose.subscribe(val => {
@@ -119,7 +120,7 @@ export class InformationIndirectComponent implements OnInit {
             });
         }
         );
-    }
+    // }
   }
 
   deleteContribute(contactId: number) {

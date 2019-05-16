@@ -33,13 +33,6 @@
           </option>
         </select>
       </div>
-      <!-- <div class="action-menu__item mr-3 d-flex flex-column">
-        <label for="compartment">Tiểu khu</label>
-        <select class="select-control" name="compartment" id="compartment" [(ngModel)]="filterModel.compartmentId">
-          <option [value]="''">Tất cả</option>
-          <option *ngFor="let compartment of listOfCompartments" [value]="compartment.key">{{ compartment.code }}</option>
-        </select>
-      </div> -->
     </div>
     <div class="action-button d-flex flex-row-reverse align-items-end mt-3">
       <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
@@ -63,15 +56,6 @@
             <th>
               <span>Phường/Xã</span>
             </th>
-            <!-- <th class="text-right">
-        <span>Tiểu khu</span>
-      </th>
-      <th class="text-right">
-        <span>Khoảnh</span>
-      </th>
-      <th class="text-right">
-        <span>Lô</span>
-      </th> -->
             <th class="text-right">
               <span>Số thông tin đóng góp</span>
             </th>
@@ -87,53 +71,43 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of pagedResult.items; let i = index">
-            <td class="pl-3">
-              <span>{{i + 1}}</span>
-            </td>
-            <td class="text-truncate" [title]="item?.stateProvince?.text">
-              {{item?.stateProvince?.text}}
-            </td>
-            <td class="text-truncate" [title]="item?.district?.text">
-              {{item?.district?.text}}
-            </td>
-            <td class="text-truncate" [title]="item?.commune?.text">
-              {{item?.commune?.text}}
-            </td>
-            <!-- <td class="text-truncate">
-              {{item?.compartment?.code}}
-            </td>
-            <td class="text-truncate">
-              {{item?.subCompartment.code}}
-            </td>
-            <td class="text-truncate">
-              {{item?.plotCode}}
-            </td> -->
-            <td class="text-right" [title]="item?.reviewCount ? item?.reviewCount : '0'">
-              {{item?.reviewCount}}
-            </td>
-            <td class="text-right" [title]="item?.notConfirmStatusCount ? item?.notConfirmStatusCount : '0'">
-              {{item?.notConfirmStatusCount}}
-            </td>
-            <td class="text-right" [title]="item?.pendingStatusCount ? item?.pendingStatusCount : '0'">
-              {{item?.pendingStatusCount}}
-            </td>
-            <td class="width-5">
-              <!-- <div class="view--detail text-center p-2 width-5 cursor-pointer" (click)="routerLink(item?.commune?.key)"
-                [routerLink]="['../detail', item?.commune?.key]">
-                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp; Chi tiết
-              </div> -->
-
-              <div title="Xem chi tiết" class="text-center" (click)="routerLink(item?.commune?.key)"
-              [routerLink]="['../detail', item?.commune?.key]">
+          <ng-container *ngIf="!loading && pagedResult && (pagedResult.items || []).length !== 0">
+            <tr *ngFor="let item of pagedResult.items; let i = index">
+              <td class="pl-3">
+                <span>{{i + 1}}</span>
+              </td>
+              <td class="text-truncate" [title]="item?.stateProvince?.text">
+                {{item?.stateProvince?.text}}
+              </td>
+              <td class="text-truncate" [title]="item?.district?.text">
+                {{item?.district?.text}}
+              </td>
+              <td class="text-truncate" [title]="item?.commune?.text">
+                {{item?.commune?.text}}
+              </td>
+              <td class="text-right" [title]="item?.reviewCount ? item?.reviewCount : '0'">
+                {{item?.reviewCount}}
+              </td>
+              <td class="text-right" [title]="item?.notConfirmStatusCount ? item?.notConfirmStatusCount : '0'">
+                {{item?.notConfirmStatusCount}}
+              </td>
+              <td class="text-right" [title]="item?.pendingStatusCount ? item?.pendingStatusCount : '0'">
+                {{item?.pendingStatusCount}}
+              </td>
+              <td class="width-5">
+                <div title="Xem chi tiết" class="text-center" (click)="routerLink(item?.commune?.key)" [routerLink]="['../detail', item?.commune?.key]">
                   <img class="cursor-pointer" src="assets/images/icon-view.svg" alt="">
                 </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          </ng-container>
+          <loading *ngIf="loading"></loading>
         </tbody>
       </table>
     </div>
-    <div *ngIf="pagedResult && (pagedResult.items || []).length === 0" class="text-center">Không có dữ liệu</div>
+    <div *ngIf="!loading && pagedResult && (pagedResult.items || []).length === 0" class="text-center py-3">
+      <h6>Không có dữ liệu</h6>
+    </div>
     <div class="w-100 px-4">
       <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
     </div>

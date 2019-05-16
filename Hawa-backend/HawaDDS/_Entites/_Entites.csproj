@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="AA\" />
     <Folder Include="AD\" />
-    <Folder Include="AP\" />
     <Folder Include="AR\" />
     <Folder Include="GE\" />
     <Folder Include="IC\" />

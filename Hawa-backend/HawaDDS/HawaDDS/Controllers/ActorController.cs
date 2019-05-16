@@ -147,7 +147,8 @@ namespace _Hawa.WebApi.Controllers
             [FromQuery] string plotCode,
             [FromQuery] int? compartmentId,
             [FromQuery] int? subCompartmentId,
-            [FromQuery] string sorting)
+            [FromQuery] string sorting,
+            [FromQuery] string searchTerm)
         {
             var result = await _actorService.FilterForestPlotActorsAsync(
                 new PagingAndSortingRequestDto
@@ -163,7 +164,8 @@ namespace _Hawa.WebApi.Controllers
                     CommuneID = communeId,
                     SubCompartmentId = subCompartmentId,
                     CompartmentId = compartmentId,
-                    PlotCode = plotCode
+                    PlotCode = plotCode,
+                    SearchTerm = searchTerm
                 });
 
             return Success(result);

@@ -9,7 +9,7 @@ namespace _Dtos
     {
         public int Id { get; set; }
 
-        [JsonIgnore] public ContactDto Contact { get; set; }
+        public ContactDto Contact { get; set; }
 
         public ShortUserDto ReviewUser { get; set; }
 
@@ -22,5 +22,7 @@ namespace _Dtos
         public long? ReviewDate { get; set; }
 
         public bool Hidden { get; set; }
+
+        public int ForestPlotId { get; set; }
     }
 }

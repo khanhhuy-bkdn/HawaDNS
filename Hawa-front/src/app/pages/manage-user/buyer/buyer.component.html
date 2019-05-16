@@ -128,70 +128,75 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of userBuyerList; index as i">
-              <td class="text-center index-checkbox">
-                <div class="d-flex align-items-center">
-                  <input class="ml-1 mr-2 checkbox__item" type="checkbox" [class.invisible]="!user.status || user.status.key === 'Inactive'"
-                    [(ngModel)]="user.checked" />
-                  <span>{{ i+1 }}</span>
-                </div>
-              </td>
-              <td [title]="user.organizationName ? user.organizationName : ''" class="text-truncate col-max">
-                <a [routerLink]="['./info', user.id]" (click)="redirectToOther()">{{ user.organizationName }}</a>
-              </td>
-              <td [title]="user.type ? user.type.text : ''" class="text-truncate col-max">
-                {{ user.type?.text }}
-              </td>
-              <td [title]="user.email ? user.email : ''" class="text-truncate col-max">
-                <a href="mailto:{{ user.email }}?Subject=HAWA%20DDS" target="_blank">{{ user.email }}</a>
-              </td>
-              <td [title]="user.phone ? user.phone : ''" class="text-truncate col-min">
-                {{ user.phone }}
-              </td>
-              <!-- <td [title]="user.homePhone ? user.homePhone : ''" class="text-truncate">
-                {{ user.homePhone }}
-              </td> -->
-              <td [title]="user.stateProvince ? user.stateProvince.text : ''" class="text-truncate col-min">
-                {{ user.stateProvince?.text }}
-              </td>
-              <td [title]="user.district ? user.district.text : ''" class="text-truncate col-min">
-                {{ user.district?.text }}
-              </td>
-              <td [title]="user.commune ? user.commune.text : ''" class="text-truncate col-min">
-                {{ user.commune?.text }}
-              </td>
-              <td [title]="user.status ? user.status.text : ''" class="text-truncate modify-manipulation"
-                [class.inactive-text]="user.status && user.status.key === 'Inactive'">
-                {{ user.status?.text }}
-              </td>
-              <td class="modify-manipulation">
-                <div class="table-action d-flex justify-content-between pr-2 align-items-center">
-                  <span class="cursor-pointer table-action__detail text-warning" (click)="redirectToOther()" title="Xem chi tiết tài khoản"
-                    [routerLink]="['./info', user.id]">
-                    <i class="fa fa-eye" aria-hidden="true"></i>
-                  </span>
-                  <ng-container *ngIf="user.status && user.status.key !== 'Inactive'">
-                    <span class="cursor-pointer table-action__edit" (click)="redirectToOther()" title="Sửa thông tin tài khoản"
-                      [routerLink]="['./edit', user.id]">
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
+            <ng-container *ngIf="!loadingtable && userBuyerList.length !== 0">
+              <tr *ngFor="let user of userBuyerList; index as i">
+                <td class="text-center index-checkbox">
+                  <div class="d-flex align-items-center">
+                    <input class="ml-1 mr-2 checkbox__item" type="checkbox" [class.invisible]="!user.status || user.status.key === 'Inactive'"
+                      [(ngModel)]="user.checked" />
+                    <span>{{ i+1 }}</span>
+                  </div>
+                </td>
+                <td [title]="user.organizationName ? user.organizationName : ''" class="text-truncate col-max">
+                  <a [routerLink]="['./info', user.id]" (click)="redirectToOther()">{{ user.organizationName }}</a>
+                </td>
+                <td [title]="user.type ? user.type.text : ''" class="text-truncate col-max">
+                  {{ user.type?.text }}
+                </td>
+                <td [title]="user.email ? user.email : ''" class="text-truncate col-max">
+                  <a href="mailto:{{ user.email }}?Subject=HAWA%20DDS" target="_blank">{{ user.email }}</a>
+                </td>
+                <td [title]="user.phone ? user.phone : ''" class="text-truncate col-min">
+                  {{ user.phone }}
+                </td>
+                <!-- <td [title]="user.homePhone ? user.homePhone : ''" class="text-truncate">
+                      {{ user.homePhone }}
+                    </td> -->
+                <td [title]="user.stateProvince ? user.stateProvince.text : ''" class="text-truncate col-min">
+                  {{ user.stateProvince?.text }}
+                </td>
+                <td [title]="user.district ? user.district.text : ''" class="text-truncate col-min">
+                  {{ user.district?.text }}
+                </td>
+                <td [title]="user.commune ? user.commune.text : ''" class="text-truncate col-min">
+                  {{ user.commune?.text }}
+                </td>
+                <td [title]="user.status ? user.status.text : ''" class="text-truncate modify-manipulation"
+                  [class.inactive-text]="user.status && user.status.key === 'Inactive'">
+                  {{ user.status?.text }}
+                </td>
+                <td class="modify-manipulation">
+                  <div class="table-action d-flex justify-content-between pr-2 align-items-center">
+                    <span class="cursor-pointer table-action__detail text-warning" (click)="redirectToOther()" title="Xem chi tiết tài khoản"
+                      [routerLink]="['./info', user.id]">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
                     </span>
-                    <span class="cursor-pointer table-action__delete text-danger" title="Vô hiệu hóa tài khoản" (click)="deActiveUsers(user.status, user.id, i)">
-                      <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </span>
-                    <span class="cursor-pointer table-action__permission text-secondary" title="Đặt lại mật khẩu tài khoản"
-                      (click)="resetPassword(user.id)">
-                      <i class="fa fa-key" aria-hidden="true"></i>
-                    </span>
-                  </ng-container>
-                  <!-- <ng-container *ngIf="user.status.key === 'Unapproved'">
-                    <span class="cursor-pointer table-action__approve" (click)="approveUser(user.id)">
-                      Duyệt tài khoản
-                    </span>
-                  </ng-container> -->
-                </div>
-              </td>
-            </tr>
-            <tr *ngIf="userBuyerList.length == 0">
+                    <ng-container *ngIf="user.status && user.status.key !== 'Inactive'">
+                      <span class="cursor-pointer table-action__edit" (click)="redirectToOther()" title="Sửa thông tin tài khoản"
+                        [routerLink]="['./edit', user.id]">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </span>
+                      <span class="cursor-pointer table-action__delete text-danger" title="Vô hiệu hóa tài khoản"
+                        (click)="deActiveUsers(user.status, user.id, i)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                      </span>
+                      <span class="cursor-pointer table-action__permission text-secondary" title="Đặt lại mật khẩu tài khoản"
+                        (click)="resetPassword(user.id)">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                      </span>
+                    </ng-container>
+                    <!-- <ng-container *ngIf="user.status.key === 'Unapproved'">
+                          <span class="cursor-pointer table-action__approve" (click)="approveUser(user.id)">
+                            Duyệt tài khoản
+                          </span>
+                        </ng-container> -->
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+
+
+            <tr *ngIf="!loadingtable && userBuyerList.length === 0">
               <td colspan="10">
                 <h6 class="mb-0 text-center">Không có dữ liệu</h6>
               </td>

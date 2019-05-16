@@ -17,35 +17,35 @@
 
 
           <div class="d-flex center-parent pl-2">
-            <ng-container *ngIf="itemContactList?.status?.key === 'ChuaDuyet'">
+            <ng-container *ngIf="contacDetailItem?.status?.key === 'ChuaDuyet'">
               <div class="arrow-left-unapproved center-parent"></div>
               <div class="unapproved text-uppercase center-parent">chưa duyệt</div>
             </ng-container>
-            <ng-container *ngIf="itemContactList?.status?.key === 'DangXacMinh'">
+            <ng-container *ngIf="contacDetailItem?.status?.key === 'DangXacMinh'">
               <div class="arrow-left-not-verified center-parent"></div>
               <div class="not-verified text-uppercase center-parent">đang xác minh</div>
             </ng-container>
-            <ng-container *ngIf="itemContactList?.status?.key === 'DaDuyet'">
+            <ng-container *ngIf="contacDetailItem?.status?.key === 'DaDuyet'">
               <div class="arrow-left-approved center-parent"></div>
               <div class="approved text-uppercase center-parent">đã duyệt</div>
             </ng-container>
-            <ng-container *ngIf="itemContactList?.status?.key === 'HuyBo'">
+            <ng-container *ngIf="contacDetailItem?.status?.key === 'HuyBo'">
               <div class="arrow-left-cancel center-parent"></div>
               <div class="cancel text-uppercase center-parent">hủy bỏ</div>
             </ng-container>
           </div>
 
-          <div class="d-flex flex-wrap flex-row-reverse mt-2 ml-auto mr-1" *ngIf="approved && position === 'admin' && itemContactList?.status?.key !== 'HuyBo'">
-            <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="itemContactList?.status?.key === 'ChuaDuyet'"
+          <div class="d-flex flex-wrap flex-row-reverse mt-2 ml-auto mr-1" *ngIf="approved && position === 'admin' && contacDetailItem?.status?.key !== 'HuyBo'">
+            <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="contacDetailItem?.status?.key === 'ChuaDuyet'"
               (click)="editStatusContact('DangXacMinh')">bắt đầu xác minh</button>
-            <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="itemContactList?.status?.key === 'ChuaDuyet' || itemContactList?.status?.key === 'DangXacMinh'"
+            <button nbButton type="button" class="cursor-pointer text-uppercase ml-1" *ngIf="contacDetailItem?.status?.key === 'ChuaDuyet' || contacDetailItem?.status?.key === 'DangXacMinh'"
               (click)="editStatusContact('DaDuyet')">duyệt</button>
-            <button nbButton type="button" class="cursor-pointer text-uppercase" *ngIf="itemContactList?.status?.key === 'ChuaDuyet' || itemContactList?.status?.key === 'DangXacMinh' || itemContactList?.status?.key === 'DaDuyet'"
+            <button nbButton type="button" class="cursor-pointer text-uppercase" *ngIf="contacDetailItem?.status?.key === 'ChuaDuyet' || contacDetailItem?.status?.key === 'DangXacMinh' || contacDetailItem?.status?.key === 'DaDuyet'"
               (click)="editStatusContact('HuyBo')">hủy bỏ</button>
           </div>
         </div>
-        <span *ngIf="isAlertPopup" [class.alert-popup-not-verified]="itemContactList?.status?.key === 'DangXacMinh'" [class.alert-popup-approved]="itemContactList?.status?.key === 'DaDuyet'"
-          [class.alert-popup-cancel]="itemContactList?.status?.key === 'HuyBo'">Chuyển trạng thái đóng góp thành công!</span>
+        <span *ngIf="isAlertPopup" [class.alert-popup-not-verified]="contacDetailItem?.status?.key === 'DangXacMinh'" [class.alert-popup-approved]="contacDetailItem?.status?.key === 'DaDuyet'"
+          [class.alert-popup-cancel]="contacDetailItem?.status?.key === 'HuyBo'">Chuyển trạng thái đóng góp thành công!</span>
         <app-list-errors class="pt-2" *ngIf="apiErrorCode && apiErrorCode !== ''" [errorCode]="apiErrorCode"></app-list-errors>
         <div>
           <div class="w-100 d-flex m-2 mt-3">
@@ -288,7 +288,7 @@
                         formControlName="stateProvinceID" [attr.disabled]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0 ? '' : null"
                         [class.cursor-default]="!(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0">
                         <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
-                          value="null">---Tỉnh/Thành phố---</option>
+                          value="null">--Tỉnh/Thành phố--</option>
                         <option *ngFor="let province of stateProvinces; index as i" [value]="province.key">
                           {{ province.text }}
                         </option>
@@ -302,7 +302,7 @@
                         || !(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0 ? '' : null">
 
                         <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
-                          value="null">---Quận/Huyện---</option>
+                          value="null">--Tất cả Quận/Huyện--</option>
                         <option *ngFor="let item of localitysFA.controls[j].get('districts').value; index as i" [value]="item.key">
                           {{ item.text }}
                         </option>
@@ -314,7 +314,7 @@
                         [attr.disabled]="(!localitysFA.controls[j].get('districtID').value || localitysFA.controls[j].get('districtID').value === null) 
                         || !(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet')) || j === 0 ? '' : null">
                         <option *ngIf="(action === 'create' || position === 'admin' || (position === 'contributor' && itemContactList?.status?.key === 'ChuaDuyet'))"
-                          value="null">---Phường/Xã---</option>
+                          value="null">--Tất cả Phường/Xã--</option>
                         <option *ngFor="let province of localitysFA.controls[j].get('communes').value; index as i" [value]="province.key">
                           {{ province.text }}
                         </option>

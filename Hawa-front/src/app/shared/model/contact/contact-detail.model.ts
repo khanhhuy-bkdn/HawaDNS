@@ -30,4 +30,5 @@ export class ContactDetail {
         district: Dictionary;
         commune: Dictionary;
     } [];
+    status: Dictionary;
 }

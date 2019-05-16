@@ -52,5 +52,7 @@ namespace _Dtos.AR
         public long? ContributeDate { get; set; }
 
         public ContactLocationInChargeDto[] LocationInCharge { get; set; }
+
+        public DictionaryItemDto Status { get; set; }
     }
 }

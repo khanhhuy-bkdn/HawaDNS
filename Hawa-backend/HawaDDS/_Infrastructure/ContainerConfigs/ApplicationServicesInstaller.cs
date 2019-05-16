@@ -62,7 +62,7 @@ namespace _Infrastructure.ContainerConfigs
             services.AddSingleton<ITokenService, JwtTokenService>();
             services.AddTransient<ISendEmailService, SendEmailService>();
             services.AddTransient<IMailKitSmtpBuilder, MailKitSmtpBuilder>();
-            services.AddTransient<IRazorViewRenderService, RazorViewRenderService>();
+            services.AddScoped<IRazorViewRenderService, RazorViewRenderService>();
             services.AddTransient<IInternalMessageService, InternalMessageService>();
             services.AddTransient<INotificationService, NotificationService>();
 

@@ -1,0 +1,51 @@
+<div class="action-bar shadow-box mt-3 pb-3 pt-3 px-4 w-25 mr-4 w-100 notification">
+  <div class="d-flex justify-content-between mb-3">
+    <div class="text-uppercase title-notification">thông báo</div>
+    <div class="d-flex">
+      <div class="mr-3 flex-column">
+        <label for="typeNoti" class="pr-3">Thời gian</label>
+        <input nbInput type="text" class="drppicker mr-3" ngxDaterangepickerMd [(ngModel)]="dateNotification"
+          [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true"
+          [isInvalidDate]="isInvalidDate" [showClearButton]="true" placeholder="Từ ngày đến ngày" (change)="changeStartDateAndEndDate()" />
+      </div>
+      <div class="mr-3 flex-column">
+        <label for="typeNoti" class="pr-3">Tình trạng</label>
+        <select class="select-control" name="typeNoti" id="typeNoti" [(ngModel)]="filterModel.isRead" (change)="changeStatus()">
+          <option selected [ngValue]="null">Tất cả</option>
+          <option [ngValue]="true">Đã đọc</option>
+          <option [ngValue]="false">Chưa đọc</option>
+        </select>
+      </div>
+      <div class="d-flex align-items-end">
+        <button *ngIf="!isPageAllNoti" nbButton type="button" [routerLink]="['/pages/dashboard/notification']" class="cursor-pointer">Xem
+          tất
+          cả</button>
+        <button *ngIf="isPageAllNoti" nbButton type="button" [routerLink]="['/pages/dashboard']" class="cursor-pointer">Quay
+          lại Dashboard</button>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="!loading && pagedResult && (pagedResult.items || []).length !== 0">
+    <ng-container *ngFor="let item of pagedResult.items">
+      <div class="mt-2 item-notifi p-4" [class.not-read-notifi]="!item?.arNotificationRead" (click)="readNotification(item)">
+        <div class="mb-2">
+          {{item?.notificationContent}}
+          <span class="view-detail-notification px-1">Xem chi tiết</span>
+        </div>
+        <div class="note">
+          <!-- Được thực hiện bởi
+          <span class="user-form">
+            Admin
+          </span> -->
+          <img src="assets/images/clock-circular-outline.svg" alt="" width="12px" class="mr-2 pb-1">
+          <span>{{(item?.createdDate * 1000) | amCalendar}}</span>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="w-100 p-2">
+    <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+  </div>
+</div>
+
+<!-- <loading *ngIf="loading"></loading> -->

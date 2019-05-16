@@ -40,16 +40,22 @@
           </ng-container>
         </div>
         <div class="w-30 text-center py-3 center-parent">
-          <div *ngIf="pagedResult && pagedResult.extraData && pagedResult.extraData.isUserReview">
+          <div *ngIf="pagedResult && pagedResult.extraData && pagedResult.extraData.isUserReview && !isContributor">
             <div>Bạn đã nhận xét liên hệ này rồi</div>
             <div class="font-size--10px">
               (You have already commented on this contact)
             </div>
           </div>
+          <div *ngIf="!(pagedResult && pagedResult.extraData && pagedResult.extraData.isUserReview) && isContributor">
+            <div>Bạn là người tạo ra liên hệ này</div>
+            <div class="font-size--10px">
+              (You are the creator of the contact)
+            </div>
+          </div>
         </div>
       </div>
       <div class="bulkhead-bottom"></div>
-      <div class="rating-form" *ngIf="pagedResult && pagedResult.extraData && (pagedResult.extraData.isUserReview === false)">
+      <div class="rating-form" *ngIf="pagedResult && pagedResult.extraData && (pagedResult.extraData.isUserReview === false) && !isContributor">
         <div class="pt-3" >
           <popup-error [change]="changeValuePopupError" [errorCode]="apiErrorCode"></popup-error>
           <div class="d-flex">

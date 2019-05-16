@@ -298,3 +298,15 @@ input:disabled {
 .opacity-empty {
   opacity: 0;
 }
+
+@media screen and (min-width: 1940px) {
+  .nb-theme-default nb-layout.window-mode {
+    padding-top: 0;
+  }
+}
+.nb-theme-default nb-layout.window-mode .scrollable-container {
+  max-width: none!important;
+}
+.nb-theme-default nb-layout.window-mode .layout nb-layout-header nav {
+  max-width: none!important;
+}

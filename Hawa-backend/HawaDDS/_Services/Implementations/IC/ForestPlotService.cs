@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 using _Abstractions.Services.IC;
 using _Common.Extensions;
 using _Common.Timing;
+using _Dtos;
 using _Dtos.IC;
 using _Dtos.IC.InputDtos;
 using _Dtos.Migration;
 using _Dtos.Shared;
 using _Dtos.Shared.Inputs;
 using _Entities;
+using _Entities.AP;
+using _Entities.AR;
 using _Entities.IC;
 using _EntityFrameworkCore.Helpers.Linq;
 using _EntityFrameworkCore.UnitOfWork;
@@ -225,6 +228,17 @@ namespace _Services.Implementations.IC
                 .WhereIf(filter.OldTo.HasValue, x => (x.ICForestPlotPlantingYear.GetValueOrDefault() == 0 ? 0 : (Clock.Now.Year - x.ICForestPlotPlantingYear.GetValueOrDefault())) <= filter.OldTo)
                 .WhereIf(!filter.Reliability.IsNullOrEmpty(), x => x.ICForestPlotReliability == filter.Reliability)
                 .WhereIf(filter.ForestCertID.HasValue, x => x.FK_ICForestCertID == filter.ForestCertID);
+        }
+
+        public async Task<StatisticDto> StatisticAsync()
+        {
+            return new StatisticDto()
+            {
+                ActorCount = await _unitOfWork.GetRepository<APActor>().GetAll().CountAsync(),
+                Area = await _unitOfWork.GetRepository<ICPlot>().GetAll().SumAsync(x => x.ICPlotArea.GetValueOrDefault()),
+                Volume = await _unitOfWork.GetRepository<ICPlot>().GetAll().SumAsync(x => x.ICPlotVolumnPerPlot.GetValueOrDefault()),
+                ReviewCount = await _unitOfWork.GetRepository<APActorReview>().GetAll().CountAsync() + await _unitOfWork.GetRepository<ARContactReview>().GetAll().CountAsync()
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace _Common.Extensions
 {
@@ -32,6 +33,12 @@ namespace _Common.Extensions
         public static decimal RoundTo(this decimal value, int decimals)
         {
             return Math.Round(value, decimals, MidpointRounding.AwayFromZero);
+        }
+
+        public static bool IsNumber(this string pText)
+        {
+            Regex regex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+$");
+            return regex.IsMatch(pText);
         }
     }
 }

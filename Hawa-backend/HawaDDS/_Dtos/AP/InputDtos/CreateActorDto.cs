@@ -26,10 +26,30 @@
 
         public int? CommuneID { get; set; }
 
+        public string CommuneCode { get; set; }
+
+        public string DistrictCode { get; set; }
+
+        public string StateProvinceCode { get; set; }
+
         public string HouseNumber { get; set; }
 
         public string Address { get; set; }
 
         public string IdentityCard { get; set; }
+
+        public string Email { get; set; }
+
+        public string Avartar { get; set; }
+
+        public string ActorTypeCode { get; set; }
+
+        public int ActorTypeID { get; set; }
+
+        public string ContactName { get; set; }
+
+        public string ContactPhone { get; set; }
+
+        public string Note { get; set; }
     }
 }

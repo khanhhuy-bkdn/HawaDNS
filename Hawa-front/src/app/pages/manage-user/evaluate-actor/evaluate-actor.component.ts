@@ -18,6 +18,7 @@ export class EvaluateActorComponent implements OnInit, OnDestroy {
     this.manageEvaluateService.filterModelListActor = null;
     this.manageEvaluateService.currentPageActor = null;
     this.manageEvaluateService.pageSizeActor = null;
+    this.manageEvaluateService.searchTermActor = null;
   }
   
 }

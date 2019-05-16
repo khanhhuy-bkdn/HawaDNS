@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using _Entities.AR;
 using _Entities.Interfaces;
 
 namespace _Entities.GE
@@ -26,5 +26,7 @@ namespace _Entities.GE
         [ForeignKey("FK_GEStateProvinceID")] public virtual GEStateProvince GEStateProvince { get; set; }
 
         [InverseProperty("GEDistrict")] public virtual ICollection<GECommune> GECommunes { get; set; }
+
+        [InverseProperty("GEDistrict")] public ICollection<ARContactForestCommuneGroup> ARContactForestCommuneGroups { get; set; }
     }
 }

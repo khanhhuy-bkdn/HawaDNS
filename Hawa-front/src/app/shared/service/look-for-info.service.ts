@@ -424,6 +424,45 @@ export class LookForInfoService {
         largeSizeUrl: result.avatar.largeSizeUrl,
       },
       averageRating: result.averageRating,
+      roles: result.roles ? result.roles.map(item => {
+        return {
+          key: item.key,
+          code: item.code,
+          text: item.text,
+        }
+      }) : null,
+      type: result.type && {
+        id: result.type.id,
+        name: result.type.name,
+        code: result.type.code,
+        acronymName: result.type.acronymName,
+      },
+      identityCard: result.identityCard,
+      acronymName: result.acronymName,
+      representative: result.representative,
+      fax: result.fax,
+      address: result.address,
+      houseNumber: result.houseNumber,
+      stateProvince: result.stateProvince && {
+        key: result.stateProvince.key,
+        code: result.stateProvince.code,
+        text: result.stateProvince.text
+      },
+      district: result.district && {
+        key: result.district.key,
+        code: result.district.code,
+        text: result.district.text
+      },
+      commune: result.commune && {
+        key: result.commune.key,
+        code: result.commune.code,
+        text: result.commune.text
+      },
+      status: result.status && {
+        key: result.status.key,
+        code: result.status.code,
+        text: result.status.text
+      },
       aggregateOfRatings: (result.aggregateOfRatings || []).map(item => ({
         rating: item.rating,
         percent: item.percent,
@@ -472,6 +511,9 @@ export class LookForInfoService {
         content: item.content,
         reviewDate: item.reviewDate,
       })),
+      contactName: result.contactName,
+      contactPhone: result.contactPhone,
+      note: result.note,
     };
   }
 
@@ -481,6 +523,41 @@ export class LookForInfoService {
     return this.apiService.get(url).map(response => {
       return this.mappingActor(response.result);
     });
+  }
+
+  // Chỉnh sửa thông tin chủ rừng
+  editActor(valueForm: any) {
+    const url = `actor/edit`;
+    const imageName = valueForm.avatar && valueForm.avatar.largeSizeUrl.split('/');
+    const requestModel = {
+      id: valueForm.id,
+      actorType: valueForm.type.name,
+      actorRoles: valueForm.actorRoles ? valueForm.actorRoles.map(item => item.key) : [],
+      name: valueForm.name,
+      taxNumber: null,
+      acronymName: valueForm.acronymName,
+      representative: valueForm.representative,
+      phone: valueForm.phone,
+      fax: valueForm.fax,
+      website: valueForm.website,
+      stateProvinceID: +(valueForm.stateProvince && valueForm.stateProvince.key),
+      districtID: +(valueForm.district && valueForm.district.key),
+      communeID: +(valueForm.commune && valueForm.commune.key),
+      communeCode: valueForm.commune && valueForm.commune.code,
+      districtCode: valueForm.district && valueForm.district.code,
+      stateProvinceCode: valueForm.stateProvince && valueForm.stateProvince.code,
+      houseNumber: valueForm.houseNumber,
+      address: valueForm.address,
+      identityCard: valueForm.identityCard,
+      email: valueForm.email,
+      avartar: imageName ? imageName[imageName.length - 1] : null,
+      actorTypeCode: valueForm.type && valueForm.type.code,
+      actorTypeID: valueForm.type && valueForm.type.id,
+      contactName: valueForm.contactName,
+      contactPhone: valueForm.contactPhone,
+      note: valueForm.note,
+    }
+    return this.apiService.post(url, requestModel);
   }
 
   // Mapping Chi tiết chủ rừng theo lô
@@ -581,8 +658,11 @@ export class LookForInfoService {
           code: result.forestPlot.subCompartment.code,
           text: result.forestPlot.subCompartment.text,
         },
-        plotCode: result.forestPlot.plotCode
-      }
+        plotCode: result.forestPlot.plotCode,
+      },
+      contactName: result.contactName,
+      contactPhone: result.contactPhone,
+      note: result.note,
     };
   }
 
@@ -659,7 +739,8 @@ export class LookForInfoService {
         title: result.title,
         content: result.content,
         reviewDate: result.reviewDate,
-        hidden: result.hidden
+        hidden: result.hidden,
+        forestPlotId: result.forestPlotId,
       }
     });
   }
@@ -924,7 +1005,12 @@ export class LookForInfoService {
               text: item.commune.text,
             }
           }
-        })
+        }),
+        status: result.contact.status && {
+          key: result.contact.status.key,
+          code: result.contact.status.code,
+          text: result.contact.status.text,
+        }
       } : null,
       reviewUser: result.reviewUser ? {
         id: result.reviewUser.id,

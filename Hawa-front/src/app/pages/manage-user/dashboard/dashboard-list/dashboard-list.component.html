@@ -1,0 +1,106 @@
+<div>
+  <h4 class="text-uppercase font-weight-bold">dashboard</h4>
+  <div class="d-flex justify-content-between">
+    <div class="action-bar shadow-box mt-3 py-3 pl-4 w-25 mr-4">
+      <div class="d-flex detail-char">
+        <div class="reserves center-parent mr-3">
+          <img src="assets/images/reserves.png" alt="">
+        </div>
+        <div class="center-parent">
+          <div>
+            <div class="quatity">
+              {{statistic?.volume | thousandSeparate}}
+            </div>
+            <div>
+              Tổng trữ lượng
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-bar shadow-box mt-3 py-3 pl-4 w-25 mr-4">
+      <div class="d-flex detail-char">
+        <div class="acreage center-parent mr-3">
+          <img src="assets/images/acreage.png" alt="">
+        </div>
+        <div class="center-parent">
+          <div>
+            <div class="quatity">
+              {{statistic?.area | thousandSeparate}} ha
+            </div>
+            <div>
+              Tổng diện tích
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="action-bar shadow-box mt-3 py-3 pl-4 w-25 mr-4">
+      <div class="d-flex detail-char">
+        <div class="user center-parent mr-3">
+          <img src="assets/images/user.png" alt="">
+        </div>
+        <div class="center-parent">
+          <div>
+            <div class="quatity">
+              {{statistic?.actorCount | thousandSeparate}}
+            </div>
+            <div>
+              Số lượng chủ rừng
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="action-bar shadow-box mt-3 py-3 pl-4 w-25">
+      <div class="d-flex detail-char">
+        <div class="message center-parent mr-3">
+          <img src="assets/images/message.png" alt="">
+        </div>
+        <div class="center-parent">
+          <div>
+            <div class="quatity">
+              {{statistic?.reviewCount | thousandSeparate}}
+            </div>
+            <div>
+              Số lượng nhận xét
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-bar shadow-box mt-3 p-3">
+    <div class="d-flex justify-content-between mb-4">
+      <div class="title-char text-uppercase">
+        Thống kê cơ bản
+      </div>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex mr-4">
+          <div class="total-reserves mr-1"></div>
+          Tổng trữ lượng
+        </div>
+        <div class="d-flex mr-4">
+          <div class="total-area mr-1"></div>
+          Tổng diện tích
+        </div>
+        <div class="d-flex">
+          <div class="total-actor mr-1"></div>
+          Số lượng chủ rừng
+        </div>
+      </div>
+    </div>
+    <kendo-chart [categoryAxis]="{ categories: categories }" class="w-100">
+      <kendo-chart-legend style="display: none" position="bottom" orientation="horizontal"></kendo-chart-legend>
+      <kendo-chart-series>
+        <kendo-chart-series-item *ngFor="let item of series" type="line" style="smooth" [data]="item.data" [name]="item.name">
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </div>
+
+  <notification></notification>
+
+</div>

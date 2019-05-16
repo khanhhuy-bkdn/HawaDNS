@@ -11,6 +11,7 @@ const routes: Routes = [{
     { path: '', redirectTo: 'infor-search' },
     { path: 'infor-user', loadChildren: './infor-user/infor-user.module#InforUserModule', canActivate: [AuthGuard] },
     { path: 'infor-search', loadChildren: './infor-search/infor-search.module#InforSearchModule' },
+    { path: 'dashboard', loadChildren: './manage-user/dashboard/dashboard.module#DashboardModule', canActivate: [AuthAdminService] },
     { path: 'buyer', loadChildren: './manage-user/buyer/buyer.module#BuyerModule', canActivate: [AuthAdminService] },
     { path: 'contribute-information', loadChildren: './manage-user/contribute-information/contribute-information.module#ContributeInformationModule', canActivate: [AuthAdminService] },
     // tslint:disable-next-line:max-line-length

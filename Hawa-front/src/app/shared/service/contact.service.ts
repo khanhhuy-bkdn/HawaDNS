@@ -90,7 +90,12 @@ export class ContactService {
             text: item.commune.text,
           }
         }
-      })
+      }),
+      status: result.status && {
+        key: result.status.key,
+        code: result.status.code,
+        text: result.status.text,
+      }
     }
   }
   // Chi tiết liên hệ
@@ -99,6 +104,7 @@ export class ContactService {
   ): Observable<ContactDetail> {
     const url = `contact/${contactId}`;
     return this.apiService.get(url).map(response => {
+      console.log('chi tiết liên hệ', response.result);
       const result = response.result;
       return this.mappingDetailContact(result);
     });

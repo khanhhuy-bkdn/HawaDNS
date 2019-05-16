@@ -114,12 +114,12 @@ export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy 
 
         },
           err => {
-            if (err._body && JSON.parse(err._body).errorCode === 'UserLoginIsNotActive') {
+            if (err._body && JSON.parse(err._body).errorCode == 'UserLoginIsNotActive') {
               return this.apiErrorCode = 'Tài khoản này đã bị khoá';
-            } else if (err._body && JSON.parse(err._body).errorCode === 'NotValidatedEmail') {
+            } else if (err._body && JSON.parse(err._body).errorCode == 'NotValidatedEmail') {
               // return this.apiErrorCode = 'Tài khoản chưa được xác thực email. Vui lòng xác thực email đăng kí';
               return this.apiErrorCode = 'Tài khoản này chưa được xác nhận. Vui lòng kiểm tra email và xác nhận đăng ký';
-            } else if (err._body && JSON.parse(err._body).errorCode === 'UserLoginInvalidUserNameOrPassword') {
+            } else if (err._body && JSON.parse(err._body).errorCode == 'UserLoginInvalidUserNameOrPassword') {
               return this.apiErrorCode = 'Nhập sai email hoặc mật khẩu';
             } else {
               return this.apiErrorCode = 'Đã xảy ra lỗi';

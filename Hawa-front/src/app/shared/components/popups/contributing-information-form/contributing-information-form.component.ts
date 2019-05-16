@@ -77,6 +77,7 @@ export class ContributingInformationFormComponent implements OnInit, AfterViewIn
     } else if (this.action === 'edit' || this.action === 'view') {
       this.contactService.detailContact(this.itemContactList.id).switchMap(response => {
         this.contacDetailItem = response;
+        console.log('this.contacDetailItem', this.contacDetailItem);
         this.imageUrls = response.images;
         if (this.imageUrls.length === 3 || this.imageUrls.length > 3) {
           this.isLimitImage = true;
@@ -268,7 +269,6 @@ export class ContributingInformationFormComponent implements OnInit, AfterViewIn
             this.errLocalitys = false;
             this.alertService.success('Tạo mới đóng góp thành công.');
           }, err => {
-            // this.alertService.error('Đã xảy ra lỗi. Tạo mới đóng góp thất bại.');
             this.apiErrorCode = 'Tạo mới đóng góp thất bại';
           })
         } else if (this.action === 'edit' || this.action === 'view') {
@@ -276,7 +276,6 @@ export class ContributingInformationFormComponent implements OnInit, AfterViewIn
             this.dialogRef.close(true);
             this.alertService.success('Chỉnh sửa đóng góp thành công.');
           }, err => {
-            // this.alertService.error('Đã xảy ra lỗi. Chỉnh sửa đóng góp thất bại.');
             this.apiErrorCode = 'Chỉnh sửa đóng góp thất bại';
           })
         }
@@ -287,7 +286,8 @@ export class ContributingInformationFormComponent implements OnInit, AfterViewIn
   validateLocalitys(): boolean {
     if (this.contributeForm.get('localitys').value && (this.contributeForm.get('localitys').value || []).length !== 0) {
       return (this.contributeForm.get('localitys').value || []).every(item => {
-        return item.stateProvinceID && item.stateProvinceID !== 'null' && item.districtID && item.districtID !== 'null' && ( (item.communeID && item.communeID !== 'null') || ( (item.communes.length === 0) && (item.communeID === null) ) );
+        return item.stateProvinceID && item.stateProvinceID !== 'null';
+        // && item.districtID && item.districtID !== 'null' && ( (item.communeID && item.communeID !== 'null') || ( (item.communes.length === 0) && (item.communeID === null) ) )
       })
     } else return false;
   }
@@ -347,7 +347,7 @@ export class ContributingInformationFormComponent implements OnInit, AfterViewIn
         }
         if (value) {
           this.contactService.changeStatusContact(this.itemContactList.id, status).subscribe(response => {
-            this.itemContactList.status.key = 'HuyBo';
+            this.contacDetailItem.status.key = 'HuyBo';
             this.isAlertPopup = true;
           });
         }
@@ -356,12 +356,12 @@ export class ContributingInformationFormComponent implements OnInit, AfterViewIn
       this.contactService.changeStatusContact(this.itemContactList.id, status).subscribe(response => {
         switch (status) {
           case 'DaDuyet': {
-            this.itemContactList.status.key = 'DaDuyet';
+            this.contacDetailItem.status.key = 'DaDuyet';
             this.isAlertPopup = true;
             break;
           }
           case 'DangXacMinh': {
-            this.itemContactList.status.key = 'DangXacMinh';
+            this.contacDetailItem.status.key = 'DangXacMinh';
             this.isAlertPopup = true;
             break;
           }
