@@ -196,6 +196,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   governance() {
     this.isShowContextMenu = false;
     this.userService.changeGovernance(true);
-    this.router.navigate(['/pages/dashboard']);
+    this.router.navigate(['/pages/buyer']);
   }
 }
