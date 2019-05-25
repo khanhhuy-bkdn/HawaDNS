@@ -135,5 +135,17 @@ namespace HawaDDS.Controllers
 
             return Success(result);
         }
+
+        /// <summary>
+        /// Cập nhật thông tin rừng theo loại cây
+        /// </summary>
+        [HttpPost("forestplot/detail/edit/{forestPlotId}")]
+        [SwaggerResponse(200, "", typeof(EditForestPlotDto))]
+        public async Task<IActionResult> Update([FromBody] EditForestPlotDto dto)
+        {
+            var result = await _forestPlotService.UpdateForestPlotsAsync(dto);
+
+            return Success(result);
+        }
     }
 }

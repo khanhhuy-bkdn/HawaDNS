@@ -39,7 +39,7 @@ namespace _Services.ConvertHelpers
                     CompartmentCode = entity.GECompartment?.GECompartmentCode,
                     SubCompartmentCode = entity.GESubCompartment?.GESubCompartmentCode,
                     PlotCode = entity.GEPlotCode,
-
+                    PlantingDate = entity.ICForestPlotPlantingDate.ToSecondsTimestamp(),
                     //Dispute = entity.ICForestPlotDispute.ToDictionaryItemDto<ForestPlotDispute>(),
                     Actor = entity.APActor.ToActorDto(),
                     ActorType = entity.APActor?.APActorType.ToActorTypeDto(),

@@ -9,7 +9,6 @@
     <Folder Include="AD\" />
     <Folder Include="AR\" />
     <Folder Include="GE\" />
-    <Folder Include="IC\" />
     <Folder Include="Attributes\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>

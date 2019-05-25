@@ -24,7 +24,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  styleUrls: ['./detail.component.scss'],
 })
 export class DetailComponent implements OnInit {
   @ViewChild('slider', { read: ElementRef }) slider: ElementRef;
@@ -57,7 +57,7 @@ export class DetailComponent implements OnInit {
     floor: 0,
     ceil: null,
     step: 1,
-    showTicks: true
+    showTicks: true,
   };
   loading = false;
   isOldToReturnPageLogin: number = null;
@@ -69,19 +69,19 @@ export class DetailComponent implements OnInit {
     private lookForInfoService: LookForInfoService,
     private sessionService: SessionService,
     private noUiSlider: NouisliderModule,
-    private savePageToLoginRequiredService: SavePageToLoginRequiredService
+    private savePageToLoginRequiredService: SavePageToLoginRequiredService,
   ) { }
 
   ngOnInit() {
 
-    this.loading = true
+    this.loading = true;
     this.filterModel.forestCertID = null;
     this.filterModel.treeSpecies = null;
     this.filterModel.oldFrom = 0;
     this.filterModel.reliability = null;
     this.filterModel.sorting = null;
     this.filterModel.treeSpecID = null;
-    this.detailsofTreeSpecies = this.lookForInfoService.detailsofTreeSpecies
+    this.detailsofTreeSpecies = this.lookForInfoService.detailsofTreeSpecies;
     this.queryParamsSubscription = this.activatedRoute.params.subscribe(data => {
       this.filterModel.communeID = data.communeID;
       this.commune = data.communeID;
@@ -91,7 +91,7 @@ export class DetailComponent implements OnInit {
     this.checkPageReturn();
     forkJoin(
       this.dataGeneralService.getMasterData,
-      this.lookForInfoService.getYearoldsTree(+this.filterModel.treeSpecID, +this.filterModel.communeID)
+      this.lookForInfoService.getYearoldsTree(+this.filterModel.treeSpecID, +this.filterModel.communeID),
       // this.dataGeneralService.getTreespecs(this.filterModel.treeSpecGroupID, 0, 1000),
     )
       .subscribe(([res1, res2]) => {
@@ -123,7 +123,8 @@ export class DetailComponent implements OnInit {
     }
     this.removeReturnPage();
     this.lookForInfoService.searchKeyWordForesttoSpeciesOrCommuneList(
-      this.searchTerm$, this.filterModel, this.pagedResult.currentPage ? this.pagedResult.currentPage : 0, this.pagedResult.pageSize ? this.pagedResult.pageSize : 10
+      // tslint:disable-next-line:max-line-length
+      this.searchTerm$, this.filterModel, this.pagedResult.currentPage ? this.pagedResult.currentPage : 0, this.pagedResult.pageSize ? this.pagedResult.pageSize : 10,
     ).subscribe(response => {
       this.render(response);
     });
@@ -132,11 +133,8 @@ export class DetailComponent implements OnInit {
       if (this.subscription) {
         this.subscription.unsubscribe();
       }
-    }
+    };
   }
-
-  
-  
 
   checkPageReturn() {
     if (Object.values(this.savePageToLoginRequiredService.returnPage).length !== 0) {
@@ -215,8 +213,8 @@ export class DetailComponent implements OnInit {
           context: {
             actor: actor,
             actorType: actorType,
-            forestPlotId: forestPlotId
-          }
+            forestPlotId: forestPlotId,
+          },
         })
         .onClose.subscribe();
     } else {
@@ -227,8 +225,8 @@ export class DetailComponent implements OnInit {
             searchTerm: this.searchTerm$.value,
             currentPage: this.pagedResult.currentPage,
             pageSize: this.pagedResult.pageSize,
-            routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`
-          }
+            routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`,
+          },
         })
         .onClose.subscribe();
     }
@@ -246,7 +244,7 @@ export class DetailComponent implements OnInit {
             forestPlotId: idContact,
             detailsofTreeSpecies: detailsofTreeSpecies,
             communeId: this.commune,
-          }
+          },
         })
         .onClose.subscribe();
     } else {
@@ -257,8 +255,8 @@ export class DetailComponent implements OnInit {
             searchTerm: this.searchTerm$.value,
             currentPage: this.pagedResult.currentPage,
             pageSize: this.pagedResult.pageSize,
-            routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`
-          }
+            routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`,
+          },
         })
         .onClose.subscribe();
     }
@@ -275,8 +273,8 @@ export class DetailComponent implements OnInit {
           searchTerm: this.searchTerm$.value,
           currentPage: this.pagedResult.currentPage,
           pageSize: this.pagedResult.pageSize,
-          routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`
-        }
+          routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`,
+        },
       })
       .onClose.subscribe();
   }
@@ -316,12 +314,12 @@ export class DetailComponent implements OnInit {
     const leftControl = document.querySelector('div.noUi-handle.noUi-handle-lower');
     leftControl.setAttribute('style', 'width:15px; height:15px; border-radius:50%; right:-7px; top:-5px;');
     const nouislider = document.querySelector('nouislider.ng2-nouislider');
-    nouislider.setAttribute('style', 'margin-top:0;margin-bottom:0;padding:0.5rem;')
+    nouislider.setAttribute('style', 'margin-top:0;margin-bottom:0;padding:0.5rem;');
     // }
   }
 
   openPopupGoogleMap(item) {
-    let markerAddress = `Lô ${item.plotCode} | Khoảnh ${item.subCompartment && item.subCompartment.code ? item.subCompartment.code : ''} | Tiểu khu ${item.compartment && item.compartment.code ? item.compartment.code : ''}
+    const markerAddress = `Lô ${item.plotCode} | Khoảnh ${item.subCompartment && item.subCompartment.code ? item.subCompartment.code : ''} | Tiểu khu ${item.compartment && item.compartment.code ? item.compartment.code : ''}
     | ${this.detailsofTreeSpecies.commune && this.detailsofTreeSpecies.commune.text ? this.detailsofTreeSpecies.commune.text : ''} | ${this.detailsofTreeSpecies.district && this.detailsofTreeSpecies.district.text ? this.detailsofTreeSpecies.district.text : ''} | ${this.detailsofTreeSpecies.stateProvince && this.detailsofTreeSpecies.stateProvince.text ? this.detailsofTreeSpecies.stateProvince.text : ''}`;
     this.nbDialogService
       .open(GoogleMapComponent, {
@@ -329,8 +327,8 @@ export class DetailComponent implements OnInit {
           locationLatitude: item.locationLatitude,
           locationLongitude: item.locationLongitude,
           markerAddress: markerAddress,
-          markerLabel: `Lô ${item.plotCode}`
-        }
+          markerLabel: `Lô ${item.plotCode}`,
+        },
       })
       .onClose.subscribe();
   }

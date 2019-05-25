@@ -1,5 +1,6 @@
 ﻿using _Dtos.AP;
 using _Dtos.Shared;
+using System;
 
 namespace _Dtos.IC
 {
@@ -44,5 +45,7 @@ namespace _Dtos.IC
         public decimal? LocationLatitude { get; set; }
 
         public decimal? LocationLongitude { get; set; }
+
+        public long? PlantingDate { get; set; }
     }
 }

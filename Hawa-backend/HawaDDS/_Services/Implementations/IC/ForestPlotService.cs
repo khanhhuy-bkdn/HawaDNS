@@ -240,5 +240,35 @@ namespace _Services.Implementations.IC
                 ReviewCount = await _unitOfWork.GetRepository<APActorReview>().GetAll().CountAsync() + await _unitOfWork.GetRepository<ARContactReview>().GetAll().CountAsync()
             };
         }
+
+        public async Task<ForestPlotDetailDto> UpdateForestPlotsAsync(EditForestPlotDto dto)
+        {
+            //ValidateActorDto(dto);
+            var actorToUpdate = await _unitOfWork.GetRepository<ICForestPlot>().GetAsync(dto.Id);
+            //UpdateActorDto(actorToUpdate, dto);
+
+            //var actorRolesFromDb = await _unitOfWork.GetRepository<APActorRole>()
+            //    .GetAll()
+            //    .Where(x => x.FK_APActorID == dto.Id)
+            //    .ToArrayAsync();
+
+            //foreach (var actorRole in actorRolesFromDb)
+            //    if (dto.ActorRoles.All(x => x != actorRole.FK_APRoleID))
+            //        await _unitOfWork.GetRepository<APActorRole>().DeleteAsync(actorRole);
+
+            //foreach (int item in dto.ActorRoles)
+            //    if (actorRolesFromDb.All(x => x.FK_APRoleID != item))
+            //        await _unitOfWork.GetRepository<APActorRole>()
+            //            .InsertAsync(
+            //                new APActorRole
+            //                {
+            //                    FK_APRoleID = item,
+            //                    FK_APActorID = dto.Id
+            //                });
+
+            //await _unitOfWork.CompleteAsync();
+            //return await GetActorAsync(actorToUpdate.Id);
+            return new ForestPlotDetailDto();
+        }
     }
 }

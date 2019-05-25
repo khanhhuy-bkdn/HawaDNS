@@ -300,6 +300,7 @@ export class LookForInfoService {
       conflictSitCode: result.conflictSitCode,
       locationLatitude: result.locationLatitude,
       locationLongitude: result.locationLongitude,
+      plantingDate: result.plantingDate,
     }
   }
   // SEARCH Danh sách thông tin về rừng theo loại cây của từng xã(lọc và sorting)

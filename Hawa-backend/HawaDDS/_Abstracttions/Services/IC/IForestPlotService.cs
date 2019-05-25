@@ -25,5 +25,7 @@ namespace _Abstractions.Services.IC
         Task<UpdateTreeSpecForestPlotReportDto> UpdateTreeSpecForestPlotsAsync();
 
         Task<StatisticDto> StatisticAsync();
+
+        Task<ForestPlotDetailDto> UpdateForestPlotsAsync(EditForestPlotDto dto);
     }
 }

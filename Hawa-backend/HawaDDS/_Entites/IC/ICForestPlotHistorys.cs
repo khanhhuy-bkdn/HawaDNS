@@ -9,11 +9,11 @@ using _Entities.Interfaces;
 
 namespace _Entities.IC
 {
-    [Table("ICForestPlots")]
-    public class ICForestPlot : IFullEntity
+    [Table("ICForestPlotHistorys")]
+    public class ICForestPlotHistory : IFullEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("ICForestPlotID")]
+        [Column("ICForestPlotHistoryID")]
         public int Id { get; set; }
 
         [StringLength(10)] public string AAStatus { get; set; }
@@ -42,9 +42,9 @@ namespace _Entities.IC
 
         public string GEParcelCode { get; set; }
 
-        public string ICForestPlotVillage { get; set; }
+        public string ICForestPlotHistoryVillage { get; set; }
 
-        public decimal ICForestPlotArea { get; set; }
+        public decimal ICForestPlotHistoryArea { get; set; }
 
         public string ICForestTypeCode { get; set; }
 
@@ -52,17 +52,17 @@ namespace _Entities.IC
 
         public string ICTreeSpecCode { get; set; }
 
-        public decimal? ICForestPlotLocationLongitude { get; set; }
+        public decimal? ICForestPlotHistoryLocationLongitude { get; set; }
 
-        public decimal? ICForestPlotLocationLatitude { get; set; }
+        public decimal? ICForestPlotHistoryLocationLatitude { get; set; }
 
-        public int? ICForestPlotPlantingYear { get; set; }
+        public int? ICForestPlotHistoryPlantingYear { get; set; }
 
-        public int? ICForestPlotAvgYearCanopy { get; set; }
+        public int? ICForestPlotHistoryAvgYearCanopy { get; set; }
 
-        public decimal ICForestPlotVolumnPerHa { get; set; }
+        public decimal ICForestPlotHistoryVolumnPerHa { get; set; }
 
-        public decimal ICForestPlotVolumnPerPlot { get; set; }
+        public decimal ICForestPlotHistoryVolumnPerPlot { get; set; }
 
         public string APActorCode { get; set; }
 
@@ -72,7 +72,7 @@ namespace _Entities.IC
 
         public string ICConflictSitCode { get; set; }
 
-        public int? ICForestPlotLandUseTerune { get; set; }
+        public int? ICForestPlotHistoryLandUseTerune { get; set; }
 
         public int? FK_GECommuneID { get; set; }
 
@@ -92,13 +92,13 @@ namespace _Entities.IC
 
         public int? FK_ICForestCertID { get; set; }
 
-        public string ICForestPlotReliability { get; set; }
+        public string ICForestPlotHistoryReliability { get; set; }
 
         public int? FK_GEForestProtectionDepartmentID { get; set; }
 
         public int? FK_GEPeoplesCommitteeID { get; set; }
 
-        public DateTime? ICForestPlotLatestReviewDate { get; set; }
+        public DateTime? ICForestPlotHistoryLatestReviewDate { get; set; }
 
         [ForeignKey("FK_GECommuneID")] public virtual GECommune GECommunes { get; set; }
 
@@ -124,10 +124,11 @@ namespace _Entities.IC
         [ForeignKey("FK_GEPeoplesCommitteeID")]
         public virtual GEPeoplesCommittee GEPeoplesCommittee { get; set; }
 
-        [InverseProperty("ICForestPlot")] public virtual ICollection<APActorReview> APActorReviews { get; set; }
+        [ForeignKey("FK_ICForestPlotID")]
+        public virtual ICForestPlot ICForestPlot { get; set; }
 
-        public string ICForestPlotFormisUUID { get; set; }
+        public string ICForestPlotHistoryFormisUUID { get; set; }
 
-        public DateTime? ICForestPlotPlantingDate { get; set; }
+        public DateTime? ICForestPlotHistoryPlantingDate { get; set; }
     }
 }

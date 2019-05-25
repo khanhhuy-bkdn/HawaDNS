@@ -24,4 +24,5 @@ export class ForestSpecailOrCommune {
     conflictSitCode: number;
     locationLatitude: number;
     locationLongitude: number;
+    plantingDate: number;
 }
