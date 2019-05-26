@@ -257,5 +257,17 @@ namespace _Services.Implementations.AP
                 throw new BusinessException("Số điện thoại không đúng định dạng.");
             }
         }
+
+        public ActorDto[] GetAll(string searchTerm)
+        {
+            return _unitOfWork.GetRepository<APActor>()
+                .GetAll().Take(500)
+                .Include(x => x.APActorRoles)
+                .ThenInclude(x => x.APRole)
+                .Include(x => x.APActorType)
+                .SearchByFields(searchTerm, x => x.APActorName)
+                .OrderBy(x => x.Id)
+                .ConvertArray(x => x.ToActorDto());
+        }
     }
 }

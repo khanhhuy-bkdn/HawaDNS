@@ -28,7 +28,15 @@ namespace _Services.ConvertHelpers
                     Avatar = entity.APActorAvatar.ToImageUrl(),
                     ContactName = entity.APActorContactName,
                     ContactPhone = entity.APActorContactPhone,
-                    Note = entity.APActorNote
+                    Note = entity.APActorNote,
+                    Type = entity.APActorType.ToActorTypeDto(),
+                    Roles = entity.APActorRoles.ConvertArray(x => x?.APRole.ToDictionaryItemDto()),
+                    Status = entity.APActorStatus.ToDictionaryItemDto<UserStatus>(),
+                    AcronymName = entity.APActorAcronymName,
+                    Address = entity.APActorAddress,
+                    Commune = entity.GECommune.ToDictionaryItemDto(),
+                    District = entity.GEDistrict.ToDictionaryItemDto(),
+                    Fax = entity.APActorFax,
                 };
         }
 

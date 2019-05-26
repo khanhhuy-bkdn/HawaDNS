@@ -74,8 +74,6 @@ namespace _Dtos.IC.InputDtos
 
         public int? FK_APFormisActorID { get; set; }
 
-        public int? FK_ICForestPlotID { get; set; }
-
         public decimal? ICForestPlotArea { get; set; }
 
         public decimal? ICForestPlotVolumnPerHa { get; set; }

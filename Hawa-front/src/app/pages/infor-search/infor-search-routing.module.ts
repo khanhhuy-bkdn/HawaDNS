@@ -13,6 +13,9 @@ const routes: Routes = [
       {
         path: 'detail/:communeID/:treeSpecID', component: DetailComponent,
       },
+      {
+        path: 'detail/:communeID/:treeSpecID/edit/:id', component: DetailComponent,
+      },
     ],
   },
 ];

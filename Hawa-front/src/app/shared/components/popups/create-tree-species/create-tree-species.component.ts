@@ -10,15 +10,19 @@ import { SessionService } from '../../../service/session.service';
 import { LoginRequiredComponent } from '../login-required/login-required.component';
 import { FilteForestSpecailOrCoomune } from '../../../model/filter-forest-specailOrCoomune.model';
 import { GoogleMapComponent } from '../google-map/google-map.component';
-import { CreateTreeSpeciesComponent } from '../create-tree-species/create-tree-species.component';
 import { Router } from '@angular/router';
+import { TreespecsList } from '../../../../shared/model/treespecs-list.model';
+import { CreateForestPlot } from '../../../../shared/model/forest-plot/create-forest-plot.model';
+import { EMPTY } from 'rxjs';
+import { ActorService } from '../../../service/actor/actor.service';
+import { ActorModel } from '../../../../shared/model/actor/actor.model';
 
 @Component({
-  selector: 'tree-species',
-  templateUrl: './tree-species.component.html',
-  styleUrls: ['./tree-species.component.scss']
+  selector: 'create-tree-species',
+  templateUrl: './create-tree-species.component.html',
+  styleUrls: ['./create-tree-species.component.scss'],
 })
-export class TreeSpeciesComponent implements OnInit {
+export class CreateTreeSpeciesComponent implements OnInit {
   @Input() ForestSpecailOrCommuneItem: ForestSpecailOrCommune;
   @Input() detailsofTreeSpecies: OverviewForest;
   // Input for return page filter Login required
@@ -28,12 +32,19 @@ export class TreeSpeciesComponent implements OnInit {
   @Input() pageSize: number;
   @Input() routerBack: string;
   @Input() action: string;
+  createSpecTreeForm: FormGroup;
   FormDetailSpecTree: FormGroup;
   landUseCerts: MasterData[];
   admin = false;
+  listOfTreeSpec: TreespecsList[];
+  listOfActor: ActorModel[];
+  createTreeSpecModel: ForestSpecailOrCommune;
+  treeSpecValue;
+  actorValue;
   constructor(
-    private dialogRef: NbDialogRef<TreeSpeciesComponent>,
+    private dialogRef: NbDialogRef<CreateTreeSpeciesComponent>,
     private dataGeneralService: DataGeneralService,
+    private actorService: ActorService,
     private fb: FormBuilder,
     private nbDialogService: NbDialogService,
     private sessionService: SessionService,
@@ -41,6 +52,8 @@ export class TreeSpeciesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.createTreeSpecModel = new ForestSpecailOrCommune();
+    this.createTreeSpecModel = this.ForestSpecailOrCommuneItem;
     this.createForm();
     this.dataGeneralService.getMasterData.subscribe(response => {
       this.landUseCerts = response.landUseCerts;
@@ -52,6 +65,7 @@ export class TreeSpeciesComponent implements OnInit {
         this.admin = false;
       }
     }
+    this.getTreespecs();
   }
 
   createForm() {
@@ -72,30 +86,11 @@ export class TreeSpeciesComponent implements OnInit {
     });
   }
 
-  editForm() {
-    this.action = 'edit';
-    this.dialogRef.close();
-    this.showDetailTreeSpecies(this.ForestSpecailOrCommuneItem, this.detailsofTreeSpecies);
-    // tslint:disable-next-line:max-line-length
-    // this.router.navigate([`pages/infor-search/detail/${this.detailsofTreeSpecies.commune.key}/${this.ForestSpecailOrCommuneItem.treeSpec.id}/edit/${this.ForestSpecailOrCommuneItem.id}`]);
-  }
-
-  showDetailTreeSpecies(item: ForestSpecailOrCommune, details: OverviewForest) {
-    this.nbDialogService
-      .open(CreateTreeSpeciesComponent, {
-        context: {
-          ForestSpecailOrCommuneItem: item,
-          detailsofTreeSpecies: details,
-
-          filterModel: this.filterModel,
-          searchTerm: this.searchTerm,
-          currentPage: this.currentPage,
-          pageSize: this.pageSize,
-          routerBack: `/pages/infor-search/detail/${this.detailsofTreeSpecies.commune.key}/${this.ForestSpecailOrCommuneItem.treeSpec.id}`,
-        },
-      })
-      .onClose.subscribe();
-  }
+  // editForm() {
+  //   this.action = 'edit';
+  //   // tslint:disable-next-line:max-line-length
+  //   this.router.navigate([`pages/infor-search/detail/${this.detailsofTreeSpecies.commune.key}/${this.ForestSpecailOrCommuneItem.treeSpec.id}/edit/${this.ForestSpecailOrCommuneItem.id}`]);
+  // }
 
   closePopup() {
     this.dialogRef.close();
@@ -131,8 +126,8 @@ Loại 4: ${this.landUseCerts[3].text}`;
             searchTerm: this.searchTerm,
             currentPage: this.currentPage,
             pageSize: this.pageSize,
-            routerBack: this.routerBack
-          }
+            routerBack: this.routerBack,
+          },
         })
         .onClose.subscribe();
     }
@@ -140,6 +135,7 @@ Loại 4: ${this.landUseCerts[3].text}`;
   }
 
   openPopupGoogleMap() {
+    // tslint:disable-next-line:max-line-length
     let markerAddress = `Lô ${this.ForestSpecailOrCommuneItem.plotCode} | Khoảnh ${this.ForestSpecailOrCommuneItem.subCompartment && this.ForestSpecailOrCommuneItem.subCompartment.code ? this.ForestSpecailOrCommuneItem.subCompartment.code : ''} | Tiểu khu ${this.ForestSpecailOrCommuneItem.compartment && this.ForestSpecailOrCommuneItem.compartment.code ? this.ForestSpecailOrCommuneItem.compartment.code : ''}
     | ${this.detailsofTreeSpecies.commune && this.detailsofTreeSpecies.commune.text ? this.detailsofTreeSpecies.commune.text : ''} | ${this.detailsofTreeSpecies.district && this.detailsofTreeSpecies.district.text ? this.detailsofTreeSpecies.district.text : ''} | ${this.detailsofTreeSpecies.stateProvince && this.detailsofTreeSpecies.stateProvince.text ? this.detailsofTreeSpecies.stateProvince.text : ''}`;
     this.nbDialogService
@@ -148,10 +144,24 @@ Loại 4: ${this.landUseCerts[3].text}`;
           locationLatitude: this.ForestSpecailOrCommuneItem.locationLatitude,
           locationLongitude: this.ForestSpecailOrCommuneItem.locationLongitude,
           markerAddress: markerAddress,
-          markerLabel: `Lô ${this.ForestSpecailOrCommuneItem.plotCode}`
-        }
+          markerLabel: `Lô ${this.ForestSpecailOrCommuneItem.plotCode}`,
+        },
       })
       .onClose.subscribe();
+  }
+
+  getTreespecs() {
+      this.dataGeneralService.getTreespecsAll().subscribe(result => {
+        this.listOfTreeSpec = result;
+        this.treeSpecValue = this.listOfTreeSpec.find(item => item.id === this.createTreeSpecModel.treeSpec.id);
+        this.FormDetailSpecTree.get('treeSpecName').patchValue(this.treeSpecValue.id);
+      });
+
+      this.actorService.getAllActor().subscribe(result => {
+        this.listOfActor = result;
+        this.actorValue = this.listOfActor.find(item => item.id === this.createTreeSpecModel.actor.id);
+        this.FormDetailSpecTree.get('actor').patchValue(this.actorValue.id);
+      });
   }
 
 }

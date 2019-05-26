@@ -170,5 +170,18 @@ namespace _Hawa.WebApi.Controllers
 
             return Success(result);
         }
+
+        /// <summary>
+        /// Danh sách tất cả chủ rừng không phân trang
+        /// </summary>
+        [HttpGet("actors")]
+        [AllowAnonymous]
+        [SwaggerResponse(200, "", typeof(IPagedResultDto<ActorDto>))]
+        public async Task<IActionResult> GetAll([FromQuery] string searchTerm)
+        {
+            var result = _actorService.GetAll(searchTerm);
+
+            return Success(result);
+        }
     }
 }

@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.sessionService.currentSession) {
-      this.haveSession = true
+      this.haveSession = true;
       if (this.sessionService.currentSession.role && this.sessionService.currentSession.role === 'Admin') {
         this.admin = true;
       } else {

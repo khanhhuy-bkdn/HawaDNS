@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using _Abstractions.Services.IC;
+using _Common.Exceptions;
 using _Common.Extensions;
 using _Common.Timing;
 using _Dtos;
@@ -28,6 +29,8 @@ namespace _Services.Implementations.IC
     public class ForestPlotService : IForestPlotService
     {
         private readonly IUnitOfWork _unitOfWork;
+
+        private IRepository<ICForestPlot> _forestPlotRepository => _unitOfWork.GetRepository<ICForestPlot>();
 
         public ForestPlotService(IUnitOfWork unitOfWork)
         {
@@ -244,31 +247,59 @@ namespace _Services.Implementations.IC
         public async Task<ForestPlotDetailDto> UpdateForestPlotsAsync(EditForestPlotDto dto)
         {
             //ValidateActorDto(dto);
-            var actorToUpdate = await _unitOfWork.GetRepository<ICForestPlot>().GetAsync(dto.Id);
-            //UpdateActorDto(actorToUpdate, dto);
+            var forestPlotToUpdate = await _unitOfWork.GetRepository<ICForestPlot>().GetAsync(dto.Id);
+            UpdateForestPlotDto(forestPlotToUpdate, dto);
 
-            //var actorRolesFromDb = await _unitOfWork.GetRepository<APActorRole>()
-            //    .GetAll()
-            //    .Where(x => x.FK_APActorID == dto.Id)
-            //    .ToArrayAsync();
+            await _forestPlotRepository.UpdateAsync(forestPlotToUpdate);
 
-            //foreach (var actorRole in actorRolesFromDb)
-            //    if (dto.ActorRoles.All(x => x != actorRole.FK_APRoleID))
-            //        await _unitOfWork.GetRepository<APActorRole>().DeleteAsync(actorRole);
+            await _unitOfWork.CompleteAsync();
 
-            //foreach (int item in dto.ActorRoles)
-            //    if (actorRolesFromDb.All(x => x.FK_APRoleID != item))
-            //        await _unitOfWork.GetRepository<APActorRole>()
-            //            .InsertAsync(
-            //                new APActorRole
-            //                {
-            //                    FK_APRoleID = item,
-            //                    FK_APActorID = dto.Id
-            //                });
+            return await GetUserAsync(forestPlotToUpdate.Id);
+        }
 
-            //await _unitOfWork.CompleteAsync();
-            //return await GetActorAsync(actorToUpdate.Id);
-            return new ForestPlotDetailDto();
+        private static void UpdateForestPlotDto(ICForestPlot entity, EditForestPlotDto dto)
+        {
+            if (entity == null)
+                throw new EntityNotFoundException();
+
+            entity.APActorCode = dto.APActorCode;
+            entity.FK_APActorID = dto.FK_APActorID;
+            entity.FK_ICTreeSpecID = dto.FK_ICTreeSpecID;
+            entity.FK_ICForestOrgID = dto.FK_ICForestOrgID;
+            entity.ICForestOrgCode = dto.ICForestOrgCode;
+            entity.ICTreeSpecCode = dto.ICTreeSpecCode;
+            entity.ICForestPlotPlantingDate = dto.ICForestPlotPlantingDate;
+            entity.ICForestPlotPlantingYear = dto.ICForestPlotPlantingYear;
+            entity.ICForestPlotReliability = dto.ICForestPlotReliability;
+            entity.ICForestTypeCode = dto.ICForestTypeCode;
+            entity.ICForestPlotAvgYearCanopy = dto.ICForestPlotAvgYearCanopy;
+            entity.ICConflictSitCode = dto.ICConflictSitCode;
+            entity.FK_ICLandUseCertID = dto.FK_ICLandUseCertID;
+            entity.FK_ICForestCertID = dto.FK_ICForestCertID;
+            entity.ICLandUseCertCode = dto.ICLandUseCertCode;
+            //entity.FK_GECommuneID = dto.FK_GECommuneID;
+            //entity.FK_GECompartmentID = dto.FK_GECompartmentID;
+            //entity.FK_GEDistrictID = dto.FK_GEDistrictID;
+            //entity.FK_GEForestProtectionDepartmentID = dto.FK_GEForestProtectionDepartmentID;
+            //entity.FK_GEPeoplesCommitteeID = dto.FK_GEPeoplesCommitteeID;
+            //entity.FK_GEStateProvinceID = dto.FK_GEStateProvinceID;
+            //entity.FK_GESubCompartmentID = dto.FK_GESubCompartmentID;
+            //entity.GECommuneCode = dto.GECommuneCode;
+            //entity.GECompartmentCode = dto.GECompartmentCode;
+            //entity.GEDistrictCode = dto.GEDistrictCode;
+            //entity.GEParcelCode = dto.GEParcelCode;
+            //entity.GEPlotCode = dto.GEPlotCode;
+            //entity.GEProvinceCode = dto.GEProvinceCode;
+            //entity.GESubCompartmentCode = dto.GESubCompartmentCode;
+        }
+
+        public async Task<ForestPlotDetailDto> GetUserAsync(int Id)
+        {
+            var forestPlotDetail = await _forestPlotRepository.GetAllIncluding(x => x.GEStateProvince, x => x.GEDistrict, x => x.GECommunes, x => x.ICTreeSpec, 
+                x => x.GEDisICLandUseCerttrict, x => x.APActor, x => x.GESubCompartment, x => x.GECompartment, x => x.ICForestCert)
+                .FirstOrDefaultAsync(x => x.Id == Id);
+
+            return forestPlotDetail.ToForestPlotDetailDto();
         }
     }
 }

@@ -1,7 +1,8 @@
 <div class="container-search">
   <div class="d-flex">
     <span>
-      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer" (click)="routerBack()" title="Trở về">
+      <img src="assets/images/back.png" alt="" width="13px" class="icon-back cursor-pointer" (click)="routerBack()"
+        title="Trở về">
     </span>
     <span class="text-uppercase font-weight-bold title-content">
       <div class="font-size--20px">
@@ -13,8 +14,9 @@
     </span>
   </div>
   <div class="shadow-box bg-white mt-4">
-    <input nbInput type="text" class="placeholder-icon input-search w-100" placeholder="&#xf002; Tìm kiếm theo tên chủ rừng"
-      (keyup)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value">
+    <input nbInput type="text" class="placeholder-icon input-search w-100"
+      placeholder="&#xf002; Tìm kiếm theo tên chủ rừng" (keyup)="searchTerm$.next($event.target.value)"
+      [value]="searchTerm$.value">
   </div>
   <div class="w-100 d-flex pt-2 shadow-box bg-white mt-2 p-3 flex-flow">
     <!-- <div class="p-1 pl-2 range-slider" *ngIf="isShowRangeBar">
@@ -85,7 +87,8 @@
         <button nbButton class="text-uppercase cursor-pointer" (click)="filter()">lọc/filter</button>
       </span>
       <span class="d-flex align-items-end">
-        <button nbButton class="text-uppercase cursor-pointer abort-bg" (click)="clearFilter()">xóa lọc/delete filter</button>
+        <button nbButton class="text-uppercase cursor-pointer abort-bg" (click)="clearFilter()">xóa lọc/delete
+          filter</button>
       </span>
     </div>
   </div>
@@ -103,7 +106,8 @@
           <span *ngIf="detailsofTreeSpecies?.commune?.text">{{detailsofTreeSpecies?.commune?.text}}</span>
           <span *ngIf="detailsofTreeSpecies?.commune?.text && detailsofTreeSpecies?.district?.text">,&nbsp;</span>
           <span *ngIf="detailsofTreeSpecies?.district?.text">{{detailsofTreeSpecies?.district?.text}}</span>
-          <span *ngIf="(detailsofTreeSpecies?.commune?.text || detailsofTreeSpecies?.district?.text) && detailsofTreeSpecies?.stateProvince?.text">,&nbsp;</span>
+          <span
+            *ngIf="(detailsofTreeSpecies?.commune?.text || detailsofTreeSpecies?.district?.text) && detailsofTreeSpecies?.stateProvince?.text">,&nbsp;</span>
           <span *ngIf="detailsofTreeSpecies?.stateProvince?.text">{{detailsofTreeSpecies?.stateProvince?.text}}</span>
         </div>
       </div>
@@ -137,7 +141,8 @@
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('ICTreeSpec.ICTreeSpecName')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('ICTreeSpec.ICTreeSpecName')">
                 <div class="pr-2">
                   <div>Loài cây</div>
                   <div class="font-size--10px">(Species)</div>
@@ -145,8 +150,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICTreeSpec.ICTreeSpecName Asc' && filterModel.sorting != 'ICTreeSpec.ICTreeSpecName Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICTreeSpec.ICTreeSpecName Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICTreeSpec.ICTreeSpecName Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICTreeSpec.ICTreeSpecName Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICTreeSpec.ICTreeSpecName Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -159,8 +166,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'GECompartmentCode Asc' && filterModel.sorting != 'GECompartmentCode Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'GECompartmentCode Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'GECompartmentCode Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'GECompartmentCode Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'GECompartmentCode Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -173,8 +182,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'GESubCompartmentCode Asc' && filterModel.sorting != 'GESubCompartmentCode Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'GESubCompartmentCode Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'GESubCompartmentCode Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'GESubCompartmentCode Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'GESubCompartmentCode Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -193,7 +204,8 @@
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('ICForestPlotVolumnPerPlot')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('ICForestPlotVolumnPerPlot')">
                 <div class="pr-2">
                   <div>Trữ lượng (m3)</div>
                   <div class="font-size--10px">(Volume)</div>
@@ -201,8 +213,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICForestPlotVolumnPerPlot Asc' && filterModel.sorting != 'ICForestPlotVolumnPerPlot Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotVolumnPerPlot Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotVolumnPerPlot Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotVolumnPerPlot Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotVolumnPerPlot Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -215,13 +229,16 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICForestPlotArea Asc' && filterModel.sorting != 'ICForestPlotArea Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotArea Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotArea Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotArea Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotArea Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('ICForestPlotPlantingYear')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('ICForestPlotPlantingYear')">
                 <div class="pr-2">
                   <div>Tuổi</div>
                   <div class="font-size--10px">(Age)</div>
@@ -229,13 +246,16 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICForestPlotPlantingYear Asc' && filterModel.sorting != 'ICForestPlotPlantingYear Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingYear Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingYear Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingYear Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingYear Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('ICForestPlotPlantingDate')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('ICForestPlotPlantingDate')">
                 <div class="pr-2">
                   <div>Năm trồng</div>
                   <div class="font-size--10px">(Planting Year)</div>
@@ -243,13 +263,16 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICForestPlotPlantingDate Asc' && filterModel.sorting != 'ICForestPlotPlantingDate Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingDate Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingDate Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingDate Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotPlantingDate Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('ICForestCert.ICForestCertName')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('ICForestCert.ICForestCertName')">
                 <div class="pr-2">
                   <div>Chứng chỉ</div>
                   <div class="font-size--10px">(Certificate)</div>
@@ -257,8 +280,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICForestCert.ICForestCertName Asc' && filterModel.sorting != 'ICForestCert.ICForestCertName Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestCert.ICForestCertName Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestCert.ICForestCertName Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestCert.ICForestCertName Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestCert.ICForestCertName Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -271,13 +296,16 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'APActor.APActorName Asc' && filterModel.sorting != 'APActor.APActorName Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'APActor.APActorName Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'APActor.APActorName Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'APActor.APActorName Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'APActor.APActorName Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('APActor.APActorType.APActorTypeName')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('APActor.APActorType.APActorTypeName')">
                 <div class="pr-2">
                   <div>Loại chủ rừng</div>
                   <div class="font-size--10px">(Forest owner type)</div>
@@ -285,8 +313,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'APActor.APActorType.APActorTypeName Asc' && filterModel.sorting != 'APActor.APActorType.APActorTypeName Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'APActor.APActorType.APActorTypeName Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'APActor.APActorType.APActorTypeName Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'APActor.APActorType.APActorTypeName Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'APActor.APActorType.APActorTypeName Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -299,7 +329,8 @@
               </span>
             </th>
             <th>
-              <span class="d-flex justify-content-start cursor-pointer" (click)="orderByField('ICForestPlotReliability')">
+              <span class="d-flex justify-content-start cursor-pointer"
+                (click)="orderByField('ICForestPlotReliability')">
                 <div class="pr-2">
                   <div>Độ tin cậy</div>
                   <div class="font-size--10px">(Reliability level)</div>
@@ -307,8 +338,10 @@
                 <span>
                   <i *ngIf="filterModel.sorting == '' || (filterModel.sorting != 'ICForestPlotReliability Asc' && filterModel.sorting != 'ICForestPlotReliability Desc')"
                     class="fa fa-sort" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotReliability Asc'" class="fa fa-caret-down" style="color: #ffff;"></i>
-                  <i *ngIf="filterModel.sorting == 'ICForestPlotReliability Desc'" class="fa fa-caret-up" style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotReliability Asc'" class="fa fa-caret-down"
+                    style="color: #ffff;"></i>
+                  <i *ngIf="filterModel.sorting == 'ICForestPlotReliability Desc'" class="fa fa-caret-up"
+                    style="color: #ffff;"></i>
                 </span>
               </span>
             </th>
@@ -342,35 +375,55 @@
                   {{item?.plotCode}}
                 </div>
                 <div (click)="openPopupGoogleMap(item)" class="icon-map">
-                  <img class="cursor-pointer" title="Xem vị trí trên bản đồ" width="23px" src="assets/images/google-map-icon.svg"
-                    alt="">
+                  <img class="cursor-pointer" title="Xem vị trí trên bản đồ" width="23px"
+                    src="assets/images/google-map-icon.svg" alt="">
                 </div>
               </div>
             </td>
-            <td class="text-right pr-5" [title]="item?.volumnPerPlot ? item?.volumnPerPlot : ''">{{item?.volumnPerPlot | thousandSeparate}}</td>
+            <td class="text-right pr-5" [title]="item?.volumnPerPlot ? item?.volumnPerPlot : ''">
+              {{item?.volumnPerPlot | thousandSeparate}}</td>
             <td class="text-right pr-5" [title]="item?.area ? item?.area : ''">{{item?.area | thousandSeparate}}</td>
-            <td class="text-right pr-5" [title]="item?.plantingYear ? item?.plantingYear : ''">{{item?.plantingYear}}</td>
-            <td class="text-right pr-5" [title]="item?.plantingDate ? (item?.plantingDate*1000 | date:'dd/MM/yyyy': '+0000') : ''">{{item?.plantingDate*1000 | date:'dd/MM/yyyy': '+0000'}}</td>
+            <td class="text-right pr-5" [title]="item?.plantingYear ? item?.plantingYear : ''">{{item?.plantingYear}}
+            </td>
+            <td class="text-right pr-5"
+              [title]="item?.plantingDate ? (item?.plantingDate*1000 | date:'dd/MM/yyyy': '+0000') : ''">
+              {{item?.plantingDate*1000 | date:'dd/MM/yyyy': '+0000'}}</td>
             <td [title]="item?.forestCert?.text ? item?.forestCert?.text : ''">{{item?.forestCert?.text}}</td>
             <td [title]="item?.actor?.name ? 'Xem chi tiết chủ rừng' : ''">
-              <a class="cursor-pointer" (click)="showPopupDetailForestOwner(item?.actor, item?.actorType?.name, item?.id)">{{item?.actor?.name}}</a>
+              <a class="cursor-pointer"
+                (click)="showPopupDetailForestOwner(item?.actor, item?.actorType?.name, item?.id)">{{item?.actor?.name}}</a>
             </td>
             <td [title]="item?.actorType?.name ? item?.actorType?.name : ''">{{item?.actorType?.name}}</td>
             <td>
-              <a class="cursor-pointer" (click)="showPopupDetailInformationIndirect(item?.id, detailsofTreeSpecies)" title="Xem liên hệ">
+              <a class="cursor-pointer" (click)="showPopupDetailInformationIndirect(item?.id, detailsofTreeSpecies)"
+                title="Xem liên hệ">
                 Xem liên hệ</a>
             </td>
             <td>
               <ng-container *ngIf="item.reliability && item.reliability.text">
-                <div [class.reliability-low]="item?.reliability?.key === 'LowRisk'" [class.reliability-moderate-risk]="item?.reliability?.key === 'ModerateRisk'"
-                  [class.reliability-high-risk]="item?.reliability?.key === 'HighRisk'" [class.reliability-legal]="item?.reliability?.key === 'Legal'"
+                <div [class.reliability-low]="item?.reliability?.key === 'LowRisk'"
+                  [class.reliability-moderate-risk]="item?.reliability?.key === 'ModerateRisk'"
+                  [class.reliability-high-risk]="item?.reliability?.key === 'HighRisk'"
+                  [class.reliability-legal]="item?.reliability?.key === 'Legal'"
                   [title]="item?.reliability?.text ? item?.reliability?.text : ''">
                   {{item?.reliability?.text}}
                 </div>
               </ng-container>
             </td>
-            <td class="text-center" (click)="showDetailTreeSpecies(item)" title="Xem chi tiết">
+            <!-- <td class="text-center" (click)="showDetailTreeSpecies(item)" title="Xem chi tiết">
               <i class="fa fa-eye text-warning cursor-pointer"></i>
+            </td> -->
+            <td class="text-center">
+              <div class="table-action justify-content-between pr-2 align-items-center">
+                <span class="cursor-pointer table-action__detail text-warning" (click)="showDetailTreeSpecies(item)"
+                  title="Xem chi tiết">
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                </span>
+                <span class="cursor-pointer table-action__edit ml-3" (click)="showDetailCreateTreeSpecies(item)"
+                  title="Sửa thông tin" *ngIf="admin">
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                </span>
+              </div>
             </td>
           </tr>
 

@@ -88,4 +88,12 @@ export class ActorService {
       return this.mappingDetailReviewActor(result);
     })
   }
+
+  getAllActor() {
+    const url = `actors`;
+    return this.apiService.get(url).map(reponse => {
+      const result = reponse.result;
+      return result;
+    });
+  }
 }

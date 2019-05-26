@@ -1,19 +1,23 @@
 <div class="wrapper-popup overlay-popup d-flex justify-content-center align-items-center">
   <div class="popup p-4 shadow-box">
-    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center" (click)="closePopup()">
+    <div class="close-icon cursor-pointer shadow-box d-flex justify-content-center align-items-center"
+      (click)="closePopup()">
       <i class="fa fa-times" aria-hidden="true"></i>
     </div>
     <div class="popup-content px-4 py-2">
       <div>
-        <div class="text-uppercase font-size--20px d-flex w-100">thông tin chi tiết
+        <div class="text-uppercase font-size--20px d-flex w-100">Chỉnh sửa thông tin
         </div>
         <div class="d-flex font-weight-bold">
           <div>
-            Lô {{ForestSpecailOrCommuneItem?.plotCode}} | Khoảnh {{ForestSpecailOrCommuneItem?.subCompartment?.code}} | Tiểu khu {{ForestSpecailOrCommuneItem?.compartment?.code}}
-            | {{detailsofTreeSpecies?.commune?.text}} | {{detailsofTreeSpecies?.district?.text}} | {{detailsofTreeSpecies?.stateProvince?.text}}
+            Lô {{ForestSpecailOrCommuneItem?.plotCode}} | Khoảnh {{ForestSpecailOrCommuneItem?.subCompartment?.code}} |
+            Tiểu khu {{ForestSpecailOrCommuneItem?.compartment?.code}}
+            | {{detailsofTreeSpecies?.commune?.text}} | {{detailsofTreeSpecies?.district?.text}} |
+            {{detailsofTreeSpecies?.stateProvince?.text}}
           </div>
           <div (click)="openPopupGoogleMap()" class="icon-map">
-            <img class="cursor-pointer" title="Xem vị trí trên bản đồ" width="23px" src="assets/images/google-map-icon.svg" alt="">
+            <img class="cursor-pointer" title="Xem vị trí trên bản đồ" width="23px"
+              src="assets/images/google-map-icon.svg" alt="">
           </div>
         </div>
 
@@ -24,16 +28,26 @@
             <div class="w-50">
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Tên loài cây</span>
-                <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="treeSpecName" [title]="FormDetailSpecTree.get('treeSpecName').value ? FormDetailSpecTree.get('treeSpecName').value : ''">
-                </span>
+                <!-- <span class="w-70">
+                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="treeSpecName"
+                    [title]="FormDetailSpecTree.get('treeSpecName').value ? FormDetailSpecTree.get('treeSpecName').value : ''">
+                </span> -->
+                <ng-container>
+                  <select name="treeSpecName" id="treeSpecName" formControlName="treeSpecName" class="select-control">
+                    <option value="null">---Chọn---</option>
+                    <option *ngFor="let treeSpecName of listOfTreeSpec; index as i" [value]="treeSpecName.id">
+                      {{ treeSpecName.name }}
+                    </option>
+                  </select>
+                </ng-container>
               </div>
             </div>
             <div class="w-50">
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Tuổi</span>
                 <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="plantingYear" [title]="FormDetailSpecTree.get('plantingYear').value ? FormDetailSpecTree.get('plantingYear').value : ''">
+                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="plantingYear"
+                    [title]="FormDetailSpecTree.get('plantingYear').value ? FormDetailSpecTree.get('plantingYear').value : ''">
                 </span>
               </div>
             </div>
@@ -47,7 +61,8 @@
                   <!-- <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="volumnPerPlot" [title]="FormDetailSpecTree.get('volumnPerPlot').value ? FormDetailSpecTree.get('volumnPerPlot').value : ''"> -->
 
                   <div class="w-80 actor">
-                    <span [title]="FormDetailSpecTree.get('volumnPerPlot').value ? FormDetailSpecTree.get('volumnPerPlot').value : ''">{{FormDetailSpecTree.get('volumnPerPlot').value | thousandSeparate}}&nbsp;{{FormDetailSpecTree.get('volumnPerPlot').value ? 'm3' : ''}}</span>
+                    <span
+                      [title]="FormDetailSpecTree.get('volumnPerPlot').value ? FormDetailSpecTree.get('volumnPerPlot').value : ''">{{FormDetailSpecTree.get('volumnPerPlot').value | thousandSeparate}}&nbsp;{{FormDetailSpecTree.get('volumnPerPlot').value ? 'm3' : ''}}</span>
                   </div>
                 </span>
               </div>
@@ -56,7 +71,8 @@
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Chứng chỉ</span>
                 <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="forestCert" [title]="FormDetailSpecTree.get('forestCert').value ? FormDetailSpecTree.get('forestCert').value : ''">
+                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="forestCert"
+                    [title]="FormDetailSpecTree.get('forestCert').value ? FormDetailSpecTree.get('forestCert').value : ''">
                 </span>
               </div>
             </div>
@@ -70,7 +86,8 @@
                   <!-- <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="area" [title]="FormDetailSpecTree.get('area').value ? FormDetailSpecTree.get('area').value : ''"> -->
 
                   <div class="w-80 actor">
-                    <span [title]="FormDetailSpecTree.get('area').value ? FormDetailSpecTree.get('area').value : ''">{{FormDetailSpecTree.get('area').value | thousandSeparate}}&nbsp;{{FormDetailSpecTree.get('area').value ? 'ha' : ''}}</span>
+                    <span
+                      [title]="FormDetailSpecTree.get('area').value ? FormDetailSpecTree.get('area').value : ''">{{FormDetailSpecTree.get('area').value | thousandSeparate}}&nbsp;{{FormDetailSpecTree.get('area').value ? 'ha' : ''}}</span>
                   </div>
                 </span>
               </div>
@@ -79,7 +96,8 @@
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Tình trạng tranh chấp</span>
                 <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="conflictSitCode" [title]="FormDetailSpecTree.get('conflictSitCode').value ? FormDetailSpecTree.get('conflictSitCode').value : ''">
+                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="conflictSitCode"
+                    [title]="FormDetailSpecTree.get('conflictSitCode').value ? FormDetailSpecTree.get('conflictSitCode').value : ''">
                 </span>
               </div>
             </div>
@@ -89,12 +107,20 @@
             <div class="w-50">
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Chủ rừng</span>
-                <span class="w-70">
-                  <!-- <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="actor"> -->
+                <!-- <span class="w-70">
                   <div class="w-80 actor">
-                    <a class="cursor-pointer text-decoration" (click)="showPopupDetailForestOwner()" title="Xem chi tiết chủ rừng">{{FormDetailSpecTree.get('actor').value}}</a>
+                    <a class="cursor-pointer text-decoration" (click)="showPopupDetailForestOwner()"
+                      title="Xem chi tiết chủ rừng">{{FormDetailSpecTree.get('actor').value}}</a>
                   </div>
-                </span>
+                </span> -->
+                <ng-container>
+                  <select name="actor" id="actor" formControlName="actor" class="select-control">
+                    <option value="null">---Chọn---</option>
+                    <option *ngFor="let actor of listOfActor; index as i" [value]="actor.id">
+                      {{ actor.name }}
+                    </option>
+                  </select>
+                </ng-container>
               </div>
             </div>
             <div class="w-50">
@@ -110,13 +136,14 @@
                     <br>
                     <span class="font-size--11px font-weight-400">4: {{landUseCerts[3].text}}</span>
                   </ng-template>
-                  <span placement="left" [ngbPopover]="popContent" popoverTitle="Tình trạng đất" #p="ngbPopover" (document:click)="p.close()"
-                    (click)="$event.stopPropagation()" title="Bấm vào để xem chi tiết">
+                  <span placement="left" [ngbPopover]="popContent" popoverTitle="Tình trạng đất" #p="ngbPopover"
+                    (document:click)="p.close()" (click)="$event.stopPropagation()" title="Bấm vào để xem chi tiết">
                     <i class="fa fa-info-circle info-button__color cursor-pointer" aria-hidden="true"></i>
                   </span>
                 </span>
                 <span class="w-70 d-flex">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="landUseCert" [title]="FormDetailSpecTree.get('landUseCert').value ? FormDetailSpecTree.get('landUseCert').value : ''">
+                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="landUseCert"
+                    [title]="FormDetailSpecTree.get('landUseCert').value ? FormDetailSpecTree.get('landUseCert').value : ''">
                   <div class="center-parent ml-2">
                     <!-- <i class="fa fa-2x fa-info-circle info-button__color" aria-hidden="true" title="{{getLandUseCertsList()}}"></i> -->
                   </div>
@@ -130,7 +157,8 @@
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Loại chủ rừng</span>
                 <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="actorType" [title]="FormDetailSpecTree.get('actorType').value ? FormDetailSpecTree.get('actorType').value : ''">
+                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="actorType"
+                    [title]="FormDetailSpecTree.get('actorType').value ? FormDetailSpecTree.get('actorType').value : ''">
                 </span>
               </div>
             </div>
@@ -138,9 +166,12 @@
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Độ tin cậy</span>
                 <span class="w-70">
-                  <ng-container *ngIf="ForestSpecailOrCommuneItem.reliability && ForestSpecailOrCommuneItem.reliability.text">
-                    <div [class.reliability-low]="ForestSpecailOrCommuneItem?.reliability?.key === 'LowRisk'" [class.reliability-moderate-risk]="ForestSpecailOrCommuneItem?.reliability?.key === 'ModerateRisk'"
-                      [class.reliability-high-risk]="ForestSpecailOrCommuneItem?.reliability?.key === 'HighRisk'" [class.reliability-legal]="ForestSpecailOrCommuneItem?.reliability?.key === 'Legal'"
+                  <ng-container
+                    *ngIf="ForestSpecailOrCommuneItem.reliability && ForestSpecailOrCommuneItem.reliability.text">
+                    <div [class.reliability-low]="ForestSpecailOrCommuneItem?.reliability?.key === 'LowRisk'"
+                      [class.reliability-moderate-risk]="ForestSpecailOrCommuneItem?.reliability?.key === 'ModerateRisk'"
+                      [class.reliability-high-risk]="ForestSpecailOrCommuneItem?.reliability?.key === 'HighRisk'"
+                      [class.reliability-legal]="ForestSpecailOrCommuneItem?.reliability?.key === 'Legal'"
                       [title]="ForestSpecailOrCommuneItem?.reliability?.text ? ForestSpecailOrCommuneItem?.reliability?.text : ''"
                       class="w-80 reliability center-parent">
                       <span>{{ForestSpecailOrCommuneItem?.reliability?.text}}</span>
@@ -153,8 +184,9 @@
           </div>
 
           <div class="d-flex justify-content-center mt-5">
-            <button nbButton class="text-uppercase cursor-pointer abort-bg but-close ml-1" (click)="closePopup()">đóng</button>
-            <button nbButton class="text-uppercase cursor-pointer button__save ml-1" (click)="editForm()" *ngIf="admin">chỉnh sửa</button>
+            <button nbButton class="text-uppercase cursor-pointer button__save" (click)="editForm()"
+              *ngIf="admin">Lưu</button>
+            <button nbButton class="text-uppercase cursor-pointer abort-bg ml-1" (click)="closePopup()">đóng</button>
           </div>
         </form>
       </div>

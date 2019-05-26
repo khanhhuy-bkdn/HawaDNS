@@ -18,6 +18,7 @@ import { SessionService } from '../../../shared/service/session.service';
 import { NouisliderModule } from 'ng2-nouislider';
 import { Options } from 'ng5-slider';
 import { TreeSpeciesComponent } from '../../../shared/components/popups/tree-species/tree-species.component';
+import { CreateTreeSpeciesComponent } from '../../../shared/components/popups/create-tree-species/create-tree-species.component';
 import { GoogleMapComponent } from '../../../shared/components/popups/google-map/google-map.component';
 import { SavePageToLoginRequiredService } from '../../../shared/service/save-page-to-login-required.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
@@ -61,6 +62,7 @@ export class DetailComponent implements OnInit {
   };
   loading = false;
   isOldToReturnPageLogin: number = null;
+  admin = false;
   constructor(
     private nbDialogService: NbDialogService,
     private dataGeneralService: DataGeneralService,
@@ -134,6 +136,14 @@ export class DetailComponent implements OnInit {
         this.subscription.unsubscribe();
       }
     };
+
+    if (this.sessionService.currentSession) {
+      if (this.sessionService.currentSession.role && this.sessionService.currentSession.role === 'Admin') {
+        this.admin = true;
+      } else {
+        this.admin = false;
+      }
+    }
   }
 
   checkPageReturn() {
@@ -265,6 +275,23 @@ export class DetailComponent implements OnInit {
   showDetailTreeSpecies(item: ForestSpecailOrCommune) {
     this.nbDialogService
       .open(TreeSpeciesComponent, {
+        context: {
+          ForestSpecailOrCommuneItem: item,
+          detailsofTreeSpecies: this.detailsofTreeSpecies,
+
+          filterModel: this.filterModel,
+          searchTerm: this.searchTerm$.value,
+          currentPage: this.pagedResult.currentPage,
+          pageSize: this.pagedResult.pageSize,
+          routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`,
+        },
+      })
+      .onClose.subscribe();
+  }
+
+  showDetailCreateTreeSpecies(item: ForestSpecailOrCommune) {
+    this.nbDialogService
+      .open(CreateTreeSpeciesComponent, {
         context: {
           ForestSpecailOrCommuneItem: item,
           detailsofTreeSpecies: this.detailsofTreeSpecies,
