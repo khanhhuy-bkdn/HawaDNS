@@ -33,7 +33,7 @@
                     [title]="FormDetailSpecTree.get('treeSpecName').value ? FormDetailSpecTree.get('treeSpecName').value : ''">
                 </span> -->
                 <ng-container>
-                  <select name="treeSpecName" id="treeSpecName" formControlName="treeSpecName" class="select-control">
+                  <select name="treeSpecName" id="treeSpecName" formControlName="treeSpecName" class="w-55 actor">
                     <option value="null">---Chọn---</option>
                     <option *ngFor="let treeSpecName of listOfTreeSpec; index as i" [value]="treeSpecName.id">
                       {{ treeSpecName.name }}
@@ -44,10 +44,12 @@
             </div>
             <div class="w-50">
               <div class="d-flex">
-                <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Tuổi</span>
+                <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Năm trồng</span>
                 <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="plantingYear"
-                    [title]="FormDetailSpecTree.get('plantingYear').value ? FormDetailSpecTree.get('plantingYear').value : ''">
+                  <!-- <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="plantingYear"
+                    [title]="FormDetailSpecTree.get('plantingYear').value ? FormDetailSpecTree.get('plantingYear').value : ''"> -->
+                    <input nbInput class="w-80 actor" type="date" formControlName="plantingDate" 
+                    [value] ="FormDetailSpecTree.get('plantingDate').value ? (FormDetailSpecTree.get('plantingDate').value*1000 | date:'yyyy-MM-dd': '+0000') : ''">
                 </span>
               </div>
             </div>
@@ -70,10 +72,19 @@
             <div class="w-50">
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Chứng chỉ</span>
-                <span class="w-70">
+                <!-- <span class="w-70">
                   <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="forestCert"
                     [title]="FormDetailSpecTree.get('forestCert').value ? FormDetailSpecTree.get('forestCert').value : ''">
-                </span>
+                </span> -->
+
+                <ng-container>
+                  <select class="w-55 actor" name="forestCert" id="forestCert" formControlName="forestCert">
+                    <option value="null">---Chọn---</option>
+                    <option *ngFor="let forestCert of forestCerts; index as i" [value]="forestCert.key">
+                      {{ forestCert.text }}
+                    </option>
+                  </select>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -95,10 +106,19 @@
             <div class="w-50">
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Tình trạng tranh chấp</span>
-                <span class="w-70">
+                <!-- <span class="w-70">
                   <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="conflictSitCode"
                     [title]="FormDetailSpecTree.get('conflictSitCode').value ? FormDetailSpecTree.get('conflictSitCode').value : ''">
-                </span>
+                </span> -->
+
+                <ng-container>
+                  <select class="w-55 actor" name="conflictSitCode" id="conflictSitCode"
+                    formControlName="conflictSitCode">
+                    <option value="null">---Chọn---</option>
+                    <option value="1">Tranh chấp</option>
+                    <option value="2">Không tranh chấp</option>
+                  </select>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -114,7 +134,8 @@
                   </div>
                 </span> -->
                 <ng-container>
-                  <select name="actor" id="actor" formControlName="actor" class="select-control">
+                  <select class="w-55 actor" name="actor" id="actor" formControlName="actor"
+                    (change)="getActorType($event.target.value)">
                     <option value="null">---Chọn---</option>
                     <option *ngFor="let actor of listOfActor; index as i" [value]="actor.id">
                       {{ actor.name }}
@@ -141,13 +162,21 @@
                     <i class="fa fa-info-circle info-button__color cursor-pointer" aria-hidden="true"></i>
                   </span>
                 </span>
-                <span class="w-70 d-flex">
+                <!-- <span class="w-70 d-flex">
                   <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="landUseCert"
                     [title]="FormDetailSpecTree.get('landUseCert').value ? FormDetailSpecTree.get('landUseCert').value : ''">
                   <div class="center-parent ml-2">
-                    <!-- <i class="fa fa-2x fa-info-circle info-button__color" aria-hidden="true" title="{{getLandUseCertsList()}}"></i> -->
                   </div>
-                </span>
+                </span> -->
+
+                <ng-container>
+                  <select class="w-55 actor" name="landUseCert" id="landUseCert" formControlName="landUseCert">
+                    <option value="null">---Chọn---</option>
+                    <option *ngFor="let landUseCert of landUseCerts; index as i" [value]="landUseCert.key">
+                      {{ landUseCert.text }}
+                    </option>
+                  </select>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -157,7 +186,7 @@
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Loại chủ rừng</span>
                 <span class="w-70">
-                  <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="actorType"
+                  <input nbInput disabled class="w-80" class="w-80 actor" type="text" formControlName="actorType"
                     [title]="FormDetailSpecTree.get('actorType').value ? FormDetailSpecTree.get('actorType').value : ''">
                 </span>
               </div>
@@ -165,7 +194,7 @@
             <div class="w-50">
               <div class="d-flex">
                 <span class="w-30 label   p-1 py-1 px-2 align-top field-name">Độ tin cậy</span>
-                <span class="w-70">
+                <!-- <span class="w-70">
                   <ng-container
                     *ngIf="ForestSpecailOrCommuneItem.reliability && ForestSpecailOrCommuneItem.reliability.text">
                     <div [class.reliability-low]="ForestSpecailOrCommuneItem?.reliability?.key === 'LowRisk'"
@@ -177,7 +206,16 @@
                       <span>{{ForestSpecailOrCommuneItem?.reliability?.text}}</span>
                     </div>
                   </ng-container>
-                </span>
+                </span> -->
+
+                <ng-container>
+                  <select class="w-55 actor" name="reliability" id="reliability" formControlName="reliability">
+                    <option value="null">---Chọn---</option>
+                    <option *ngFor="let reliability of reliabilitys; index as i" [value]="reliability.key">
+                      {{ reliability.code }}
+                    </option>
+                  </select>
+                </ng-container>
 
               </div>
             </div>

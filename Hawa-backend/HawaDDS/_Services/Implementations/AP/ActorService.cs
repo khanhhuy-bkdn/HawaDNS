@@ -267,6 +267,7 @@ namespace _Services.Implementations.AP
                 .Include(x => x.APActorType)
                 .SearchByFields(searchTerm, x => x.APActorName)
                 .OrderBy(x => x.Id)
+                .DistinctBy(x => x.APActorName)
                 .ConvertArray(x => x.ToActorDto());
         }
     }
