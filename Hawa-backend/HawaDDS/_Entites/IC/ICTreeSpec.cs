@@ -32,6 +32,8 @@ namespace _Entities.IC
 
         public string ICTreeSpecLatin { get; set; }
 
+        public string ICTreeSpecCode { get; set; }
+
         public string ICTreeSpecGeoDistribution { get; set; }
 
         public bool? ICTreeSpecIsSpecialProduct { get; set; }

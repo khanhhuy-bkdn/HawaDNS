@@ -139,7 +139,7 @@ namespace HawaDDS.Controllers
         /// <summary>
         /// Cập nhật thông tin rừng theo loại cây
         /// </summary>
-        [HttpPost("forestplot/detail/edit/{forestPlotId}")]
+        [HttpPost("forestplot/detail/edit")]
         [SwaggerResponse(200, "", typeof(IPagedResultDto<EditForestPlotDto>))]
         public async Task<IActionResult> Update([FromBody] EditForestPlotDto dto)
         {

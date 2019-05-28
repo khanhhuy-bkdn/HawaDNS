@@ -16,7 +16,9 @@ import { CreateForestPlot } from '../../../../shared/model/forest-plot/create-fo
 import { EMPTY } from 'rxjs';
 import { ActorService } from '../../../service/actor/actor.service';
 import { ActorModel } from '../../../../shared/model/actor/actor.model';
-import * as moment from 'moment';
+import { TreeSpeciesService } from '../../../service/tree-species/tree-species.service';
+import { AlertService } from '../../../../shared/service/alert.service';
+import DateTimeConvertHelper from '../../../helpers/datetime-convert-helper';
 
 @Component({
     selector: 'create-tree-species',
@@ -53,25 +55,10 @@ export class CreateTreeSpeciesComponent implements OnInit {
         private nbDialogService: NbDialogService,
         private sessionService: SessionService,
         private router: Router,
+        private treeSpeciesService: TreeSpeciesService,
+        private alertService: AlertService,
     ) { }
 
-    dateNotification: any;
-    alwaysShowCalendars: boolean;
-    ranges: any = {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    }
-    invalidDates: moment.Moment[] = [];
-
-    // moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')
-
-    isInvalidDate = (m: moment.Moment) => {
-        return this.invalidDates.some(d => d.isSame(m, 'day'))
-    }
     ngOnInit() {
         this.createTreeSpecModel = new ForestSpecailOrCommune();
         this.createTreeSpecModel = this.ForestSpecailOrCommuneItem;
@@ -108,7 +95,7 @@ export class CreateTreeSpeciesComponent implements OnInit {
             actorType: this.ForestSpecailOrCommuneItem && this.ForestSpecailOrCommuneItem.actorType && this.ForestSpecailOrCommuneItem.actorType.name,
             // tslint:disable-next-line:max-line-length
             reliability: this.ForestSpecailOrCommuneItem && this.ForestSpecailOrCommuneItem.reliability && this.ForestSpecailOrCommuneItem.reliability.key,
-            plantingDate: this.ForestSpecailOrCommuneItem && this.ForestSpecailOrCommuneItem.plantingDate,
+            plantingDate: (this.ForestSpecailOrCommuneItem && this.ForestSpecailOrCommuneItem.plantingDate) ? (new Date(this.ForestSpecailOrCommuneItem.plantingDate * 1000).toISOString()) : '',
         });
     }
 
@@ -214,4 +201,13 @@ Loại 4: ${this.landUseCerts[3].text}`;
         }
     }
 
+    submitForm() {
+        this.treeSpeciesService.editTreeSpecies(this.ForestSpecailOrCommuneItem.id, this.FormDetailSpecTree.value).subscribe(result => {
+            this.alertService.success('Cập nhật thông tin thành công');
+            this.sessionService.userSubject.next(result);
+            // tslint:disable-next-line:max-line-length
+            //this.router.navigate([`pages/infor-search/detail/${this.detailsofTreeSpecies.commune.key}/${this.ForestSpecailOrCommuneItem.treeSpec.id}`]);
+            this.closePopup();
+        }, err => this.alertService.error('Cập nhật thông tin không thành công.'));
+    }
 }

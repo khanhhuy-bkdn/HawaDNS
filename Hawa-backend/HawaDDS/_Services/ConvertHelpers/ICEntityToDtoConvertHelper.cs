@@ -2,6 +2,7 @@
 
 using _Common.Extensions;
 using _Common.Helpers;
+using _Common.Runtime.Session;
 using _Common.Timing;
 using _Constants.EntityTypes;
 using _Dtos.IC;
@@ -103,6 +104,56 @@ namespace _Services.ConvertHelpers
                     SubCompartment = entity.GESubCompartment.ToDictionaryItemDto(),
                     PlotCode = entity.GEPlotCode,
                     Id = entity.Id
+                };
+        }
+
+        public static ICForestPlotHistory ToForestPlotHistory(this ICForestPlot entity, IBysSession session)
+        {
+            return entity == null
+                ? null
+                : new ICForestPlotHistory
+                {
+                    AASource = entity.AASource,
+                    GEProvinceCode = entity.GEProvinceCode,
+                    GEDistrictCode = entity.GEDistrictCode,
+                    GECommuneCode = entity.GECommuneCode,
+                    GECompartmentCode = entity.GECompartmentCode,
+                    GESubCompartmentCode = entity.GESubCompartmentCode,
+                    GEPlotCode = entity.GEPlotCode,
+                    GEParcelCode = entity.GEParcelCode,
+                    ICForestPlotHistoryVillage = entity.ICForestPlotVillage,
+                    ICForestPlotHistoryArea = entity.ICForestPlotArea,
+                    ICForestTypeCode = entity.ICForestTypeCode,
+                    ICForestOrgCode = entity.ICForestOrgCode,
+                    ICTreeSpecCode = entity.ICTreeSpecCode,
+                    ICForestPlotHistoryLocationLongitude = entity.ICForestPlotLocationLongitude,
+                    ICForestPlotHistoryLocationLatitude = entity.ICForestPlotLocationLatitude,
+                    ICForestPlotHistoryPlantingYear = entity.ICForestPlotPlantingYear,
+                    ICForestPlotHistoryAvgYearCanopy = entity.ICForestPlotAvgYearCanopy,
+                    ICForestPlotHistoryVolumnPerHa = entity.ICForestPlotVolumnPerHa,
+                    ICForestPlotHistoryVolumnPerPlot = entity.ICForestPlotVolumnPerPlot,
+                    APActorCode = entity.APActorCode,
+                    FK_APActorID = entity.FK_APActorID,
+                    ICLandUseCertCode = entity.ICLandUseCertCode,
+                    ICConflictSitCode = entity.ICConflictSitCode,
+                    ICForestPlotHistoryLandUseTerune = entity.ICForestPlotLandUseTerune,
+                    FK_GECommuneID = entity.FK_GECommuneID,
+                    FK_GECompartmentID = entity.FK_GECompartmentID,
+                    FK_GEDistrictID = entity.FK_GEDistrictID,
+                    FK_GEStateProvinceID = entity.FK_GEStateProvinceID,
+                    FK_GESubCompartmentID = entity.FK_GESubCompartmentID,
+                    FK_ICForestOrgID = entity.FK_ICForestOrgID,
+                    FK_ICTreeSpecID = entity.FK_ICTreeSpecID,
+                    FK_ICLandUseCertID = entity.FK_ICLandUseCertID,
+                    FK_ICForestCertID = entity.FK_ICForestCertID,
+                    ICForestPlotHistoryReliability = entity.ICForestPlotReliability,
+                    FK_GEForestProtectionDepartmentID = entity.FK_GEForestProtectionDepartmentID,
+                    FK_GEPeoplesCommitteeID = entity.FK_GEPeoplesCommitteeID,
+                    ICForestPlotHistoryLatestReviewDate = entity.ICForestPlotLatestReviewDate,
+                    ICForestPlotHistoryFormisUUID = entity.ICForestPlotFormisUUID,
+                    ICForestPlotHistoryPlantingDate = entity.ICForestPlotPlantingDate,
+                    ICForestPlotHistoryCreatedDate = Clock.Now,
+                    FK_ADuserID = session.UserId,
                 };
         }
     }

@@ -48,8 +48,11 @@
                 <span class="w-70">
                   <!-- <input nbInput disabled class="w-80" class="w-80" type="text" formControlName="plantingYear"
                     [title]="FormDetailSpecTree.get('plantingYear').value ? FormDetailSpecTree.get('plantingYear').value : ''"> -->
-                    <input nbInput class="w-80 actor" type="date" formControlName="plantingDate" 
-                    [value] ="FormDetailSpecTree.get('plantingDate').value ? (FormDetailSpecTree.get('plantingDate').value*1000 | date:'yyyy-MM-dd': '+0000') : ''">
+                    <!-- <input nbInput class="w-80 actor" type="date" formControlName="plantingDate" style="padding: 0.6rem 1.125rem;"
+                    [value] ="FormDetailSpecTree.get('plantingDate').value ? (FormDetailSpecTree.get('plantingDate').value*1000 | date:'yyyy-MM-dd': '+0000') : ''"> -->
+
+                    <input nbInput class="w-80 actor" type="date" formControlName="plantingDate" style="padding: 0.6rem 1.125rem;"
+                    [value] ="FormDetailSpecTree.get('plantingDate').value ? (FormDetailSpecTree.get('plantingDate').value | date:'yyyy-MM-dd') : ''">
                 </span>
               </div>
             </div>
@@ -222,7 +225,7 @@
           </div>
 
           <div class="d-flex justify-content-center mt-5">
-            <button nbButton class="text-uppercase cursor-pointer button__save" (click)="editForm()"
+            <button nbButton class="text-uppercase cursor-pointer button__save" (click)="submitForm()"
               *ngIf="admin">Lưu</button>
             <button nbButton class="text-uppercase cursor-pointer abort-bg ml-1" (click)="closePopup()">đóng</button>
           </div>

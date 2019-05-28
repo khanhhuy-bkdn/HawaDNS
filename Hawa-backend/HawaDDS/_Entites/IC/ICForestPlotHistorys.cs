@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using _Entities.AP;
+using _Entities.AD;
 using _Entities.GE;
 using _Entities.Interfaces;
 
@@ -130,5 +131,12 @@ namespace _Entities.IC
         public string ICForestPlotHistoryFormisUUID { get; set; }
 
         public DateTime? ICForestPlotHistoryPlantingDate { get; set; }
+
+        public DateTime? ICForestPlotHistoryCreatedDate { get; set; }
+
+        public int? FK_ADuserID { get; set; }
+
+        [ForeignKey("FK_ADuserID")]
+        public virtual ADUser ADUser { get; set; }
     }
 }
