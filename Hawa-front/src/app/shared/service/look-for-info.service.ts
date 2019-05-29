@@ -20,7 +20,7 @@ import { FeedBackList } from '../model/feed-back/feed-back-list.model';
 import { PagedResultContactList } from '../model/contact/page-result-contact-list.model';
 import { PagedResultActorForestList } from '../model/actor/page-result-actor-forest-list.model';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LookForInfoService {
   detailsofTreeSpecies: OverviewForest;
@@ -29,34 +29,34 @@ export class LookForInfoService {
   pageSize = null;
   constructor(
     private apiService: ApiService,
-    private instantSearchService: InstantSearchService
+    private instantSearchService: InstantSearchService,
   ) { }
   // tạo filter Params cho danh sách thông tin tổng quan về rừng
   createFilterParamsForestplotlist(filterModel: FilterOVerviewForest): URLSearchParams {
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'stateProvinceID',
-      (filterModel.stateProvinceID && filterModel.stateProvinceID.key) ? filterModel.stateProvinceID.key.toString() : ''
+      (filterModel.stateProvinceID && filterModel.stateProvinceID.key) ? filterModel.stateProvinceID.key.toString() : '',
     );
     urlFilterParams.append(
       'districtID',
-      (filterModel.districtID && filterModel.districtID.key) ? filterModel.districtID.key.toString() : ''
+      (filterModel.districtID && filterModel.districtID.key) ? filterModel.districtID.key.toString() : '',
     );
     urlFilterParams.append(
       'communeID',
-      (filterModel.communeID && filterModel.communeID.key) ? filterModel.communeID.key.toString() : ''
+      (filterModel.communeID && filterModel.communeID.key) ? filterModel.communeID.key.toString() : '',
     );
     urlFilterParams.append(
       'treeSpecID',
-      (filterModel.treeSpecID && filterModel.treeSpecID.id) ? filterModel.treeSpecID.id.toString() : ''
+      (filterModel.treeSpecID && filterModel.treeSpecID.id) ? filterModel.treeSpecID.id.toString() : '',
     );
     urlFilterParams.append(
       'treeSpecGroupID',
-      (filterModel.treeSpecGroupID && filterModel.treeSpecGroupID.id) ? filterModel.treeSpecGroupID.id.toString() : ''
+      (filterModel.treeSpecGroupID && filterModel.treeSpecGroupID.id) ? filterModel.treeSpecGroupID.id.toString() : '',
     );
     urlFilterParams.append(
       'sorting',
-      filterModel.sorting ? filterModel.sorting.toString() : ''
+      filterModel.sorting ? filterModel.sorting.toString() : '',
     );
     return urlFilterParams;
   }
@@ -92,7 +92,7 @@ export class LookForInfoService {
       area: result.area,
       locationLatitudeCommune: result.locationLatitudeCommune,
       locationLongitudeCommune: result.locationLongitudeCommune,
-    }
+    };
   }
 
   // Danh sách thông tin tổng quan về rừng (lọc và sorting)
@@ -110,7 +110,7 @@ export class LookForInfoService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingForestplotlist)
+        items: (result.items || []).map(this.mappingForestplotlist),
       };
     });
   }
@@ -122,8 +122,8 @@ export class LookForInfoService {
     const bodyContent = {
       isLike: isLike,
       content: content,
-      userId: userId
-    }
+      userId: userId,
+    };
     return this.apiService.post(url, bodyContent);
   }
 
@@ -168,10 +168,10 @@ export class LookForInfoService {
           key: result.user.status.key,
           code: result.user.status.code,
           text: result.user.status.text,
-        }
+        },
       },
       id: result.id,
-    }
+    };
   }
 
   // Danh sách đánh giá hệ thống
@@ -184,9 +184,9 @@ export class LookForInfoService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingFeedBackList)
+        items: (result.items || []).map(this.mappingFeedBackList),
       };
-    })
+    });
   }
 
   // Create param url cho Danh sách thông tin về rừng theo loại cây của từng xã(lọc và sorting)
@@ -194,35 +194,35 @@ export class LookForInfoService {
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'communeID',
-      filterModel.communeID ? filterModel.communeID.toString() : ''
+      filterModel.communeID ? filterModel.communeID.toString() : '',
     );
     urlFilterParams.append(
       'treeSpecID',
-      (filterModel.treeSpecID && (+filterModel.treeSpecID !== 0)) ? filterModel.treeSpecID.toString() : ''
+      (filterModel.treeSpecID && (+filterModel.treeSpecID !== 0)) ? filterModel.treeSpecID.toString() : '',
     );
     urlFilterParams.append(
       'forestCertID',
-      (filterModel.forestCertID && filterModel.forestCertID !== 'null') ? filterModel.forestCertID.toString() : ''
+      (filterModel.forestCertID && filterModel.forestCertID !== 'null') ? filterModel.forestCertID.toString() : '',
     );
     urlFilterParams.append(
       'oldFrom',
-      (filterModel.oldFrom || filterModel.oldFrom === 0) ? filterModel.oldFrom.toString() : ''
+      (filterModel.oldFrom || filterModel.oldFrom === 0) ? filterModel.oldFrom.toString() : '',
     );
     urlFilterParams.append(
       'oldTo',
-      (filterModel.oldTo || filterModel.oldTo === 0) ? filterModel.oldTo.toString() : ''
+      (filterModel.oldTo || filterModel.oldTo === 0) ? filterModel.oldTo.toString() : '',
     );
     urlFilterParams.append(
       'treeSpecGroupID',
-      filterModel.treeSpecGroupID ? filterModel.treeSpecGroupID.toString() : ''
+      filterModel.treeSpecGroupID ? filterModel.treeSpecGroupID.toString() : '',
     );
     urlFilterParams.append(
       'reliability',
-      (filterModel.reliability && filterModel.reliability !== 'null') ? filterModel.reliability.toString() : ''
+      (filterModel.reliability && filterModel.reliability !== 'null') ? filterModel.reliability.toString() : '',
     );
     urlFilterParams.append(
       'sorting',
-      filterModel.sorting ? filterModel.sorting.toString() : ''
+      filterModel.sorting ? filterModel.sorting.toString() : '',
     );
     return urlFilterParams;
   }
@@ -301,7 +301,7 @@ export class LookForInfoService {
       locationLatitude: result.locationLatitude,
       locationLongitude: result.locationLongitude,
       plantingDate: result.plantingDate,
-    }
+    };
   }
   // SEARCH Danh sách thông tin về rừng theo loại cây của từng xã(lọc và sorting)
   searchKeyWordForesttoSpeciesOrCommuneList(
@@ -354,10 +354,10 @@ export class LookForInfoService {
               pageSize: response.pageSize,
               pageCount: response.totalPages,
               total: response.totalCount,
-              items: (response.items || []).map(this.mappingForesttoSpeciesOrCommuneList)
+              items: (response.items || []).map(this.mappingForesttoSpeciesOrCommuneList),
             };
           });
-      }
+      },
       );
   }
 
@@ -406,7 +406,7 @@ export class LookForInfoService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingForesttoSpeciesOrCommuneList)
+        items: (result.items || []).map(this.mappingForesttoSpeciesOrCommuneList),
       };
     });
   }
@@ -430,7 +430,7 @@ export class LookForInfoService {
           key: item.key,
           code: item.code,
           text: item.text,
-        }
+        };
       }) : null,
       type: result.type && {
         id: result.type.id,
@@ -447,22 +447,22 @@ export class LookForInfoService {
       stateProvince: result.stateProvince && {
         key: result.stateProvince.key,
         code: result.stateProvince.code,
-        text: result.stateProvince.text
+        text: result.stateProvince.text,
       },
       district: result.district && {
         key: result.district.key,
         code: result.district.code,
-        text: result.district.text
+        text: result.district.text,
       },
       commune: result.commune && {
         key: result.commune.key,
         code: result.commune.code,
-        text: result.commune.text
+        text: result.commune.text,
       },
       status: result.status && {
         key: result.status.key,
         code: result.status.code,
-        text: result.status.text
+        text: result.status.text,
       },
       aggregateOfRatings: (result.aggregateOfRatings || []).map(item => ({
         rating: item.rating,
@@ -557,7 +557,7 @@ export class LookForInfoService {
       contactName: valueForm.contactName,
       contactPhone: valueForm.contactPhone,
       note: valueForm.note,
-    }
+    };
     return this.apiService.post(url, requestModel);
   }
 
@@ -742,11 +742,12 @@ export class LookForInfoService {
         reviewDate: result.reviewDate,
         hidden: result.hidden,
         forestPlotId: result.forestPlotId,
-      }
+      };
     });
   }
 
   // Danh sách review của lô rừng
+  // tslint:disable-next-line:max-line-length
   getListReviewActor(forestPlotId: number, page: number | string, pageSize: number | string): Observable<PagedResultActorForestList<ActorReviewModel>> {
     const url = `forestplot/${forestPlotId}/review/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {
@@ -822,13 +823,14 @@ export class LookForInfoService {
             title: item.title,
             content: item.content,
             reviewDate: item.reviewDate,
-          }
-        })
-      }
-    })
+          };
+        }),
+      };
+    });
   }
 
   // Danh sách review của lô rừng - Admin
+  // tslint:disable-next-line:max-line-length
   getListReviewActorAdmin(forestPlotId: number, page: number | string, pageSize: number | string): Observable<PagedResult<ActorReviewModel>> {
     const url = `admin/forestplot/${forestPlotId}/reviews/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {
@@ -901,10 +903,10 @@ export class LookForInfoService {
             content: item.content,
             reviewDate: item.reviewDate,
             hidden: item.hidden,
-          }
-        })
-      }
-    })
+          };
+        }),
+      };
+    });
   }
 
   // Danh sách tuổi của loài cây (theo xã và nhóm loài cây)
@@ -917,17 +919,17 @@ export class LookForInfoService {
     }
     return this.apiService.get(url).map(response => {
       return response.result;
-    })
+    });
   }
 
-  //====================================
+  // ====================================
   // Đánh giá liên hệ
   // Tạo mới đánh giá liên hệ
   createReviewContact(createContactReview: CreateContactReview) {
     const url = `contact/review/create`;
     return this.apiService.post(url, createContactReview).map(response => {
       return this.mappingListReviewContact(response.result);
-    })
+    });
   }
 
   // Mapping model danh sách đánh giá của liên hệ gián tiếp
@@ -962,7 +964,7 @@ export class LookForInfoService {
             guid: item.guid,
             thumbSizeUrl: item.thumbSizeUrl,
             largeSizeUrl: item.largeSizeUrl,
-          }
+          };
         }) : null,
         stateProvince: result.contact.stateProvince ? {
           key: result.contact.stateProvince.key,
@@ -985,8 +987,8 @@ export class LookForInfoService {
         aggregateOfRatings: result.contact.aggregateOfRatings ? (result.contact.aggregateOfRatings || []).map(item => {
           return {
             rating: item.rating,
-            percent: item.percent
-          }
+            percent: item.percent,
+          };
         }) : null,
         locationInCharge: result.contact.locationInCharge && (result.contact.locationInCharge || []).map(item => {
           return {
@@ -1004,14 +1006,14 @@ export class LookForInfoService {
               key: item.commune.key,
               code: item.commune.code,
               text: item.commune.text,
-            }
-          }
+            },
+          };
         }),
         status: result.contact.status && {
           key: result.contact.status.key,
           code: result.contact.status.code,
           text: result.contact.status.text,
-        }
+        },
       } : null,
       reviewUser: result.reviewUser ? {
         id: result.reviewUser.id,
@@ -1055,10 +1057,11 @@ export class LookForInfoService {
       content: result.content,
       reviewDate: result.reviewDate,
       hidden: result.hidden,
-    }
+    };
   }
 
   // Danh sách đánh giá của liên hệ gián tiếp
+  // tslint:disable-next-line:max-line-length
   getListReviewContact(contactId: number, page: number | string, pageSize: number | string): Observable<PagedResultContactList<ReviewContactList>> {
     const url = `contact/${contactId}/reviews/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {
@@ -1078,6 +1081,7 @@ export class LookForInfoService {
   }
 
   // Danh sách đánh giá của liên hệ gián tiếp của Admin
+  // tslint:disable-next-line:max-line-length
   getListReviewContactAdmin(contactId: number, page: number | string, pageSize: number | string): Observable<PagedResultContactList<ReviewContactList>> {
     const url = `admin/contact/${contactId}/reviews/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {

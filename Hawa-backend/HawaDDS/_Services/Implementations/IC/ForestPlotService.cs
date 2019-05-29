@@ -265,15 +265,41 @@ namespace _Services.Implementations.IC
             dto.ICTreeSpecCode = treeSpecies.ICTreeSpecCode;
 
             var landUseCert = await _unitOfWork.GetRepository<ICLandUseCert>().GetAsync(dto.FK_ICLandUseCertID.Value);
-            dto.ICLandUseCertCode = landUseCert.ICLandUseCertCode; 
+            dto.ICLandUseCertCode = landUseCert.ICLandUseCertCode;
+
+            //var forestPlotHistory = await _unitOfWork.GetRepository<ICForestPlotHistory>()
+            //    .GetAll()
+            //    .WhereIf(forestPlotToUpdate.Id > 0, x => x.FK_ICForestPlotID == forestPlotToUpdate.Id)
+            //    .WhereIf(forestPlotToUpdate.FK_APActorID > 0, x => x.FK_APActorID == forestPlotToUpdate.FK_APActorID)
+            //    .WhereIf(forestPlotToUpdate.FK_ICForestCertID > 0, x => x.FK_ICForestCertID == forestPlotToUpdate.FK_ICForestCertID)
+            //    .WhereIf(forestPlotToUpdate.FK_ICLandUseCertID > 0, x => x.FK_ICLandUseCertID == forestPlotToUpdate.FK_ICLandUseCertID)
+            //    .WhereIf(forestPlotToUpdate.FK_ICTreeSpecID > 0, x => x.FK_ICTreeSpecID == forestPlotToUpdate.FK_ICTreeSpecID)
+            //    .WhereIf(!forestPlotToUpdate.ICForestPlotReliability.IsNullOrEmpty(), x => x.ICForestPlotHistoryReliability == forestPlotToUpdate.ICForestPlotReliability)
+            //    .WhereIf(forestPlotToUpdate.ICForestPlotPlantingDate.HasValue, x => x.ICForestPlotHistoryPlantingDate == forestPlotToUpdate.ICForestPlotPlantingDate)
+            //    .WhereIf(!forestPlotToUpdate.ICConflictSitCode.IsNullOrEmpty(), x => x.ICConflictSitCode == forestPlotToUpdate.ICConflictSitCode).FirstOrDefaultAsync();
+
+            if ((forestPlotToUpdate.APActorCode != dto.APActorCode)
+                || (forestPlotToUpdate.FK_APActorID != dto.FK_APActorID)
+                || (forestPlotToUpdate.FK_ICTreeSpecID != dto.FK_ICTreeSpecID) 
+                || (forestPlotToUpdate.ICTreeSpecCode != dto.ICTreeSpecCode)
+                || (forestPlotToUpdate.ICForestPlotPlantingDate.GetValueOrDefault().Date != Convert.ToDateTime(dto.ICForestPlotPlantingDate).Date) 
+                || (forestPlotToUpdate.ICForestPlotReliability != dto.ICForestPlotReliability) 
+                ||(forestPlotToUpdate.ICConflictSitCode != dto.ICConflictSitCode)
+                ||(forestPlotToUpdate.FK_ICLandUseCertID != dto.FK_ICLandUseCertID) 
+                ||(forestPlotToUpdate.FK_ICForestCertID != dto.FK_ICForestCertID)
+                ||(forestPlotToUpdate.ICLandUseCertCode != dto.ICLandUseCertCode)
+                ||(forestPlotToUpdate.ICForestPlotArea != dto.ICForestPlotArea)
+                || (forestPlotToUpdate.ICForestPlotVolumnPerPlot != dto.ICForestPlotVolumnPerPlot)
+            )
+            {
+                await CreateForestPlotHistoryAsync(forestPlotToUpdate);
+            }
 
             UpdateForestPlotDto(forestPlotToUpdate, dto);
 
             await _forestPlotRepository.UpdateAsync(forestPlotToUpdate);
 
             await _unitOfWork.CompleteAsync();
-
-            await CreateForestPlotHistoryAsync(forestPlotToUpdate);
 
             return await GetUserAsync(forestPlotToUpdate.Id);
         }
@@ -310,7 +336,7 @@ namespace _Services.Implementations.IC
         public async Task CreateForestPlotHistoryAsync(ICForestPlot dto)
         {
             var forestPlotHistoryCreate = dto.ToForestPlotHistory(_bysSession);
-            var forestPlotHistory = await _unitOfWork.GetRepository<ICForestPlotHistory>().InsertAsync(forestPlotHistoryCreate);
+            await _unitOfWork.GetRepository<ICForestPlotHistory>().InsertAsync(forestPlotHistoryCreate);
 
             await _unitOfWork.CompleteAsync();
 
@@ -353,11 +379,7 @@ namespace _Services.Implementations.IC
                 .Include(x => x.GEDisICLandUseCerttrict)
                 .Include(x => x.ADUser)
                 .Include(x => x.ICForestPlot)
-                .SearchByFields(
-                    filter.SearchTerm,
-                    x => x.APActor.APActorName)
-                .Where(x => x.FK_GECommuneID == filter.CommuneID && x.FK_ICTreeSpecID == filter.TreeSpecID && x.FK_ICForestPlotID == filter.ForestPlotID)
-                .WhereIf(filter.ForestCertID.HasValue, x => x.FK_ICForestCertID == filter.ForestCertID);
+                .Where(x => x.FK_ICForestPlotID == filter.ForestPlotID);
         }
     }
 }

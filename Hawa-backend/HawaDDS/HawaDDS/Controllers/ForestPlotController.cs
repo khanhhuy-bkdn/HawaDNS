@@ -162,7 +162,7 @@ namespace HawaDDS.Controllers
             [FromQuery] int? forestCertID,
             [FromQuery] int? treeSpecGroupID,
             [FromQuery] string reliability,
-            [FromQuery] string searchTerm,
+            [FromQuery] int forestPlotID,
             [FromQuery] string sorting)
         {
             var result = await _forestPlotService.FilterForestPlotHistoryDetailsAsync(
@@ -175,9 +175,8 @@ namespace HawaDDS.Controllers
                 new FilterForestPlotHistoryDetailDto
                 {
                     TreeSpecID = treeSpecID,
-                    CommuneID = communeID,
                     ForestCertID = forestCertID,
-                    SearchTerm = searchTerm
+                    ForestPlotID = forestPlotID,
                 });
 
             return Success(result);

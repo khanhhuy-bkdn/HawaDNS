@@ -49,7 +49,7 @@ namespace _Dtos.IC
 
         public long? PlantingDate { get; set; }
 
-        public UserDto User { get; set; }
+        public UserHistoryDto User { get; set; }
 
         public long? CreateDate { get; set; }
     }

@@ -96,6 +96,8 @@ namespace _EntityFrameworkCore.Contexts
         public DbSet<ICTreeSpecGroupItem> ICTreeSpecGroupItems { get; set; }
 
         public DbSet<ICPlot> ICPlots { get; set; }
+
+        public DbSet<ICForestPlotHistory> ICForestPlotHistorys { get; set; }
         #endregion
     }
 }

@@ -113,7 +113,6 @@ namespace _Services.ConvertHelpers
                 ? null
                 : new ICForestPlotHistory
                 {
-                    AASource = entity.AASource,
                     GEProvinceCode = entity.GEProvinceCode,
                     GEDistrictCode = entity.GEDistrictCode,
                     GECommuneCode = entity.GECommuneCode,
@@ -184,8 +183,8 @@ namespace _Services.ConvertHelpers
                     ConflictSitCode = Convert.ToInt32(entity.ICConflictSitCode),
                     LocationLatitude = entity.ICForestPlotHistoryLocationLatitude,
                     LocationLongitude = entity.ICForestPlotHistoryLocationLongitude,
-                    User = entity.ADUser.ToUserDto(),
-                    CreateDate = entity.ICForestPlotHistoryCreatedDate.ToMilliSecondsTimestamp(),    
+                    User = entity.ADUser.ToUserHistoryDto(),
+                    CreateDate = entity.ICForestPlotHistoryCreatedDate.ToSecondsTimestamp(),    
                 };
         }
     }

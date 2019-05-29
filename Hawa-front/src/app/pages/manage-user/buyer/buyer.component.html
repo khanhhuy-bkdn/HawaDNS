@@ -165,7 +165,7 @@
                   [class.inactive-text]="user.status && user.status.key === 'Inactive'">
                   {{ user.status?.text }}
                 </td>
-                <td class="modify-manipulation">
+                <td class="modify-manipulation text-center">
                   <div class="table-action d-flex justify-content-between pr-2 align-items-center">
                     <span class="cursor-pointer table-action__detail text-warning" (click)="redirectToOther()" title="Xem chi tiết tài khoản"
                       [routerLink]="['./info', user.id]">

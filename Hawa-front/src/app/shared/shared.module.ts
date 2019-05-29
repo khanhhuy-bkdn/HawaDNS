@@ -38,6 +38,7 @@ import { AgmCoreModule } from '@agm/core';
 import { PopupErrorComponent } from './shared-components/popup-error/popup-error.component';
 import { TreeSpeciesComponent } from './components/popups/tree-species/tree-species.component';
 import { CreateTreeSpeciesComponent } from './components/popups/create-tree-species/create-tree-species.component';
+import { HistoryTreeSpecies } from './components/popups/history-tree-species/history-tree-species.component';
 import {ToastyModule} from 'ng2-toasty';
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
@@ -99,6 +100,7 @@ import 'hammerjs';
     PopupErrorComponent,
     TreeSpeciesComponent,
     CreateTreeSpeciesComponent,
+    HistoryTreeSpecies,
   ],
   exports: [
     AgmCoreModule,
@@ -146,6 +148,7 @@ import 'hammerjs';
     GoogleMapComponent,
     TreeSpeciesComponent,
     CreateTreeSpeciesComponent,
+    HistoryTreeSpecies,
   ],
   providers: [
     {

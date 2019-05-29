@@ -55,5 +55,18 @@ namespace _Services.ConvertHelpers
                     Avatar = entity.ADUserAvatarFileName.ToImageUrl()
                 };
         }
+
+        public static UserHistoryDto ToUserHistoryDto(this ADUser entity)
+        {
+            return entity == null
+                ? null
+                : new UserHistoryDto
+                {
+                    Id = entity.Id,
+                    Email = entity.ADUserEmail,
+                    OrganizationName = entity.ADUserOrganizationName,
+                    UserName = entity.ADUserAcronymName,
+                };
+        }
     }
 }

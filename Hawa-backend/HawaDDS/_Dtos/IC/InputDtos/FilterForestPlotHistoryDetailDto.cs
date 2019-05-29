@@ -2,8 +2,6 @@
 {
     public class FilterForestPlotHistoryDetailDto
     {
-        public int CommuneID { get; set; }
-
         public int ForestPlotID { get; set; }
 
         public int? TreeSpecID { get; set; }

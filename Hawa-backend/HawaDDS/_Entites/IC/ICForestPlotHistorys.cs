@@ -13,7 +13,7 @@ namespace _Entities.IC
     [Table("ICForestPlotHistorys")]
     public class ICForestPlotHistory : IFullEntity
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Column("ICForestPlotHistoryID")]
         public int Id { get; set; }
 
@@ -26,8 +26,6 @@ namespace _Entities.IC
         public DateTime? AAUpdatedDate { get; set; }
 
         public string AAUpdatedUser { get; set; }
-
-        public string AASource { get; set; }
 
         public string GEProvinceCode { get; set; }
 
@@ -101,6 +99,16 @@ namespace _Entities.IC
 
         public DateTime? ICForestPlotHistoryLatestReviewDate { get; set; }
 
+        public int? FK_ICForestPlotID { get; set; }
+
+        public string ICForestPlotHistoryFormisUUID { get; set; }
+
+        public DateTime? ICForestPlotHistoryPlantingDate { get; set; }
+
+        public DateTime? ICForestPlotHistoryCreatedDate { get; set; }
+
+        public int? FK_ADuserID { get; set; }
+
         [ForeignKey("FK_GECommuneID")] public virtual GECommune GECommunes { get; set; }
 
         [ForeignKey("FK_GEDistrictID")] public virtual GEDistrict GEDistrict { get; set; }
@@ -127,16 +135,6 @@ namespace _Entities.IC
 
         [ForeignKey("FK_ICForestPlotID")]
         public virtual ICForestPlot ICForestPlot { get; set; }
-
-        public string ICForestPlotHistoryFormisUUID { get; set; }
-
-        public DateTime? ICForestPlotHistoryPlantingDate { get; set; }
-
-        public DateTime? ICForestPlotHistoryCreatedDate { get; set; }
-
-        public int? FK_ADuserID { get; set; }
-
-        public int? FK_ICForestPlotID { get; set; }
 
         [ForeignKey("FK_ADuserID")]
         public virtual ADUser ADUser { get; set; }

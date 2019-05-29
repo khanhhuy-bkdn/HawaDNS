@@ -19,6 +19,7 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { Options } from 'ng5-slider';
 import { TreeSpeciesComponent } from '../../../shared/components/popups/tree-species/tree-species.component';
 import { CreateTreeSpeciesComponent } from '../../../shared/components/popups/create-tree-species/create-tree-species.component';
+import { HistoryTreeSpecies } from '../../../shared/components/popups/history-tree-species/history-tree-species.component';
 import { GoogleMapComponent } from '../../../shared/components/popups/google-map/google-map.component';
 import { SavePageToLoginRequiredService } from '../../../shared/service/save-page-to-login-required.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
@@ -311,6 +312,18 @@ export class DetailComponent implements OnInit {
                     this.render(response);
                 });
             });
+    }
+
+    showHistoryDetailTreeSpecies(item: ForestSpecailOrCommune) {
+        this.nbDialogService
+            .open(HistoryTreeSpecies, {
+                context: {
+                    ForestSpecailOrCommuneItem: item,
+                    detailsofTreeSpecies: this.detailsofTreeSpecies,
+                    routerBack: `/pages/infor-search/detail/${this.commune}/${this.filterModel.treeSpecID}`,
+                },
+            })
+            .onClose.subscribe();
     }
 
     orderByField(fieldName: string) {

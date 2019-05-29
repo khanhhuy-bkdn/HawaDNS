@@ -413,16 +413,22 @@
             <!-- <td class="text-center" (click)="showDetailTreeSpecies(item)" title="Xem chi tiết">
               <i class="fa fa-eye text-warning cursor-pointer"></i>
             </td> -->
-            <td class="text-center">
+            <td class="modify-manipulation" style="text-align: center">
               <div class="table-action justify-content-between pr-2 align-items-center">
-                <span class="cursor-pointer table-action__detail text-warning" (click)="showDetailTreeSpecies(item)"
-                  title="Xem chi tiết">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-                </span>
-                <span class="cursor-pointer table-action__edit ml-3" (click)="showDetailCreateTreeSpecies(item)"
-                  title="Sửa thông tin" *ngIf="admin">
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
-                </span>
+                <ng-container>
+                  <span class="cursor-pointer table-action__detail text-warning" (click)="showDetailTreeSpecies(item)"
+                    title="Xem chi tiết">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  </span>
+                  <span class="cursor-pointer table-action__permission text-secondary ml-3"
+                    (click)="showHistoryDetailTreeSpecies(item)" title="Xem lịch sử">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                  </span>
+                  <span class="cursor-pointer table-action__edit ml-3" (click)="showDetailCreateTreeSpecies(item)"
+                    title="Sửa thông tin" *ngIf="admin">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </span>
+                </ng-container>
               </div>
             </td>
           </tr>
