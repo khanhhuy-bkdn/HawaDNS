@@ -273,6 +273,8 @@ namespace _Services.Implementations.IC
 
             await _unitOfWork.CompleteAsync();
 
+            await CreateForestPlotHistoryAsync(forestPlotToUpdate);
+
             return await GetUserAsync(forestPlotToUpdate.Id);
         }
 
@@ -284,34 +286,16 @@ namespace _Services.Implementations.IC
             entity.APActorCode = dto.APActorCode;
             entity.FK_APActorID = dto.FK_APActorID;
             entity.FK_ICTreeSpecID = dto.FK_ICTreeSpecID;
-            //entity.FK_ICForestOrgID = dto.FK_ICForestOrgID;
-            //entity.ICForestOrgCode = dto.ICForestOrgCode;
             entity.ICTreeSpecCode = dto.ICTreeSpecCode;
             entity.ICForestPlotPlantingDate = Convert.ToDateTime(dto.ICForestPlotPlantingDate);
             entity.ICForestPlotPlantingYear = entity.ICForestPlotPlantingDate.GetValueOrDefault().Year;
             entity.ICForestPlotReliability = dto.ICForestPlotReliability;
-            //entity.ICForestTypeCode = dto.ICForestTypeCode;
-            //entity.ICForestPlotAvgYearCanopy = dto.ICForestPlotAvgYearCanopy;
             entity.ICConflictSitCode = dto.ICConflictSitCode;
             entity.FK_ICLandUseCertID = dto.FK_ICLandUseCertID;
             entity.FK_ICForestCertID = dto.FK_ICForestCertID;
             entity.ICLandUseCertCode = dto.ICLandUseCertCode;
             entity.ICForestPlotArea = dto.ICForestPlotArea;
             entity.ICForestPlotVolumnPerPlot = dto.ICForestPlotVolumnPerPlot;
-            //entity.FK_GECommuneID = dto.FK_GECommuneID;
-            //entity.FK_GECompartmentID = dto.FK_GECompartmentID;
-            //entity.FK_GEDistrictID = dto.FK_GEDistrictID;
-            //entity.FK_GEForestProtectionDepartmentID = dto.FK_GEForestProtectionDepartmentID;
-            //entity.FK_GEPeoplesCommitteeID = dto.FK_GEPeoplesCommitteeID;
-            //entity.FK_GEStateProvinceID = dto.FK_GEStateProvinceID;
-            //entity.FK_GESubCompartmentID = dto.FK_GESubCompartmentID;
-            //entity.GECommuneCode = dto.GECommuneCode;
-            //entity.GECompartmentCode = dto.GECompartmentCode;
-            //entity.GEDistrictCode = dto.GEDistrictCode;
-            //entity.GEParcelCode = dto.GEParcelCode;
-            //entity.GEPlotCode = dto.GEPlotCode;
-            //entity.GEProvinceCode = dto.GEProvinceCode;
-            //entity.GESubCompartmentCode = dto.GESubCompartmentCode;
         }
 
         public async Task<ForestPlotDetailDto> GetUserAsync(int Id)
@@ -323,48 +307,14 @@ namespace _Services.Implementations.IC
             return forestPlotDetail.ToForestPlotDetailDto();
         }
 
-        public async Task<ForestPlotDetailHistoryDto> CreateForestPlotHistoryAsync(ICForestPlot dto)
+        public async Task CreateForestPlotHistoryAsync(ICForestPlot dto)
         {
-
-            //var contactReviewFromDb = await _unitOfWork.GetRepository<APActorReview>()
-            //    .GetAll()
-            //    .Where(
-            //        x =>
-            //            x.FK_ReviewUserID == _bysSession.UserId
-            //            && (x.APActorReviewDate.GetValueOrDefault().Date == Clock.Now.Date || x.FK_ICForestPlotID == dto.ForestPlotId))
-            //    .ToArrayAsync();
-
-            //if (contactReviewFromDb.Any(x => x.FK_ICForestPlotID == dto.ForestPlotId))
-            //{
-            //    throw new BusinessException("Bạn đã đánh giá lô rừng này rồi.");
-            //}
-
-            //if (contactReviewFromDb.Count(x => x.APActorReviewDate.GetValueOrDefault().Date == Clock.Now.Date) >= 5)
-            //{
-            //    throw new BusinessException("Bạn đã đánh giá 5 lần trong ngày.");
-            //}
-
-            //if (Clock.Now < contactReviewFromDb.Max(x => x.APActorReviewDate).GetValueOrDefault().AddMinutes(30))
-            //{
-            //    throw new BusinessException("Mỗi đánh giá trong ngày phải cách nhau 30 phút.");
-            //}
-
             var forestPlotHistoryCreate = dto.ToForestPlotHistory(_bysSession);
             var forestPlotHistory = await _unitOfWork.GetRepository<ICForestPlotHistory>().InsertAsync(forestPlotHistoryCreate);
 
             await _unitOfWork.CompleteAsync();
 
-            //await _notificationService.CreateNotificationAsync(
-            //    new CreateNotificationDto
-            //    {
-            //        UserId = _bysSession.UserId,
-            //        NotificationType = NotificationType.AddedActorEvaluation,
-            //        NotificationObjectType = "APActorReviews",
-            //        NotificationObjectId = actorReview.Id,
-            //        NotificationContent = _unitOfWork.GetRepository<ADUser>().Get(_bysSession.UserId)?.ADUserOrganizationName + " đã thêm đánh giá chủ rừng " + forestPlotActorFromDb.APActor?.APActorName
-            //    });
-
-            return await GetForestPlotHistoryAsync(forestPlotHistory.Id);
+            //return await GetForestPlotHistoryAsync(forestPlotHistory.Id);
         }
 
         public async Task<ForestPlotDetailHistoryDto> GetForestPlotHistoryAsync(int forestPlotHistoryId)
