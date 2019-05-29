@@ -323,7 +323,7 @@ namespace _Services.Implementations.IC
             return forestPlotDetail.ToForestPlotDetailDto();
         }
 
-        public async Task<ICForestPlotHistory> CreateForestPlotHistoryAsync(ICForestPlot dto)
+        public async Task<ForestPlotDetailHistoryDto> CreateForestPlotHistoryAsync(ICForestPlot dto)
         {
 
             //var contactReviewFromDb = await _unitOfWork.GetRepository<APActorReview>()
@@ -367,14 +367,47 @@ namespace _Services.Implementations.IC
             return await GetForestPlotHistoryAsync(forestPlotHistory.Id);
         }
 
-        public async Task<ICForestPlotHistory> GetForestPlotHistoryAsync(int forestPlotHistoryId)
+        public async Task<ForestPlotDetailHistoryDto> GetForestPlotHistoryAsync(int forestPlotHistoryId)
         {
             var forestPlotHistoryFromDb = await _unitOfWork.GetRepository<ICForestPlotHistory>()
                 .GetAllIncluding(x => x.APActor, x => x.ADUser)
                 .FirstOrDefaultAsync(x => x.Id == forestPlotHistoryId);
 
-            //return actorReviewFromDb.ToReviewItemDto();
-            return forestPlotHistoryFromDb;
+            return forestPlotHistoryFromDb.ToForestPlotHistoryDto();
+        }
+
+        public async Task<IPagedResultDto<ForestPlotDetailHistoryDto>> FilterForestPlotHistoryDetailsAsync(PagingAndSortingRequestDto pagingAndSortingRequestDto, FilterForestPlotHistoryDetailDto filter)
+        {
+            var query = GetFilterForestPlotHistorysQuery(filter);
+
+            return await query.OrderBy(x => x.Id)
+                .ApplySorting(pagingAndSortingRequestDto)
+                .GetPagedResultAsync(pagingAndSortingRequestDto.Page, pagingAndSortingRequestDto.PageSize, x => x.ToForestPlotHistoryDto());
+        }
+
+        private IQueryable<ICForestPlotHistory> GetFilterForestPlotHistorysQuery(FilterForestPlotHistoryDetailDto filter)
+        {
+            return _unitOfWork.GetRepository<ICForestPlotHistory>()
+                .GetAll()
+                .Include(x => x.GESubCompartment)
+                .Include(x => x.GECompartment)
+                .Include(x => x.GEStateProvince)
+                .Include(x => x.GEDistrict)
+                .Include(x => x.GECommunes)
+                .Include(x => x.ICTreeSpec)
+                .Include(x => x.GECompartment)
+                .Include(x => x.GESubCompartment)
+                .Include(x => x.ICForestCert)
+                .Include(x => x.APActor)
+                .ThenInclude(x => x.APActorType)
+                .Include(x => x.GEDisICLandUseCerttrict)
+                .Include(x => x.ADUser)
+                .Include(x => x.ICForestPlot)
+                .SearchByFields(
+                    filter.SearchTerm,
+                    x => x.APActor.APActorName)
+                .Where(x => x.FK_GECommuneID == filter.CommuneID && x.FK_ICTreeSpecID == filter.TreeSpecID && x.FK_ICForestPlotID == filter.ForestPlotID)
+                .WhereIf(filter.ForestCertID.HasValue, x => x.FK_ICForestCertID == filter.ForestCertID);
         }
     }
 }

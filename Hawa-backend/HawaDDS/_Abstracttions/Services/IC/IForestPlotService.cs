@@ -27,5 +27,7 @@ namespace _Abstractions.Services.IC
         Task<StatisticDto> StatisticAsync();
 
         Task<ForestPlotDetailDto> UpdateForestPlotsAsync(EditForestPlotDto dto);
+
+        Task<IPagedResultDto<ForestPlotDetailHistoryDto>> FilterForestPlotHistoryDetailsAsync(PagingAndSortingRequestDto pagingAndSortingRequestDto, FilterForestPlotHistoryDetailDto filter);
     }
 }

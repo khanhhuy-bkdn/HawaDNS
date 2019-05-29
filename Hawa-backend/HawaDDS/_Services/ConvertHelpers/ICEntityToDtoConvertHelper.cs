@@ -154,6 +154,38 @@ namespace _Services.ConvertHelpers
                     ICForestPlotHistoryPlantingDate = entity.ICForestPlotPlantingDate,
                     ICForestPlotHistoryCreatedDate = Clock.Now,
                     FK_ADuserID = session.UserId,
+                    FK_ICForestPlotID = entity.Id,
+                };
+        }
+
+        public static ForestPlotDetailHistoryDto ToForestPlotHistoryDto(this ICForestPlotHistory entity)
+        {
+            return entity == null
+                ? null
+                : new ForestPlotDetailHistoryDto
+                {
+                    Id = entity.Id,
+                    Area = entity.ICForestPlotHistoryArea,
+                    PlantingYear = entity.ICForestPlotHistoryPlantingYear.GetValueOrDefault() == 0 ? 0 : (Clock.Now.Year - entity.ICForestPlotHistoryPlantingYear.GetValueOrDefault()),
+                    TreeSpec = entity.ICTreeSpec.ToTreeSpecDto(),
+                    CompartmentCode = entity.GECompartment?.GECompartmentCode,
+                    SubCompartmentCode = entity.GESubCompartment?.GESubCompartmentCode,
+                    PlotCode = entity.GEPlotCode,
+                    PlantingDate = entity.ICForestPlotHistoryPlantingDate.ToSecondsTimestamp(),
+                    Actor = entity.APActor.ToActorDto(),
+                    ActorType = entity.APActor?.APActorType.ToActorTypeDto(),
+                    Compartment = entity.GECompartment.ToDictionaryItemDto(),
+                    ForestCert = entity.ICForestCert.ToDictionaryItemDto(),
+                    Plot = null, //TOdo mapping
+                    SubCompartment = entity.GESubCompartment.ToDictionaryItemDto(),
+                    VolumnPerPlot = entity.ICForestPlotHistoryVolumnPerPlot,
+                    Reliability = entity.ICForestPlotHistoryReliability.ToDictionaryItemDto<ForestPlotReliability>(),
+                    LandUseCert = entity.GEDisICLandUseCerttrict.ToDictionaryItemDto(),
+                    ConflictSitCode = Convert.ToInt32(entity.ICConflictSitCode),
+                    LocationLatitude = entity.ICForestPlotHistoryLocationLatitude,
+                    LocationLongitude = entity.ICForestPlotHistoryLocationLongitude,
+                    User = entity.ADUser.ToUserDto(),
+                    CreateDate = entity.ICForestPlotHistoryCreatedDate.ToMilliSecondsTimestamp(),    
                 };
         }
     }

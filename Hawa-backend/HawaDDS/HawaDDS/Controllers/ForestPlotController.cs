@@ -147,5 +147,40 @@ namespace HawaDDS.Controllers
 
             return Success(result);
         }
+
+        /// <summary>
+        /// Danh sách thông tin lịch sử về rừng theo loại cây của từng xã(lọc và sorting)
+        /// </summary>
+        [HttpGet("forestplot/detail/history/filter/{page:int}/{pageSize:int}")]
+        [AllowAnonymous]
+        [SwaggerResponse(200, "", typeof(IPagedResultDto<FilterForestPlotHistoryDetailDto>))]
+        public async Task<IActionResult> FilterForestPlotHistoryDetails(
+            [FromRoute] int page,
+            [FromRoute] int pageSize,
+            [FromQuery] int communeID,
+            [FromQuery] int? treeSpecID,
+            [FromQuery] int? forestCertID,
+            [FromQuery] int? treeSpecGroupID,
+            [FromQuery] string reliability,
+            [FromQuery] string searchTerm,
+            [FromQuery] string sorting)
+        {
+            var result = await _forestPlotService.FilterForestPlotHistoryDetailsAsync(
+                new PagingAndSortingRequestDto
+                {
+                    Page = page,
+                    PageSize = pageSize,
+                    Sorting = sorting
+                },
+                new FilterForestPlotHistoryDetailDto
+                {
+                    TreeSpecID = treeSpecID,
+                    CommuneID = communeID,
+                    ForestCertID = forestCertID,
+                    SearchTerm = searchTerm
+                });
+
+            return Success(result);
+        }
     }
 }

@@ -136,6 +136,8 @@ namespace _Entities.IC
 
         public int? FK_ADuserID { get; set; }
 
+        public int? FK_ICForestPlotID { get; set; }
+
         [ForeignKey("FK_ADuserID")]
         public virtual ADUser ADUser { get; set; }
     }
