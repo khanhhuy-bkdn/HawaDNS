@@ -118,12 +118,13 @@ namespace _Services.Implementations.AP
                 .GetPagedResultAsync(pagingRequestDto.Page, pagingRequestDto.PageSize, x => x.ToReviewItemDto(), extraData);
         }
 
-        public async Task<IPagedResultDto<ReviewItemDto>> GetAdminReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId)
+        public async Task<IPagedResultDto<ReviewItemDto>> GetAdminReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId, int actorId)
         {
             return await _unitOfWork.GetRepository<APActorReview>()
                 .GetAllIncluding(x => x.APActor, x => x.ADUser, x => x.ICForestPlot)
                 .IncludesForToForestPlot(x => x.ICForestPlot)
                 .Where(x => x.FK_ICForestPlotID == forestPlotId)
+                .Where(x => x.FK_APActorID == actorId)
                 .OrderByDescending(x => x.APActorReviewDate)
                 .GetPagedResultAsync(pagingRequestDto.Page, pagingRequestDto.PageSize, x => x.ToReviewItemDto());
         }

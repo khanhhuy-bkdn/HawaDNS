@@ -45,8 +45,9 @@ export class EvaluateActorDetailComponent implements OnInit {
     // });
     this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId).switchMap(res1 => {
       this.actorId = res1.id;
+      console.log(this.actorId)
       this.render(res1);
-      return this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, 0, 10)
+      return this.lookForInfoService.getListReviewActorAdmin(this.actorId, this.forestPlotId, 0, 10)
     }).subscribe(res2 => {
       this.renderReivew(res2);
     });
@@ -91,7 +92,7 @@ export class EvaluateActorDetailComponent implements OnInit {
   }
 
   detailReviewActor() {
-    this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, 0, 10).subscribe(response => {
+    this.lookForInfoService.getListReviewActorAdmin(this.actorId ,this.forestPlotId, 0, 10).subscribe(response => {
       this.renderReivew(response);
     })
   }

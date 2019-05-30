@@ -6,7 +6,7 @@
   <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive [end]="sidebar.id === 'end'" *ngIf="isSilderbar">
     <div class="wrapper pt-4" id="wrapper-menu-sidebar">
       <ul class="admin-menu m-0 p-0">
-        <!-- <li class="d-flex">
+        <li class="d-flex">
           <a class="admin-menu__item py-3 cursor-pointer" [class.pl-2]="hideSidebar" (click)="checkUrl()" [routerLink]="['/pages/dashboard']"
             routerLinkActive="router-link-active" title="Dashboard">
             <span class="menu-item__icon">
@@ -26,7 +26,7 @@
             </span>
             <span *ngIf="hideSidebar" class="menu-item__title">Dashboard</span>
           </a>
-        </li> -->
+        </li>
         <li class="d-flex">
           <a class="admin-menu__item py-3 cursor-pointer" [class.pl-2]="hideSidebar" (click)="checkUrl()" [routerLink]="['/pages/buyer']"
             routerLinkActive="router-link-active" title="Người dùng">
@@ -81,7 +81,7 @@
           </a>
         </li>
         <!--21/05/2019-->
-        <!-- <li class="d-flex">
+        <li class="d-flex">
           <a class="admin-menu__item py-3 cursor-pointer contact-permanent" [class.pl-2]="hideSidebar" [routerLink]="['/pages/evaluate-actor']"
             routerLinkActive="router-link-active" title="Quản lý chủ rừng">
             <span class="menu-item__icon">
@@ -111,7 +111,7 @@
             </span>
             <span *ngIf="hideSidebar" class="menu-item__title content">Quản lý chủ rừng</span>
           </a>
-        </li> -->
+        </li>
         <!--end-->
         <li class="d-flex">
           <a class="admin-menu__item py-3 cursor-pointer" [class.pl-2]="hideSidebar" [routerLink]="['/pages/feedback']"

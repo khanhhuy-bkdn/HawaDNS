@@ -831,8 +831,8 @@ export class LookForInfoService {
 
   // Danh sách review của lô rừng - Admin
   // tslint:disable-next-line:max-line-length
-  getListReviewActorAdmin(forestPlotId: number, page: number | string, pageSize: number | string): Observable<PagedResult<ActorReviewModel>> {
-    const url = `admin/forestplot/${forestPlotId}/reviews/${page}/${pageSize}`;
+  getListReviewActorAdmin( actorId: number, forestPlotId: number, page: number | string, pageSize: number | string): Observable<PagedResult<ActorReviewModel>> {
+    const url = `admin/forestplot/${forestPlotId}/${actorId}/reviews/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return {

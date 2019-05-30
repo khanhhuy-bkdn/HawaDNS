@@ -164,18 +164,20 @@ namespace _Services.ConvertHelpers
                     Phone = entity.APActor.APActorPhone,
                     Website = entity.APActor.APActorWebsite,
                     ForestPlot = entity.ToForestPlotDto(),
-                    AverageRating = entity.APActorReviews.ToAverageRating(),
-                    ReviewCount = entity.APActorReviews.Count
+                    AverageRating = entity.APActorReviews.Where(o => o.FK_APActorID == entity.FK_APActorID).Count() > 0 
+                    ? entity.APActorReviews.ToAverageRating(entity) : 5,
+                    ReviewCount = entity.APActorReviews.Where(o => o.FK_APActorID == entity.FK_APActorID).Count() > 0 
+                    ? entity.APActorReviews.Where(o => o.FK_APActorID == entity.FK_APActorID).Count() : 0
                 };
         }
 
-        public static decimal ToAverageRating(this ICollection<APActorReview> list)
+        public static decimal ToAverageRating(this ICollection<APActorReview> list, ICForestPlot entity)
         {
             return list.IsNullOrEmpty()
                 ? 0
-                : (decimal)list
+                : (decimal)list.Where(o => o.FK_APActorID == entity.FK_APActorID)
                       .Sum(x => x.APActorReviewRating)
-                  / list.Count;
+                  / (list.Where(o => o.FK_APActorID == entity.FK_APActorID).Count());
         }
     }
 }

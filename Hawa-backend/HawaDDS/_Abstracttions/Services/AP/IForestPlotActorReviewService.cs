@@ -15,7 +15,7 @@ namespace _Abstractions.Services.AP
 
         Task<IPagedResultDto<ReviewItemDto>> GetReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId);
 
-        Task<IPagedResultDto<ReviewItemDto>> GetAdminReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId);
+        Task<IPagedResultDto<ReviewItemDto>> GetAdminReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId, int actorId);
 
         Task DeleteReviewAsync(int actorReviewId);
 
