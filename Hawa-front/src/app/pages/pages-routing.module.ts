@@ -8,7 +8,7 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    { path: '', redirectTo: 'dashboard' },
+    { path: '', redirectTo: 'infor-search' },
     { path: 'infor-user', loadChildren: './infor-user/infor-user.module#InforUserModule', canActivate: [AuthGuard] },
     { path: 'infor-search', loadChildren: './infor-search/infor-search.module#InforSearchModule' },
     { path: 'dashboard', loadChildren: './manage-user/dashboard/dashboard.module#DashboardModule', canActivate: [AuthAdminService] },

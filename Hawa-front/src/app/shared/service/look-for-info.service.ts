@@ -668,8 +668,8 @@ export class LookForInfoService {
   }
 
   // Chi tiết chủ rừng theo lô
-  viewActorForForestplot(forestPlotId: number) {
-    const url = `actor/forestplot/${forestPlotId}`;
+  viewActorForForestplot(actorId: number, forestPlotId: number) {
+    const url = `actor/forestplot/${forestPlotId}/${actorId}`;
     return this.apiService.get(url).map(response => {
       return this.mappingActorToForesplot(response.result);
     });
@@ -748,8 +748,8 @@ export class LookForInfoService {
 
   // Danh sách review của lô rừng
   // tslint:disable-next-line:max-line-length
-  getListReviewActor(forestPlotId: number, page: number | string, pageSize: number | string): Observable<PagedResultActorForestList<ActorReviewModel>> {
-    const url = `forestplot/${forestPlotId}/review/${page}/${pageSize}`;
+  getListReviewActor(actorId: number, forestPlotId: number, page: number | string, pageSize: number | string): Observable<PagedResultActorForestList<ActorReviewModel>> {
+    const url = `forestplot/${forestPlotId}/${actorId}/review/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {
       const result = response.result;
       return {

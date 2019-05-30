@@ -123,11 +123,11 @@ namespace _Hawa.WebApi.Controllers
         /// <summary>
         ///     Chi tiết chủ rừng theo lô
         /// </summary>
-        [HttpGet("actor/forestplot/{forestPlotId}")]
+        [HttpGet("actor/forestplot/{forestPlotId}/{actorId}")]
         [SwaggerResponse(200, "", typeof(ActorDto))]
-        public async Task<IActionResult> GetForestPlotActorAsync([FromRoute] int forestPlotId)
+        public async Task<IActionResult> GetForestPlotActorAsync([FromRoute] int forestPlotId, [FromRoute] int actorId)
         {
-            var result = await _actorService.GetForestPlotActorAsync(forestPlotId);
+            var result = await _actorService.GetForestPlotActorAsync(forestPlotId, actorId);
 
             return Success(result);
         }

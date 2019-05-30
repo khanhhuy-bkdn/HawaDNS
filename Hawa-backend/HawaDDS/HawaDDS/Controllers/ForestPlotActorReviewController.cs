@@ -63,12 +63,13 @@ namespace _Hawa.WebApi.Controllers
         /// <summary>
         ///     Danh sách đánh giá chủ rừng của 1 lô rừng
         /// </summary>
-        [HttpGet("forestplot/{forestPlotId}/review/{page:int}/{pageSize:int}")]
+        [HttpGet("forestplot/{forestPlotId}/{actorId}/review/{page:int}/{pageSize:int}")]
         [SwaggerResponse(200, "", typeof(IPagedResultDto<ReviewItemDto>))]
         public async Task<IActionResult> ReviewsOfForestPlot(
             [FromRoute] int forestPlotId,
             [FromRoute] int page,
-            [FromRoute] int pageSize)
+            [FromRoute] int pageSize,
+            [FromRoute] int actorId)
         {
             var result = await _forestPlotActorReviewService.GetReviewsOfForestPlotAsync(
                 new PagingRequestDto
@@ -76,7 +77,8 @@ namespace _Hawa.WebApi.Controllers
                     Page = page,
                     PageSize = pageSize
                 },
-                forestPlotId);
+                forestPlotId,
+                actorId);
 
             return Success(result);
         }

@@ -11,7 +11,7 @@ import { EvaluateActorListManager } from '../../model/evaluate-actor/evaluate-ac
 import { DetailActorManagerForest } from '../../model/evaluate-actor/detail-actor-manager-forest.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ManageEvaluateService {
   filterModelListContact = new FilterEvaluateContactListManager();
@@ -32,19 +32,19 @@ export class ManageEvaluateService {
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'contactStateProvinceId',
-      filterModel.contactStateProvinceId ? filterModel.contactStateProvinceId.toString() : ''
+      filterModel.contactStateProvinceId ? filterModel.contactStateProvinceId.toString() : '',
     );
     urlFilterParams.append(
       'contactDistrictId',
-      filterModel.contactDistrictId ? filterModel.contactDistrictId.toString() : ''
+      filterModel.contactDistrictId ? filterModel.contactDistrictId.toString() : '',
     );
     urlFilterParams.append(
       'contactCommuneId',
-      filterModel.contactCommuneId ? filterModel.contactCommuneId.toString() : ''
+      filterModel.contactCommuneId ? filterModel.contactCommuneId.toString() : '',
     );
     urlFilterParams.append(
       'rating',
-      filterModel.rating ? filterModel.rating.toString() : ''
+      filterModel.rating ? filterModel.rating.toString() : '',
     );
     return urlFilterParams;
   }
@@ -81,7 +81,7 @@ export class ManageEvaluateService {
             guid: item.guid,
             thumbSizeUrl: item.thumbSizeUrl,
             largeSizeUrl: item.largeSizeUrl,
-          }
+          };
         }) : null,
         stateProvince: result.contact.stateProvince ? {
           key: result.contact.stateProvince.key,
@@ -104,8 +104,8 @@ export class ManageEvaluateService {
         aggregateOfRatings: result.contact.aggregateOfRatings ? (result.contact.aggregateOfRatings || []).map(item => {
           return {
             rating: item.rating,
-            percent: item.percent
-          }
+            percent: item.percent,
+          };
         }) : null,
         locationInCharge: result.contact.locationInCharge && (result.contact.locationInCharge || []).map(item => {
           return {
@@ -123,14 +123,14 @@ export class ManageEvaluateService {
               key: item.commune.key,
               code: item.commune.code,
               text: item.commune.text,
-            }
-          }
+            },
+          };
         }),
         status: result.contact.status && {
           key: result.contact.status.key,
           code: result.contact.status.code,
           text: result.contact.status.text,
-        }
+        },
       } : null,
       reviewUser: result.reviewUser ? {
         id: result.reviewUser.id,
@@ -173,15 +173,15 @@ export class ManageEvaluateService {
       title: result.title,
       content: result.content,
       reviewDate: result.reviewDate,
-      hidden: result.hidden
-    }
+      hidden: result.hidden,
+    };
   }
 
   // Danh sách đánh giá liên hệ gián tiếp
   evaluateList(
     filterModel: FilterEvaluateContactListManager,
     page: number | string,
-    pageSize: number | string
+    pageSize: number | string,
   ): Observable<PagedResult<ReviewContactList>> {
     const url = `contactreviews/${page}/${pageSize}`;
     const urlParams = this.createFilterParamsListReviewContact(filterModel);
@@ -192,8 +192,8 @@ export class ManageEvaluateService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingListReviewContact)
-      }
+        items: (result.items || []).map(this.mappingListReviewContact),
+      };
     });
   }
 
@@ -254,11 +254,11 @@ export class ManageEvaluateService {
         return {
           rating: item.rating,
           percent: item.percent,
-        }
+        };
       }) : null,
       titleContribute: result.titleContribute,
       reviewCount: result.reviewCount,
-    }
+    };
   }
 
 
@@ -267,19 +267,19 @@ export class ManageEvaluateService {
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'contactStateProvinceId',
-      filterModel.contactStateProvinceId ? filterModel.contactStateProvinceId.toString() : ''
+      filterModel.contactStateProvinceId ? filterModel.contactStateProvinceId.toString() : '',
     );
     urlFilterParams.append(
       'contactDistrictId',
-      filterModel.contactDistrictId ? filterModel.contactDistrictId.toString() : ''
+      filterModel.contactDistrictId ? filterModel.contactDistrictId.toString() : '',
     );
     urlFilterParams.append(
       'contactCommuneId',
-      filterModel.contactCommuneId ? filterModel.contactCommuneId.toString() : ''
+      filterModel.contactCommuneId ? filterModel.contactCommuneId.toString() : '',
     );
     urlFilterParams.append(
       'rating',
-      filterModel.rating ? filterModel.rating.toString() : ''
+      filterModel.rating ? filterModel.rating.toString() : '',
     );
     return urlFilterParams;
   }
@@ -289,7 +289,7 @@ export class ManageEvaluateService {
   contactListForEvaluate(
     filterModel: FilterEvaluateContactListManager,
     page: number | string,
-    pageSize: number | string
+    pageSize: number | string,
   ): Observable<PagedResult<ListEvaluateContact>> {
     const url = `contact/filter/${page}/${pageSize}`;
     const urlParams = this.createFilterParamsContactListForEvaluate(filterModel);
@@ -300,8 +300,8 @@ export class ManageEvaluateService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingContactListForEvaluate)
-      }
+        items: (result.items || []).map(this.mappingContactListForEvaluate),
+      };
     });
   }
 
@@ -309,7 +309,7 @@ export class ManageEvaluateService {
   listEvaluateFromContact(
     contactId: number,
     page: number | string,
-    pageSize: number | string
+    pageSize: number | string,
   ): Observable<PagedResult<ReviewContactList>> {
     const url = `contact/${contactId}/reviews/${page}/${pageSize}`;
     return this.apiService.get(url).map(response => {
@@ -319,8 +319,8 @@ export class ManageEvaluateService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingListReviewContact)
-      }
+        items: (result.items || []).map(this.mappingListReviewContact),
+      };
     });
   }
 
@@ -368,31 +368,31 @@ export class ManageEvaluateService {
     const urlFilterParams = new URLSearchParams();
     urlFilterParams.append(
       'stateProvinceId',
-      filterModel.stateProvinceId ? filterModel.stateProvinceId.toString() : ''
+      filterModel.stateProvinceId ? filterModel.stateProvinceId.toString() : '',
     );
     urlFilterParams.append(
       'districtId',
-      filterModel.districtId ? filterModel.districtId.toString() : ''
+      filterModel.districtId ? filterModel.districtId.toString() : '',
     );
     urlFilterParams.append(
       'communeId',
-      filterModel.communeId ? filterModel.communeId.toString() : ''
+      filterModel.communeId ? filterModel.communeId.toString() : '',
     );
     urlFilterParams.append(
       'compartmentId',
-      filterModel.compartmentId ? filterModel.compartmentId.toString() : ''
+      filterModel.compartmentId ? filterModel.compartmentId.toString() : '',
     );
     urlFilterParams.append(
       'subCompartmentId',
-      filterModel.subCompartmentId ? filterModel.subCompartmentId.toString() : ''
+      filterModel.subCompartmentId ? filterModel.subCompartmentId.toString() : '',
     );
     urlFilterParams.append(
       'plotCode',
-      filterModel.plotCode ? filterModel.plotCode.toString() : ''
+      filterModel.plotCode ? filterModel.plotCode.toString() : '',
     );
     return urlFilterParams;
   }
-  // Mapping cho danh sách đánh giá chủ rừng theo lô 
+  // Mapping cho danh sách đánh giá chủ rừng theo lô
   mappingActorForEvaluate(result: any): EvaluateActorListManager {
     return {
       name: result.name,
@@ -438,14 +438,14 @@ export class ManageEvaluateService {
       },
       reviewCount: result.reviewCount,
       averageRating: result.averageRating,
-    }
+    };
   }
   // Danh sách đánh giá chủ rừng theo lô
   actorListForEvaluate(
     searchTerm: string,
     filterModel: EvaluateActorFilterManager,
     page: number | string,
-    pageSize: number | string
+    pageSize: number | string,
   ): Observable<PagedResult<EvaluateActorListManager>> {
     const url = `forestplotactor/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
     const urlParams = this.createFilterParamsActorForEvaluate(filterModel);
@@ -456,8 +456,8 @@ export class ManageEvaluateService {
         pageSize: result.pageSize,
         pageCount: result.totalPages,
         total: result.totalCount,
-        items: (result.items || []).map(this.mappingActorForEvaluate)
-      }
+        items: (result.items || []).map(this.mappingActorForEvaluate),
+      };
     });
   }
   // Danh sách đánh giá chủ rừng theo lô màn hình Admin có search
@@ -465,7 +465,7 @@ export class ManageEvaluateService {
     searchTerm: Observable<string>,
     filterModel: EvaluateActorFilterManager,
     page: number | string,
-    pageSize: number | string
+    pageSize: number | string,
   ): Observable<PagedResult<EvaluateActorListManager>> {
     const filterUrl = `forestplotactor/filter/${page}/${pageSize}?searchTerm=`;
     return searchTerm
@@ -480,8 +480,8 @@ export class ManageEvaluateService {
             pageSize: result.pageSize,
             pageCount: result.totalPages,
             total: result.totalCount,
-            items: (result.items || []).map(this.mappingActorForEvaluate)
-          }
+            items: (result.items || []).map(this.mappingActorForEvaluate),
+          };
         });
       });
 
@@ -505,7 +505,7 @@ export class ManageEvaluateService {
           key: itemrRole.key,
           code: itemrRole.code,
           text: itemrRole.text,
-        }
+        };
       }) : null,
       type: result.type && {
         id: result.type.id,
@@ -543,7 +543,7 @@ export class ManageEvaluateService {
         return {
           rating: itemAggregateOfRating.rating,
           percent: itemAggregateOfRating.percent,
-        }
+        };
       }) : null,
       reviews: result.reviews ? (result.reviews || []).map(itemReview => {
         return {
@@ -636,9 +636,9 @@ export class ManageEvaluateService {
             compartmentCode: itemReview.compartmentCode,
             subCompartmentCode: itemReview.subCompartmentCode,
             plotCode: itemReview.plotCode,
-          }
+          },
 
-        }
+        };
       }) : null,
       forestPlot: result.forestPlot && {
         stateProvince: result.forestPlot.stateProvince && {
@@ -681,7 +681,7 @@ export class ManageEvaluateService {
       contactName: result.contactName,
       contactPhone: result.contactPhone,
       note: result.note,
-    }
+    };
   }
   // Chi tiết chủ rừng theo lô
   detailAtorForForestPlotId(forestPlotId: number): Observable<DetailActorManagerForest> {

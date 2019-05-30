@@ -13,7 +13,7 @@ namespace _Abstractions.Services.AP
 
         Task<ReviewItemDto> GetReviewAsync(int actorReviewId);
 
-        Task<IPagedResultDto<ReviewItemDto>> GetReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId);
+        Task<IPagedResultDto<ReviewItemDto>> GetReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId, int actorId);
 
         Task<IPagedResultDto<ReviewItemDto>> GetAdminReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId, int actorId);
 

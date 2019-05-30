@@ -170,12 +170,14 @@ Loại 4: ${this.landUseCerts[3].text}`;
             this.FormDetailSpecTree.get('treeSpecName').patchValue(this.treeSpecValue.id);
         });
 
-        this.actorService.getAllActor().subscribe(result => {
-            this.listOfActor = result;
-            this.actorValue = this.listOfActor.find(item => item.id === this.createTreeSpecModel.actor.id);
-            this.FormDetailSpecTree.get('actor').patchValue(this.actorValue.id);
-            this.FormDetailSpecTree.get('actorType').patchValue(this.actorValue.type.name);
-        });
+        setTimeout(() => {
+            this.actorService.getAllActor().subscribe(result => {
+                this.listOfActor = result;
+                this.actorValue = this.listOfActor.find(item => item.id === this.createTreeSpecModel.actor.id);
+                this.FormDetailSpecTree.get('actor').patchValue(this.actorValue.id);
+                this.FormDetailSpecTree.get('actorType').patchValue(this.actorValue.type.name);
+            });
+        }, 100);
 
         this.FormDetailSpecTree.get('conflictSitCode').patchValue(this.createTreeSpecModel.conflictSitCode);
 

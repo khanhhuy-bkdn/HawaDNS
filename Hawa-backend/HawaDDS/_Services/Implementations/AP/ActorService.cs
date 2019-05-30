@@ -129,7 +129,7 @@ namespace _Services.Implementations.AP
                 await DeleteActorAsync(i);
         }
 
-        public async Task<ActorDto> GetForestPlotActorAsync(int forestPlotId)
+        public async Task<ActorDto> GetForestPlotActorAsync(int forestPlotId, int actorId)
         {
             var forestPlot = await _unitOfWork.GetRepository<ICForestPlot>()
                 .GetAllIncluding(
@@ -144,6 +144,7 @@ namespace _Services.Implementations.AP
                 .Include(x => x.APActor.APActorRoles)
                 .ThenInclude(x => x.APRole)
                 .Where(x => x.APActor != null)
+                .Where(x => x.FK_APActorID == actorId)
                 .FirstOrDefaultAsync(x => x.Id == forestPlotId);
 
             return forestPlot.ToActorDto();

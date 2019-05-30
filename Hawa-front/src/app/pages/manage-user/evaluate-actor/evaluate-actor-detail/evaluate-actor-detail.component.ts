@@ -12,9 +12,10 @@ import { PopupComponent } from '../../../../shared/components/popups/popup/popup
 import { AlertService } from '../../../../shared/service/alert.service';
 import {Location} from '@angular/common';
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'evaluate-actor-detail',
   templateUrl: './evaluate-actor-detail.component.html',
-  styleUrls: ['./evaluate-actor-detail.component.scss']
+  styleUrls: ['./evaluate-actor-detail.component.scss'],
 })
 export class EvaluateActorDetailComponent implements OnInit {
   queryParamsSubscription: Subscription;
@@ -29,7 +30,7 @@ export class EvaluateActorDetailComponent implements OnInit {
     private nbDialogService: NbDialogService,
     private lookForInfoService: LookForInfoService,
     private alertService: AlertService,
-    private _location: Location
+    private _location: Location,
   ) { }
 
   ngOnInit() {
@@ -45,9 +46,10 @@ export class EvaluateActorDetailComponent implements OnInit {
     // });
     this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId).switchMap(res1 => {
       this.actorId = res1.id;
-      console.log(this.actorId)
+      // tslint:disable-next-line:no-console
+      console.log(this.actorId);
       this.render(res1);
-      return this.lookForInfoService.getListReviewActorAdmin(this.actorId, this.forestPlotId, 0, 10)
+      return this.lookForInfoService.getListReviewActorAdmin(this.actorId, this.forestPlotId, 0, 10);
     }).subscribe(res2 => {
       this.renderReivew(res2);
     });
@@ -59,7 +61,7 @@ export class EvaluateActorDetailComponent implements OnInit {
 
   render(detailActorManagerForest) {
     this.detailActorManagerForest = detailActorManagerForest;
-    this.detailActorManagerForest.averageRating = +this.detailActorManagerForest.averageRating.toFixed(1)
+    this.detailActorManagerForest.averageRating = +this.detailActorManagerForest.averageRating.toFixed(1);
     this.averageRatingRounding = +this.detailActorManagerForest.averageRating.toFixed(1);
     this.averageRatingRounding = this.roundHalf(this.averageRatingRounding);
     this.detailActorManagerForest.aggregateOfRatings = this.detailActorManagerForest.aggregateOfRatings.reverse();
@@ -79,8 +81,8 @@ export class EvaluateActorDetailComponent implements OnInit {
         context: {
           actor: null,
           actorType: null,
-          forestPlotId: forestPlotId
-        }
+          forestPlotId: forestPlotId,
+        },
       })
       .onClose.subscribe();
   }
@@ -92,9 +94,9 @@ export class EvaluateActorDetailComponent implements OnInit {
   }
 
   detailReviewActor() {
-    this.lookForInfoService.getListReviewActorAdmin(this.actorId ,this.forestPlotId, 0, 10).subscribe(response => {
+    this.lookForInfoService.getListReviewActorAdmin(this.actorId, this.forestPlotId, 0, 10).subscribe(response => {
       this.renderReivew(response);
-    })
+    });
   }
 
   actionEvaluate(action: string, contactReviewId: number) {
@@ -104,20 +106,20 @@ export class EvaluateActorDetailComponent implements OnInit {
           showModel: {
             title: `${action} đánh giá`,
             notices: [
-              `Bạn có chắc muốn ${action} đánh giá này?`
+              `Bạn có chắc muốn ${action} đánh giá này?`,
             ],
             actions: [
               {
                 actionname: 'đồng ý',
                 actionvalue: true,
-                actiontype: 'test'
+                actiontype: 'test',
               },
               {
                 actionname: 'hủy',
                 actionvalue: false,
-                actiontype: 'test'
-              }
-            ]
+                actiontype: 'test',
+              },
+            ],
           },
         },
       })
@@ -132,7 +134,7 @@ export class EvaluateActorDetailComponent implements OnInit {
               },
                 err => {
                   this.alertService.error('Đã xảy ra lỗi! Ẩn đánh giá không thành công.');
-                })
+                });
               break;
             }
             case 'Hiện': {
@@ -143,7 +145,7 @@ export class EvaluateActorDetailComponent implements OnInit {
               },
                 err => {
                   this.alertService.error('Đã xảy ra lỗi! Hiện đánh giá không thành công.');
-                })
+                });
               break;
             }
             case 'Xóa': {
@@ -154,7 +156,7 @@ export class EvaluateActorDetailComponent implements OnInit {
               },
                 err => {
                   this.alertService.error('Đã xảy ra lỗi! Xóa đánh giá không thành công.');
-                })
+                });
               break;
             }
           }
@@ -163,9 +165,10 @@ export class EvaluateActorDetailComponent implements OnInit {
   }
 
   pagedResultChange(pagedResult) {
-    this.lookForInfoService.getListReviewActorAdmin(this.forestPlotId, pagedResult.currentPage, pagedResult.pageSize).subscribe(response => {
+    // tslint:disable-next-line:max-line-length
+    this.lookForInfoService.getListReviewActorAdmin(this.actorId, this.forestPlotId, pagedResult.currentPage, pagedResult.pageSize).subscribe(response => {
       this.renderReivew(response);
-    })
+    });
   }
 
   routerBack() {

@@ -46,10 +46,13 @@ export class ActorPopupComponent implements OnInit {
     this.getInfoActor();
     this.createActorReview.actorId = this.actor.id;
     this.createActorReview.forestPlotId = this.forestPlotId;
-    this.getListReviewsActor();
+    setTimeout(() => {
+      this.getListReviewsActor();
+    }, 100);
+
   }
   getInfoActor() {
-    this.lookForInfoService.viewActorForForestplot(this.forestPlotId).subscribe(actorDetail => {
+    this.lookForInfoService.viewActorForForestplot(this.actor.id, this.forestPlotId).subscribe(actorDetail => {
       this.actorDetail = actorDetail;
       this.averageRating = actorDetail.averageRating ? actorDetail.averageRating.toFixed(1) : 0;
       this.averageRatingRound = Number(this.roundHalf(this.averageRating));
@@ -101,7 +104,7 @@ export class ActorPopupComponent implements OnInit {
 
   getListReviewsActor() {
     this.lookForInfoService
-      .getListReviewActor(this.forestPlotId, 0, this.pagedResult.pageSize)
+      .getListReviewActor(this.actor.id, this.forestPlotId, 0, this.pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
       });
@@ -109,7 +112,7 @@ export class ActorPopupComponent implements OnInit {
 
   pagedResultChange(pagedResult) {
     this.lookForInfoService
-      .getListReviewActor(this.forestPlotId, pagedResult.currentPage, pagedResult.pageSize)
+      .getListReviewActor(this.actor.id, this.forestPlotId, pagedResult.currentPage, pagedResult.pageSize)
       .subscribe(result => {
         this.rerender(result);
       });

@@ -21,7 +21,7 @@ namespace _Abstractions.Services.AP
 
         Task DeleteActorsAsync(IdentitiesDto dto);
 
-        Task<ActorDto> GetForestPlotActorAsync(int forestPlotId);
+        Task<ActorDto> GetForestPlotActorAsync(int forestPlotId, int actorId);
 
         Task<IPagedResultDto<ShortActorDto>> FilterForestPlotActorsAsync(PagingAndSortingRequestDto pagingAndSortingRequestDto, FilterActorDto filterActorDto);
 

@@ -101,7 +101,7 @@ namespace _Services.Implementations.AP
             return actorReviewFromDb.ToReviewItemDto();
         }
 
-        public async Task<IPagedResultDto<ReviewItemDto>> GetReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId)
+        public async Task<IPagedResultDto<ReviewItemDto>> GetReviewsOfForestPlotAsync(PagingRequestDto pagingRequestDto, int forestPlotId, int actorId)
         {
             var extraData = new ExtraDataReviewsDto
             {
@@ -113,7 +113,7 @@ namespace _Services.Implementations.AP
             return await _unitOfWork.GetRepository<APActorReview>()
                 .GetAllIncluding(x => x.APActor, x => x.ADUser, x => x.ICForestPlot)
                 .IncludesForToForestPlot(x => x.ICForestPlot)
-                .Where(x => x.FK_ICForestPlotID == forestPlotId && x.APActorReviewIsHide == false)
+                .Where(x => x.FK_ICForestPlotID == forestPlotId && x.APActorReviewIsHide == false && x.FK_APActorID == actorId)
                 .OrderByDescending(x => x.APActorReviewDate)
                 .GetPagedResultAsync(pagingRequestDto.Page, pagingRequestDto.PageSize, x => x.ToReviewItemDto(), extraData);
         }
