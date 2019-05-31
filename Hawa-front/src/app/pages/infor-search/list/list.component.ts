@@ -69,7 +69,7 @@ export class ListComponent implements OnInit {
     forkJoin(
       this.dataGeneralService.getProvincesNotHidden(),
       // this.dataGeneralService.getTreespecsAll(),
-      this.treeSpecGroupService.getListTreeSpecGroupNoQuery()
+      this.treeSpecGroupService.getListTreeSpecGroupNoQuery(),
     )
       .subscribe(([res1, res3]) => {
         this.stateProvinces = res1;

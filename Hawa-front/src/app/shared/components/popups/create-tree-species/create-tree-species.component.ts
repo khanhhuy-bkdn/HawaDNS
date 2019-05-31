@@ -191,7 +191,6 @@ Loại 4: ${this.landUseCerts[3].text}`;
         this.FormDetailSpecTree.get('reliability').patchValue(reliabilityValue.key);
 
         this.dateValue = new Date(this.FormDetailSpecTree.get('plantingDate').value);
-        console.log(this.dateValue)
     }
 
     getActorType(actor) {
