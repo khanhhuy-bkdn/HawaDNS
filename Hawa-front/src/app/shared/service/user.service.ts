@@ -130,11 +130,13 @@ export class UserService {
         return this.apiService
             .postAuth(route, {
                 userNameOrEmailAddress: username,
-                password: password
+                password: password,
             })
             .map(data => {
-                this.setAuth(data.result);
-                return data.result;
+                setTimeout(() => {
+                    this.setAuth(data.result);
+                    return data.result;
+                }, 100);
             });
     }
 

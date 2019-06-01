@@ -15,6 +15,7 @@ import { TreeSpecGroup } from '../../../shared/model/setting/tree-spec-group/tre
 import { TreeSpecGroupService } from '../../../shared/service/setting/tree-spec-group.service';
 import { GoogleMapComponent } from '../../../shared/components/popups/google-map/google-map.component';
 import { environment } from '../../../../environments/environment';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'list',

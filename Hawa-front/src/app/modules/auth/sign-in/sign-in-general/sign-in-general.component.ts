@@ -106,9 +106,11 @@ export class SignInGeneralComponent implements OnInit, AfterViewInit, OnDestroy 
             this.isSubAttemptAuth = false;
             if (this.savePageToLoginRequiredService.returnPage && this.savePageToLoginRequiredService.returnPage.routerBack) {
               this.isRemoveReturnPage = false;
-              this.router.navigate([`${this.savePageToLoginRequiredService.returnPage.routerBack}`]);
+              setTimeout(() => { this.router.navigate([`${this.savePageToLoginRequiredService.returnPage.routerBack}`]); }, 1000);
             } else {
-              this.router.navigate(['/pages/infor-search/list']);
+              setTimeout(() => {
+                this.router.navigate(['/pages/infor-search/list']);
+              }, 1000);
             }
           }
 

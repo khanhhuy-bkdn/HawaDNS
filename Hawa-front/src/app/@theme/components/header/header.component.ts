@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private nbDialogService: NbDialogService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private dataGeneralService: DataGeneralService
+    private dataGeneralService: DataGeneralService,
   ) {
   }
 
@@ -85,6 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Click out
     document.addEventListener('click', e => {
       const elem = e.target as HTMLElement;
+      // tslint:disable-next-line:max-line-length
       if (!elem.matches('#adminmenu') && !elem.matches('#carret-down') && !elem.matches('#adminname') && !elem.matches('#carret-down-icon') && !elem.matches('#adminavatar')) {
         this.isShowContextMenu = false;
       }
@@ -97,13 +98,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else if (title === 'Thông tin người dùng') {
       this.manageBuyerService.currentUserInfo().subscribe(currentUser => {
         const currentUserType = currentUser.type;
-        if (currentUserType && (currentUserType.code == 'Personal' || currentUserType.key == 'Personal')) {
-          this.router.navigate(['/pages/infor-user/personal'])
+        if (currentUserType && (currentUserType.code === 'Personal' || currentUserType.key === 'Personal')) {
+          this.router.navigate(['/pages/infor-user/personal']);
         }
-        if (currentUserType && (currentUserType.code == 'Organization' || currentUserType.key == 'Organization')) {
-          this.router.navigate(['/pages/infor-user/organization'])
+        if (currentUserType && (currentUserType.code === 'Organization' || currentUserType.key === 'Organization')) {
+          this.router.navigate(['/pages/infor-user/organization']);
         }
-      })
+      });
     }
   }
 
@@ -125,11 +126,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.manageBuyerService.currentUserInfo().subscribe(currentUser => {
       this.isShowContextMenu = false;
       const currentUserType = currentUser.type;
-      if (currentUserType && (currentUserType.code == 'Personal' || currentUserType.key == 'Personal')) {
-        this.router.navigate(['/pages/infor-user/personal'])
+      if (currentUserType && (currentUserType.code === 'Personal' || currentUserType.key === 'Personal')) {
+        this.router.navigate(['/pages/infor-user/personal']);
       }
-      if (currentUserType && (currentUserType.code == 'Organization' || currentUserType.key == 'Organization')) {
-        this.router.navigate(['/pages/infor-user/organization'])
+      if (currentUserType && (currentUserType.code === 'Organization' || currentUserType.key === 'Organization')) {
+        this.router.navigate(['/pages/infor-user/organization']);
       }
     });
     setTimeout(_ => {
@@ -172,6 +173,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   homeInforSearch() {
+    // tslint:disable-next-line:max-line-length
     // if (this.sessionService.currentSession && this.sessionService.currentSession.role && this.sessionService.currentSession.role === 'Admin') {
     //   this.router.navigate(['/pages/account-approval']);
     // } else {
@@ -188,7 +190,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.nbDialogService
       .open(CommingSoonThemComponent, {
         context: {
-        }
+        },
       })
       .onClose.subscribe();
   }
