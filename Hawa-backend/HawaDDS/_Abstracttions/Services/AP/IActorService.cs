@@ -25,6 +25,8 @@ namespace _Abstractions.Services.AP
 
         Task<IPagedResultDto<ShortActorDto>> FilterForestPlotActorsAsync(PagingAndSortingRequestDto pagingAndSortingRequestDto, FilterActorDto filterActorDto);
 
-        ActorDto[] GetAll(string searchTerm);
+        ActorDto[] GetAll(string searchTerm); 
+
+        Task<ActorDto> GetForestPlotActorAdminAsync(int forestPlotId);
     }
 }

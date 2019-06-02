@@ -183,5 +183,17 @@ namespace _Hawa.WebApi.Controllers
 
             return Success(result);
         }
+
+        /// <summary>
+        ///     Chi tiết chủ rừng theo lô Admin
+        /// </summary>
+        [HttpGet("actor/forestplot/{forestPlotId}")]
+        [SwaggerResponse(200, "", typeof(ActorDto))]
+        public async Task<IActionResult> GetForestPlotActorAdminAsync([FromRoute] int forestPlotId)
+        {
+            var result = await _actorService.GetForestPlotActorAdminAsync(forestPlotId);
+
+            return Success(result);
+        }
     }
 }

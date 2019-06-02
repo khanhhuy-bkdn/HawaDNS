@@ -36,6 +36,7 @@ export class EvaluateActorDetailComponent implements OnInit {
   ngOnInit() {
     this.queryParamsSubscription = this.activatedRoute.params.subscribe(data => {
       this.forestPlotId = data.id;
+      console.log(this.detailActorManagerForest)
     });
     // forkJoin(
     //   this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId),

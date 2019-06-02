@@ -130,7 +130,9 @@ namespace _Services.ConvertHelpers
                     Name = entity.APActor.APActorName,
                     Website = entity.APActor.APActorWebsite,
                     Avatar = entity.APActor.APActorAvatar.ToImageUrl(),
-                    AverageRating = entity.APActorReviews.IsNullOrEmpty() ? 0 : (decimal)entity.APActorReviews.Sum(x => x.APActorReviewRating) / entity.APActorReviews.Count,
+                    //AverageRating = entity.APActorReviews.IsNullOrEmpty() ? 0 : (decimal)entity.APActorReviews.Sum(x => x.APActorReviewRating) / entity.APActorReviews.Count,
+                    AverageRating = entity.APActorReviews.Where(o => o.FK_APActorID == entity.FK_APActorID).Count() > 0
+                    ? entity.APActorReviews.ToAverageRating(entity) : 5,
                     AggregateOfRatings = entity.APActorReviews.ToArray().ToAggregateOfRatings(),
                     Reviews = entity.APActorReviews.ConvertArray(x => x.ToReviewItemDto()),
                     AcronymName = entity.APActor.APActorAcronymName,

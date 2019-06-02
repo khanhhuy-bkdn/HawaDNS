@@ -150,6 +150,26 @@ namespace _Services.Implementations.AP
             return forestPlot.ToActorDto();
         }
 
+        public async Task<ActorDto> GetForestPlotActorAdminAsync(int forestPlotId)
+        {
+            var forestPlot = await _unitOfWork.GetRepository<ICForestPlot>()
+                .GetAllIncluding(
+                    x =>
+                        x.APActorReviews,
+                    x => x.GECommunes,
+                    x => x.GEDistrict,
+                    x => x.GEStateProvince,
+                    x => x.GESubCompartment,
+                    x => x.GECompartment)
+                .IncludesForToActor(x => x.APActor)
+                .Include(x => x.APActor.APActorRoles)
+                .ThenInclude(x => x.APRole)
+                .Where(x => x.APActor != null)
+                .FirstOrDefaultAsync(x => x.Id == forestPlotId);
+
+            return forestPlot.ToActorDto();
+        }
+
         public async Task<IPagedResultDto<ShortActorDto>> FilterForestPlotActorsAsync(PagingAndSortingRequestDto pagingAndSortingRequestDto, FilterActorDto filterDto)
         {
             var forestPlotIds = await _unitOfWork.GetRepository<ICForestPlot>()
