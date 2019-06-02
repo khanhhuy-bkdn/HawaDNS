@@ -46,9 +46,9 @@ export class ActorPopupComponent implements OnInit {
     this.getInfoActor();
     this.createActorReview.actorId = this.actor.id;
     this.createActorReview.forestPlotId = this.forestPlotId;
-    setTimeout(() => {
-      this.getListReviewsActor();
-    }, 100);
+    // setTimeout(() => {
+    //   this.getListReviewsActor();
+    // }, 500);
 
   }
   getInfoActor() {
@@ -58,6 +58,7 @@ export class ActorPopupComponent implements OnInit {
       this.averageRatingRound = Number(this.roundHalf(this.averageRating));
       this.change = Number(this.roundHalf(this.averageRating));
       this.aggregateOfRatings = actorDetail.aggregateOfRatings ? actorDetail.aggregateOfRatings.reverse() : [];
+      this.getListReviewsActor();
     });
   }
 

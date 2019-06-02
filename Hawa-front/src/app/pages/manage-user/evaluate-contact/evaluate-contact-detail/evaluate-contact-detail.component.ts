@@ -41,19 +41,22 @@ export class EvaluateContactDetailComponent implements OnInit, OnDestroy {
     });
     this.manageEvaluateService.listEvaluateFromContact(this.contactId, 0, 10).subscribe(response => {
       this.render(response);
-    });
-    this.contactService.detailContact(this.contactId).subscribe(response => {
-      this.contacDetailItem = response;
-      this.contacDetailItem.averageRating = +this.contacDetailItem.averageRating.toFixed(1);
-      this.averageRatingRounding = this.roundHalf(response.averageRating);
-      this.contacDetailItem.aggregateOfRatings = this.contacDetailItem.aggregateOfRatings.reverse();
-      this.contacDetailItem.aggregateOfRatings.forEach(item => {
-        item.percent = +item.percent.toFixed(1);
+
+      this.contactService.detailContact(this.contactId).subscribe(response => {
+        this.contacDetailItem = response;
+        this.contacDetailItem.averageRating = +this.contacDetailItem.averageRating.toFixed(1);
+        this.averageRatingRounding = this.roundHalf(response.averageRating);
+        this.contacDetailItem.aggregateOfRatings = this.contacDetailItem.aggregateOfRatings.reverse();
+        this.contacDetailItem.aggregateOfRatings.forEach(item => {
+          item.percent = +item.percent.toFixed(1);
+        });
+
+        this.lookForInfoService.getListReviewContactAdmin(this.contactId, 0, 10).subscribe(response => {
+          this.pagedResultComment = response;
+        });
       });
     });
-    this.lookForInfoService.getListReviewContactAdmin(this.contactId, 0, 10).subscribe(response => {
-      this.pagedResultComment = response;
-    });
+    
   }
 
   render(pagedResult) {

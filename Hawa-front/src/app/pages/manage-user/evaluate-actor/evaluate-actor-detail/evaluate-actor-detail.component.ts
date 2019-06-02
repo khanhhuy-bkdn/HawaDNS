@@ -36,7 +36,6 @@ export class EvaluateActorDetailComponent implements OnInit {
   ngOnInit() {
     this.queryParamsSubscription = this.activatedRoute.params.subscribe(data => {
       this.forestPlotId = data.id;
-      console.log(this.detailActorManagerForest)
     });
     // forkJoin(
     //   this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId),
@@ -48,7 +47,6 @@ export class EvaluateActorDetailComponent implements OnInit {
     this.manageEvaluateService.detailAtorForForestPlotId(this.forestPlotId).switchMap(res1 => {
       this.actorId = res1.id;
       // tslint:disable-next-line:no-console
-      console.log(this.actorId);
       this.render(res1);
       return this.lookForInfoService.getListReviewActorAdmin(this.actorId, this.forestPlotId, 0, 10);
     }).subscribe(res2 => {
