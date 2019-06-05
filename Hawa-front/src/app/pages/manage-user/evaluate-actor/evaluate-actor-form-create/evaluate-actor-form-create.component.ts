@@ -13,11 +13,11 @@ import CustomValidator from '../../../../helpers/bys-validator.helper';
 import { isFulfilled } from 'q';
 
 @Component({
-  selector: 'evaluate-actor-form',
-  templateUrl: './evaluate-actor-form.component.html',
-  styleUrls: ['./evaluate-actor-form.component.scss']
+  selector: 'evaluate-actor-form-create',
+  templateUrl: './evaluate-actor-form-create.component.html',
+  styleUrls: ['./evaluate-actor-form-create.component.scss']
 })
-export class EvaluateActorFormComponent implements OnInit {
+export class EvaluateActorFormCreateComponent implements OnInit {
   formErrors = {
     name: '',
     phone: '',
@@ -46,28 +46,17 @@ export class EvaluateActorFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.queryParamsSubscription = this.activatedRoute.params.subscribe(data => {
-      this.actorId = +data.id;
-    });
-    const queryparamForestPlotId = this.activatedRoute.snapshot.queryParamMap.get('forestPlotId');
-    if (queryparamForestPlotId) {
-        this.forestPlotId = +queryparamForestPlotId;
-    }
     this.loading = true;
-    this.lookForInfoService.viewActor(this.actorId).subscribe(res1 => {
-      this.actor = res1;
-      this.createForm();
-      this.loading = false;
-      this.mapDistrictCommune();
-    });
+    this.createForm();
+    this.loading = false;
+    this.mapDistrictCommune();
     this.dataGeneralService.getMasterData.subscribe(result => {
       this.actorTypes = result.actorTypes;
-    })
+    });
   }
 
   createForm() {
     this.actorForm = this.fb.group({
-      id: this.actor.id,
       name: [this.actor.name, CustomValidator.required],
       email: [this.actor.email, CustomValidator.email],
       phone: [this.actor.phone, [CustomValidator.required, CustomValidator.phoneNumber]],
@@ -207,13 +196,9 @@ export class EvaluateActorFormComponent implements OnInit {
   submitForm() {
     this.isSubmit = true;
     if (this.validateForm()) {
-      this.lookForInfoService.editActor(this.actorForm.value).subscribe(response => {
-        this.alertService.success('Chỉnh sửa thông tin chủ rừng thành công.');
-        if (this.forestPlotId) {
-          this.router.navigate([`/pages/evaluate-actor/detail/${this.forestPlotId}`]);
-        } else {
-          this.router.navigate([`/pages/evaluate-actor/list/${this.actorId}`]);
-        }
+      this.lookForInfoService.createActor(this.actorForm.value).subscribe(response => {
+        this.alertService.success('Tạo mới thông tin chủ rừng thành công.');
+        this.router.navigate([`/pages/evaluate-actor/list-actor`]);
       }, err => {
         this.alertService.error('Đã xảy ra lỗi. Vui lòng thử lại');
       });

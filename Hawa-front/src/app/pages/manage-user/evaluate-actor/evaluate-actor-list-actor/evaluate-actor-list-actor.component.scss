@@ -1,0 +1,85 @@
+.wrapper {
+  padding: 2.25rem 2.25rem 0.75rem;
+  position: relative;
+}
+
+table {
+
+  th,
+  td {
+    padding: 0.4rem 0.5rem !important;
+  }
+
+  thead {
+    background-color: #008a77;
+    color: #ffffff;
+
+    tr {
+      height: 3.5rem;
+    }
+  }
+
+  tbody {
+    tr {
+      height: 3.5rem;
+
+      &:nth-child(even) {
+        background-color: #f6f7f7;
+      }
+    }
+  }
+}
+
+.view--detail {
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 15px;
+  font-size: .8rem;
+}
+
+.width-5 {
+  width: 80px;
+}
+
+.action-bar {
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+  .search-action {
+    &__input {
+      height: 100%;
+      max-height: 35px;
+    }
+
+    &__submit {
+      width: 40px;
+      padding: 0;
+    }
+  }
+}
+.star-high{
+  color: #ffc01e;
+}
+.no-outline{
+  outline: none;
+}
+
+.display--none{
+  display: none;
+}
+
+.search-bar {
+  .search-action {
+    &__input {
+      background-color: #ffffff;
+      width: 25rem;
+      max-width: 25rem;
+    }
+
+    &__submit {
+      max-width: 3rem;
+      padding: 0.5rem 1.5rem;
+    }
+  }
+}

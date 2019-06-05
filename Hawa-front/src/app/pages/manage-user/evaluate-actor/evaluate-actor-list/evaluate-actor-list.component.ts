@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FilterEvaluateContactListManager } from '../../../../shared/model/evaluate-contact/filter-evaluate-contact-list-manager.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ManageEvaluateService } from '../../../../shared/service/manage-user-account/manage-evaluate.service';
 import { DataGeneralService } from '../../../../shared/service/data-general.service';
 import { AdministrativeUnit } from '../../../../shared/model/dictionary/administrative-unit';
 import { EvaluateActorFilterManager } from '../../../../shared/model/evaluate-actor/evaluate-actor-filter-manager.model';
-import { EMPTY, BehaviorSubject, Observable } from 'rxjs';
+import { EMPTY, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ThemeSettingsComponent } from '../../../../@theme/components';
 import { PagedResult } from '../../../../shared/model/dictionary/paging-result.model';
 import { EvaluateActorListManager } from '../../../../shared/model/evaluate-actor/evaluate-actor-list-manager.model';
@@ -21,6 +21,7 @@ import { ItemUnit } from '../../../../shared/model/dictionary/item-unit.model';
 })
 export class EvaluateActorListComponent implements OnInit {
   @ViewChild('importDataActor') importDataActor;
+  queryParamsSubscription: Subscription;
   filterModel = new EvaluateActorFilterManager();
   stateProvinces: AdministrativeUnit[];
   districts: AdministrativeUnit[];
@@ -32,11 +33,12 @@ export class EvaluateActorListComponent implements OnInit {
   searchTerm$ = new BehaviorSubject<string>('');
   isOnInit = false;
   loadingtable = false;
-
+  actorId: any;
   arrayBuffer: any;
   currentRow: number;
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private manageEvaluateService: ManageEvaluateService,
     private dataGeneralService: DataGeneralService,
     private importDataActorService: ImportDataActorService,
@@ -44,6 +46,9 @@ export class EvaluateActorListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.queryParamsSubscription = this.activatedRoute.params.subscribe(data => {
+      this.actorId = data.id;
+    });
     if (this.manageEvaluateService.filterModelListActor) {
       this.filterModel.stateProvinceId = this.manageEvaluateService.filterModelListActor.stateProvinceId;
       this.filterModel.districtId = this.manageEvaluateService.filterModelListActor.districtId;
@@ -106,11 +111,6 @@ export class EvaluateActorListComponent implements OnInit {
       .subscribe(dataSubCompartments => {
         this.subCompartments = dataSubCompartments;
       })
-    // this.manageEvaluateService.actorListForEvaluate(this.filterModel,
-    //   this.manageEvaluateService.currentPageActor ? this.manageEvaluateService.currentPageActor : 0,
-    //   this.manageEvaluateService.pageSizeActor ? this.manageEvaluateService.pageSizeActor : 10).subscribe(response => {
-    //     this.render(response);
-    //   })
 
     if (this.manageEvaluateService.pageSizeActor) {
       this.pagedResult.pageSize = this.manageEvaluateService.pageSizeActor
@@ -122,21 +122,13 @@ export class EvaluateActorListComponent implements OnInit {
       distinctUntilChanged()
     ).subscribe(keyword => {
       this.loadingtable = true;
-      this.manageEvaluateService.actorListForEvaluate(this.searchTerm$.value, this.filterModel,
+      this.manageEvaluateService.actorListForEvaluate(this.actorId, this.searchTerm$.value, this.filterModel,
         (!this.isOnInit && this.manageEvaluateService.currentPageActor) ? this.manageEvaluateService.currentPageActor : 0,
         this.pagedResult.pageSize ? this.pagedResult.pageSize : 10).subscribe(response => {
           this.render(response);
         })
       this.isOnInit = true;
     });
-
-    // this.manageEvaluateService.actorListForEvaluateSearchKeyWord(
-    //   this.searchTerm$, this.filterModel,
-    //   this.manageEvaluateService.currentPageActor ? this.manageEvaluateService.currentPageActor : 0,
-    //   this.manageEvaluateService.pageSizeActor ? this.manageEvaluateService.pageSizeActor : 10
-    // ).subscribe(response => {
-    //   this.render(response);
-    // });
   }
 
   render(pagedResult) {
@@ -212,6 +204,7 @@ export class EvaluateActorListComponent implements OnInit {
   filter() {
     this.loadingtable = true;
     this.manageEvaluateService.actorListForEvaluate(
+      this.actorId,
       this.searchTerm$.value,
       this.filterModel
       , this.pagedResult && this.pagedResult.currentPage ? this.pagedResult.currentPage : 0
@@ -231,7 +224,7 @@ export class EvaluateActorListComponent implements OnInit {
   }
 
   pagedResultChange(pagedResult) {
-    this.manageEvaluateService.actorListForEvaluate(this.searchTerm$.value, this.filterModel, pagedResult.currentPage, pagedResult.pageSize).subscribe(response => {
+    this.manageEvaluateService.actorListForEvaluate(this.actorId, this.searchTerm$.value, this.filterModel, pagedResult.currentPage, pagedResult.pageSize).subscribe(response => {
       this.render(response);
     })
   }
@@ -244,7 +237,7 @@ export class EvaluateActorListComponent implements OnInit {
           this.loading = true;
           this.importDataActorService.importDataActor(fileList[0]).subscribe(response => {
             // reload manager actor
-            this.manageEvaluateService.actorListForEvaluate(this.searchTerm$.value, this.filterModel, this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(response => {
+            this.manageEvaluateService.actorListForEvaluate(this.actorId, this.searchTerm$.value, this.filterModel, this.pagedResult.currentPage, this.pagedResult.pageSize).subscribe(response => {
               this.render(response);
             })
             // alert message

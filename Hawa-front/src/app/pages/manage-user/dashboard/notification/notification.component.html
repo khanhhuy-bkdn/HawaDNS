@@ -38,7 +38,7 @@
             Admin
           </span> -->
           <img src="assets/images/clock-circular-outline.svg" alt="" width="12px" class="mr-2 pb-1">
-          <span>{{(item?.createdDate * 1000) | amCalendar}}</span>
+          <span>{{(item?.createdDate * 1000) | date:'dd/MM/yyyy HH:mm': '+0000'}}</span>
         </div>
       </div>
     </ng-container>

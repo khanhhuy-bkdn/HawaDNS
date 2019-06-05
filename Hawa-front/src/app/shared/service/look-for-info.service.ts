@@ -561,6 +561,39 @@ export class LookForInfoService {
     return this.apiService.post(url, requestModel);
   }
 
+  createActor(valueForm: any) {
+    const url = `actor/create`;
+    const imageName = valueForm.avatar && valueForm.avatar.largeSizeUrl.split('/');
+    const requestModel = {
+      actorType: valueForm.type.name,
+      actorRoles: valueForm.actorRoles ? valueForm.actorRoles.map(item => item.key) : [],
+      name: valueForm.name,
+      taxNumber: null,
+      acronymName: valueForm.acronymName,
+      representative: valueForm.representative,
+      phone: valueForm.phone,
+      fax: valueForm.fax,
+      website: valueForm.website,
+      stateProvinceID: +(valueForm.stateProvince && valueForm.stateProvince.key),
+      districtID: +(valueForm.district && valueForm.district.key),
+      communeID: +(valueForm.commune && valueForm.commune.key),
+      communeCode: valueForm.commune && valueForm.commune.code,
+      districtCode: valueForm.district && valueForm.district.code,
+      stateProvinceCode: valueForm.stateProvince && valueForm.stateProvince.code,
+      houseNumber: valueForm.houseNumber,
+      address: valueForm.address,
+      identityCard: valueForm.identityCard,
+      email: valueForm.email,
+      avartar: imageName ? imageName[imageName.length - 1] : null,
+      actorTypeCode: valueForm.type && valueForm.type.code,
+      actorTypeID: valueForm.type && valueForm.type.id,
+      contactName: valueForm.contactName,
+      contactPhone: valueForm.contactPhone,
+      note: valueForm.note,
+    };
+    return this.apiService.post(url, requestModel);
+  }
+
   // Mapping Chi tiết chủ rừng theo lô
   mappingActorToForesplot(result: any): ActorForesplot {
     return {

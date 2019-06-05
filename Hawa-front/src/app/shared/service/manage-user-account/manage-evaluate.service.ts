@@ -9,6 +9,8 @@ import { ListEvaluateContact } from '../../model/evaluate-contact/list-evaluate-
 import { EvaluateActorFilterManager } from '../../model/evaluate-actor/evaluate-actor-filter-manager.model';
 import { EvaluateActorListManager } from '../../model/evaluate-actor/evaluate-actor-list-manager.model';
 import { DetailActorManagerForest } from '../../model/evaluate-actor/detail-actor-manager-forest.model';
+import { ActorFilterManager } from '../../model/actor/actor-filter-manager.model';
+import { ActorGenModel } from '../../model/actor/actor-gen.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +23,13 @@ export class ManageEvaluateService {
   filterModelListActor = new EvaluateActorFilterManager();
   currentPageActor = null;
   pageSizeActor = null;
+  filterModelListActorReview = new ActorFilterManager();
   constructor(
     private apiService: ApiService,
   ) {
     this.filterModelListContact = null;
     this.filterModelListActor = null;
+    this.filterModelListActorReview = null;
   }
   // Create param url cho Danh sách đánh giá liên hệ gián tiếp
   createFilterParamsListReviewContact(filterModel: FilterEvaluateContactListManager): URLSearchParams {
@@ -442,12 +446,13 @@ export class ManageEvaluateService {
   }
   // Danh sách đánh giá chủ rừng theo lô
   actorListForEvaluate(
+    actorId: number | string,
     searchTerm: string,
     filterModel: EvaluateActorFilterManager,
     page: number | string,
     pageSize: number | string,
   ): Observable<PagedResult<EvaluateActorListManager>> {
-    const url = `forestplotactor/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
+    const url = `forestplotactor/${actorId}/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
     const urlParams = this.createFilterParamsActorForEvaluate(filterModel);
     return this.apiService.get(url, urlParams).map(response => {
       const result = response.result;
@@ -462,6 +467,7 @@ export class ManageEvaluateService {
   }
   // Danh sách đánh giá chủ rừng theo lô màn hình Admin có search
   actorListForEvaluateSearchKeyWord(
+    actorId: number | string,
     searchTerm: Observable<string>,
     filterModel: EvaluateActorFilterManager,
     page: number | string,
@@ -690,6 +696,110 @@ export class ManageEvaluateService {
       const result = response.result;
       return this.mappingDetailAtorForForestPlotId(result);
     });
+  }
+
+  // Danh sách đánh giá chủ rừng
+  actorList(
+    searchTerm: string,
+    filterModel: ActorFilterManager,
+    page: number | string,
+    pageSize: number | string,
+  ): Observable<PagedResult<ActorGenModel>> {
+    const url = `actor/filter/${page}/${pageSize}?searchTerm=${searchTerm}`;
+    const urlParams = this.createFilterParamsActor(filterModel);
+    return this.apiService.get(url, urlParams).map(response => {
+      const result = response.result;
+      return {
+        currentPage: result.pageIndex,
+        pageSize: result.pageSize,
+        pageCount: result.totalPages,
+        total: result.totalCount,
+        items: (result.items || []).map(this.mappingActor),
+      };
+    });
+  }
+
+  // Chủ rừng
+  // create params cho danh sách đánh giá chủ rừng
+  createFilterParamsActor(filterModel: ActorFilterManager): URLSearchParams {
+    const urlFilterParams = new URLSearchParams();
+    urlFilterParams.append(
+      'actorType',
+      filterModel.actorType ? filterModel.actorType.toString() : '',
+    );
+    urlFilterParams.append(
+      'stateProvinceId',
+      filterModel.stateProvinceId ? filterModel.stateProvinceId.toString() : '',
+    );
+    urlFilterParams.append(
+      'districtId',
+      filterModel.districtId ? filterModel.districtId.toString() : '',
+    );
+    urlFilterParams.append(
+      'communeId',
+      filterModel.communeId ? filterModel.communeId.toString() : '',
+    );
+    urlFilterParams.append(
+      'actorRoleId',
+      filterModel.actorRoleId ? filterModel.actorRoleId.toString() : '',
+    );
+    urlFilterParams.append(
+      'status',
+      filterModel.status ? filterModel.status.toString() : '',
+    );
+    return urlFilterParams;
+  }
+
+  // Mapping model thông tin chi tiết chủ rừng
+  mappingActor(result: any): ActorGenModel {
+    return {
+      id: result.id,
+      name: result.name,
+      email: result.email,
+      phone: result.phone,
+      website: result.website,
+      avatar: result.avatar && {
+        guid: result.avatar.guid,
+        thumbSizeUrl: result.avatar.thumbSizeUrl,
+        largeSizeUrl: result.avatar.largeSizeUrl,
+      },
+      roles: result.roles ? result.roles.map(item => {
+        return {
+          key: item.key,
+          code: item.code,
+          text: item.text,
+        };
+      }) : null,
+      type: result.type && {
+        id: result.type.id,
+        name: result.type.name,
+        code: result.type.code,
+        acronymName: result.type.acronymName,
+      },
+      acronymName: result.acronymName,
+      fax: result.fax,
+      address: result.address,
+      stateProvince: result.stateProvince && {
+        key: result.stateProvince.key,
+        code: result.stateProvince.code,
+        text: result.stateProvince.text,
+      },
+      district: result.district && {
+        key: result.district.key,
+        code: result.district.code,
+        text: result.district.text,
+      },
+      commune: result.commune && {
+        key: result.commune.key,
+        code: result.commune.code,
+        text: result.commune.text,
+      },
+      status: result.status && {
+        key: result.status.key,
+        code: result.status.code,
+        text: result.status.text,
+      },
+    };
   }
 
 }

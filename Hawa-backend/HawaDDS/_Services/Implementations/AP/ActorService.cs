@@ -175,6 +175,7 @@ namespace _Services.Implementations.AP
             var forestPlotIds = await _unitOfWork.GetRepository<ICForestPlot>()
                 .GetAll()
                 .SearchByFields(filterDto.SearchTerm, x => x.APActor.APActorName)
+                .Where(x => x.FK_APActorID == filterDto.ActorId)
                 .Where(x => x.APActor != null)
                 .WhereIf(filterDto.StateProvinceID > 0, x => x.FK_GEStateProvinceID == filterDto.StateProvinceID)
                 .WhereIf(filterDto.DistrictID > 0, x => x.FK_GEDistrictID == filterDto.DistrictID)
@@ -255,7 +256,7 @@ namespace _Services.Implementations.AP
                     x => x.APActorEmail,
                     x => x.APActorPhone)
                 .WhereIf(filter.ActorRoleId.HasValue, x => x.APActorRoles.Any(y => y.FK_APRoleID == filter.ActorRoleId))
-                .WhereIf(filter.Status.IsNullOrWhiteSpace(), x => x.APActorStatus == filter.Status)
+                //.WhereIf(filter.Status.IsNullOrWhiteSpace(), x => x.APActorStatus == filter.Status)
                 .WhereIf(filter.StateProvinceID.HasValue, x => x.FK_GEStateProvinceID == filter.StateProvinceID)
                 .WhereIf(filter.DistrictID.HasValue, x => x.FK_GEDistrictID == filter.DistrictID)
                 .WhereIf(filter.CommuneID.HasValue, x => x.FK_GECommuneID == filter.CommuneID);

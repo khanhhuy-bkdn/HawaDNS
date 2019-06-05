@@ -1,0 +1,124 @@
+<div class="wrapper">
+  <h4 class="text-uppercase font-weight-bold">Quản lý chủ rừng</h4>
+
+  <div class="search-bar d-flex flex-row-reverse">
+    <div class="ml-1">
+        <button nbButton type="button" class="cursor-pointer text-uppercase button__save ml-1" [routerLink]="['/pages/evaluate-actor/create-form']">
+        Tạo mới
+      </button>
+      <!-- <button nbButton type="button" class="cursor-pointer" (click)="importDataActor.click()">Import dữ liệu chủ rừng</button>
+      <input type="file" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        class="display--none" (change)="importDataActorFuc($event)" #importDataActor /> -->
+    </div>
+    <div class="search-action d-flex">
+      <input nbInput class="search-action__input input-height--36" type="text" placeholder="Tìm kiếm theo tên chủ rừng"
+        (keyup)="searchTerm$.next($event.target.value)" [value]="searchTerm$.value"/>
+      <button nbButton type="button" class="cursor-pointer search-action__submit d-flex justify-content-center">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="action-bar shadow-box mt-3 p-3 d-flex flex-wrap justify-content-between bg-white">
+    <div class="action-menu d-flex">
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="province">Tỉnh/Thành phố</label>
+        <select class="select-control" name="province" id="province" [(ngModel)]="filterModel.stateProvinceId" (change)="getDistricts($event.target.value)">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let province of stateProvinces" [value]="province.key">{{ province.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="district">Quận/Huyện</label>
+        <select class="select-control" name="district" id="district" [(ngModel)]="filterModel.districtId" (change)="getWards($event.target.value)"
+          [disabled]="!filterModel.stateProvinceId || filterModel.stateProvinceId === 'null'" [class.not-allowed]="!filterModel.stateProvinceId || filterModel.stateProvinceId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let district of districts" [value]="district.key">{{ district.text }}</option>
+        </select>
+      </div>
+      <div class="action-menu__item mr-3 d-flex flex-column">
+        <label for="ward">Phường/Xã</label>
+        <select class="select-control" name="ward" id="ward" [(ngModel)]="filterModel.communeId" (change)="getCompartments($event.target.value)"
+          [disabled]="!filterModel.districtId || filterModel.districtId === 'null'" [class.not-allowed]="!filterModel.districtId || filterModel.districtId === 'null'">
+          <option [value]="null">Tất cả</option>
+          <option *ngFor="let ward of communes" [value]="ward.key">{{ ward.text }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="action-button d-flex flex-row-reverse align-items-end mt-3">
+      <button nbButton type="button" class="abort-bg ml-1 cursor-pointer" (click)="clearFilter()">xóa lọc</button>
+      <button nbButton type="button" (click)="filter()" class="cursor-pointer">lọc</button>
+    </div>
+  </div>
+
+  <div class="mt-3 shadow-box list-user">
+    <div class="">
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th class="text-uppercase index-checkbox">
+              <span class="pl-3">stt</span>
+            </th>
+            <th>
+              <span>Chủ rừng</span>
+              <!-- (click)="sortName.click()" -->
+            </th>
+            <!-- (click)="sortEvaluator.click()" -->
+            <th>
+              <span>Tỉnh/Thành phố</span>
+            </th>
+            <th>
+              <span>Quận/Huyện</span>
+            </th>
+            <th>
+              <span>Phường/Xã</span>
+            </th>
+            <th class="text-center modify-manipulation width-5">
+              <div class="text-center">
+                Thao tác
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of pagedResult.items; let i = index">
+            <td class="index-checkbox">
+              <span class="pl-3">{{i+1}}</span>
+            </td>
+            <td [title]="item?.name ? item?.name : ''" class="text-truncate ">
+              {{item?.name}}
+            </td>
+            <td [title]="item?.stateProvince?.text ? item?.stateProvince?.text : ''" class="text-truncate ">
+              {{item?.stateProvince?.text}}
+            </td>
+            <td [title]="item?.district?.text ? item?.district?.text : ''" class="text-truncate ">
+              {{item?.district?.text}}
+            </td>
+            <td [title]="item?.commune?.text ? item?.commune?.text : ''" class="text-truncate ">
+              {{item?.commune?.text}}
+            </td>
+            <td class="text-truncate text-center">
+              <div [title]="'Chi tiết'" class="text-center" (click)="viewDetail(item?.id)">
+                <img class="cursor-pointer" src="assets/images/icon-view.svg" alt="">
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="pagedResult && pagedResult.items && pagedResult.items.length == 0">
+            <td colspan="11">
+              <h6 class="mb-0 text-center">Không có dữ liệu</h6>
+            </td>
+          </tr>
+          <loading *ngIf="loadingtable"></loading>
+        </tbody>
+      </table>
+    </div>
+    <div class="w-100 p-4 mt-4">
+      <app-pagination [(pagedResult)]="pagedResult" (pagedResultChange)="pagedResultChange($event)"></app-pagination>
+    </div>
+  </div>
+  <!-- <loading *ngIf="loading"></loading> -->
+
+</div>
+
+<ngx-loading [show]="loading" [config]="{backdropBorderRadius: '10px',
+    primaryColour: '#008A77', secondaryColour: '#008A77', tertiaryColour: '#008A77' }"></ngx-loading>

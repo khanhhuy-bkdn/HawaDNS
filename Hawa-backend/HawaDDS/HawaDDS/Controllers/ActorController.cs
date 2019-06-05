@@ -135,10 +135,11 @@ namespace _Hawa.WebApi.Controllers
         /// <summary>
         ///     Danh sách chủ rừng theo lô (Admin quản lý)
         /// </summary>
-        [HttpGet("forestplotactor/filter/{page:int}/{pageSize:int}")]
+        [HttpGet("forestplotactor/{actorId:int}/filter/{page:int}/{pageSize:int}")]
         [SwaggerResponse(200, "", typeof(IPagedResultDto<ShortActorDto>))]
         [AllowAnonymous]
         public async Task<IActionResult> FilterForestPlotActor(
+            [FromRoute] int actorId,
             [FromRoute] int page,
             [FromRoute] int pageSize,
             [FromQuery] int? stateProvinceId,
@@ -165,7 +166,8 @@ namespace _Hawa.WebApi.Controllers
                     SubCompartmentId = subCompartmentId,
                     CompartmentId = compartmentId,
                     PlotCode = plotCode,
-                    SearchTerm = searchTerm
+                    SearchTerm = searchTerm,
+                    ActorId = actorId,
                 });
 
             return Success(result);

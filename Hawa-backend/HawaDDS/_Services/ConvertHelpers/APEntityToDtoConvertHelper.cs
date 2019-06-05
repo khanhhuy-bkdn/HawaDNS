@@ -36,6 +36,7 @@ namespace _Services.ConvertHelpers
                     Address = entity.APActorAddress,
                     Commune = entity.GECommune.ToDictionaryItemDto(),
                     District = entity.GEDistrict.ToDictionaryItemDto(),
+                    StateProvince = entity.GEStateProvince.ToDictionaryItemDto(),
                     Fax = entity.APActorFax,
                 };
         }
