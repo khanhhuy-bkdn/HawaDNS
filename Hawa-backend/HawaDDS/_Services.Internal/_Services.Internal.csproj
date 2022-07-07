@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.1.4" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.6" />
     <PackageReference Include="MimeKit" Version="2.1.4" />
   </ItemGroup>
 
