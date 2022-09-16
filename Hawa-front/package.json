@@ -58,7 +58,7 @@
     "@progress/kendo-drawing": "^1.5.12",
     "@types/xlsx": "0.0.36",
     "angular2-moment": "^1.9.0",
-    "bootstrap": "4.0.0",
+    "bootstrap": "4.3.1",
     "classlist.js": "1.1.20150312",
     "core-js": "2.5.1",
     "eva-icons": "^1.1.0",
